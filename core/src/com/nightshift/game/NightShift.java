@@ -14,14 +14,14 @@ public class NightShift extends ApplicationAdapter {
 	
 	private SpriteBatch batch;
 	private World world;
-	private Janitor hero, villan;
+	private Janitor hero, villain;
 	
 	@Override
 	public void create() {
 		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
 		hero = new Janitor(0, 389, world);
-		villan = new Janitor(0, 0, world);
+		villain = new Janitor(0, 0, world);
 		this.initContactListener();
 	}
 
@@ -33,7 +33,7 @@ public class NightShift extends ApplicationAdapter {
 		hero.moveJanitor();
 		batch.begin();
 		hero.draw(batch);
-		villan.draw(batch);
+		villain.draw(batch);
 		batch.end();
 	}
 	
@@ -48,7 +48,7 @@ public class NightShift extends ApplicationAdapter {
 			@Override
 			public void beginContact(Contact contact) {
 				System.out.println("Contact began.");
-				if((contact.getFixtureA().getBody() == hero.getBody()&&contact.getFixtureB().getBody() == villan.getBody())||(contact.getFixtureA().getBody() == villan.getBody()&&contact.getFixtureB().getBody() == hero.getBody())){
+				if((contact.getFixtureA().getBody() == hero.getBody()&&contact.getFixtureB().getBody() == villain.getBody())||(contact.getFixtureA().getBody() == villain.getBody()&&contact.getFixtureB().getBody() == hero.getBody())){
 					System.out.println("Boolean expression evaluated true.");
 					hero.moveToPreviousPosition();
 				}

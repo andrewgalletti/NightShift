@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Janitor extends Sprite {
 	
-	public static final int STEP_SIZE = 1; 
+	public static final int STEP_SIZE = 10;
 	
 	private static Texture img = new Texture(Gdx.files.internal("Sprite.png"));
 	private Body body;
@@ -20,7 +20,7 @@ public class Janitor extends Sprite {
 	private boolean spriteFlip = false;
 	
 	public Janitor(int xPos, int yPos, World world) {
-		super(img,img.getWidth(), img.getHeight());	
+		super(img,img.getWidth(), img.getHeight());
 		this.setX(xPos);
 		this.setY(yPos);
 		this.world = world;

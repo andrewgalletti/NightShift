@@ -3,116 +3,91 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class Janitor extends Sprite {
 	
-	public static final int SPEED = 600;
-
+	public static final int STEP_SIZE = 1; 
+	
 	private static Texture img = new Texture(Gdx.files.internal("Sprite.png"));
 	private Body body;
 	private World world;
-
-	public PlayerDirection direction;
-	public Vector2 velocity = new Vector2(0,0);
+	private float prevX, prevY;
+	private boolean spriteFlip = false;
 	
 	public Janitor(int xPos, int yPos, World world) {
 		super(img,img.getWidth(), img.getHeight());	
 		this.setX(xPos);
 		this.setY(yPos);
 		this.world = world;
+		prevX = xPos;
+		prevY = yPos;
 		createPhysicsBody();
 	}
-
-	public void moveJanitor(int input) {
-		boolean didMove;
-
-		switch(input) {
-			case(Input.Keys.RIGHT):
-				velocity.x += SPEED;
-				direction = PlayerDirection.RIGHT;
-				didMove = true;
-				break;
-			case(Input.Keys.LEFT):
-				velocity.x -= SPEED;
-				direction = PlayerDirection.LEFT;
-				didMove = true;
-				break;
-			case(Input.Keys.UP):
-				velocity.y += SPEED;
-				direction = PlayerDirection.UP;
-				didMove = true;
-				break;
-			case(Input.Keys.DOWN):
-				velocity.y -= SPEED;
-				direction = PlayerDirection.DOWN;
-				didMove = true;
-				break;
-			default:
-				didMove = false;
-				break;
+	
+	public void moveJanitor() {
+		boolean didMove = false;
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			this.translateX(STEP_SIZE);
+			this.body.setTransform(this.getX(), this.getY(), 0);
+			this.setFlip(spriteFlip, false);
+			didMove = true;
 		}
-
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			this.translateX(-STEP_SIZE);
+			this.body.setTransform(this.getX(), this.getY(), 0);
+			this.setFlip(spriteFlip, false);
+			didMove = true;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)) { 
+			this.translateY(STEP_SIZE);
+			this.body.setTransform(this.getX(), this.getY(), 0);
+			this.setFlip(spriteFlip, false);
+			didMove = true;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			this.translateY(-STEP_SIZE);
+			this.body.setTransform(this.getX(), this.getY(), 0);
+			this.setFlip(spriteFlip, false);
+			didMove = true;
+		}
 		if(didMove) {
-			this.body.setLinearVelocity(velocity);
+			spriteFlip = !spriteFlip;
 		}
 	}
-
-	public void bounce() {
-		switch(direction) {
-			case RIGHT:
-				body.applyForceToCenter(-1000000000,0,false);
-				direction = PlayerDirection.LEFT;
-				break;
-			case LEFT:
-				body.applyForceToCenter(1000000000,0,false);
-				direction = PlayerDirection.RIGHT;
-				break;
-			case UP:
-				body.applyForceToCenter(0,-1000000000,false);
-				direction = PlayerDirection.DOWN;
-				break;
-			case DOWN:
-				body.applyForceToCenter(0,1000000000,false);
-				direction = PlayerDirection.UP;
-				break;
-			default:
-				break;
-		}
-	}
-
-	public void updateSpritePos() {
-		this.setX(body.getPosition().x);
-		this.setY(body.getPosition().y);
-	}
-
-	public void resetVelocity() {
-		velocity.x = 0;
-		velocity.y = 0;
-		body.setLinearVelocity(velocity);
-	}
-
+	
 	public Body getBody() {
 		return this.body;
 	}
-
-	private void createPhysicsBody() {
+	
+	private void createPhysicsBody() {	
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		bodyDef.position.set(this.getX(), this.getY());
-
-		PolygonShape shape = new PolygonShape();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(this.getX(), this.getY());
+        
+        PolygonShape shape = new PolygonShape();
 		shape.setAsBox(this.getWidth()/2, this.getHeight()/2);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.restitution = .5f;
-		fixtureDef.density = .1f;
-
-		this.body = this.world.createBody(bodyDef);
-		this.body.createFixture(fixtureDef);
+        
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        
+        this.body = this.world.createBody(bodyDef);
+        this.body.createFixture(fixtureDef);
+	}
+	
+	public void savePos() {
+		prevX = this.getX();
+		prevY = this.getY();
+	}
+	
+	public void moveToPreviousPosition() {
+		this.body.setTransform(prevX, prevY, 0);
+		this.setX(prevX);
+		this.setY(prevY);
+		System.out.println("Sprite was moved back.");
 	}
 }
-

@@ -10,12 +10,14 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class NightShift extends ApplicationAdapter {
+public class NightShift extends ApplicationAdapter{
 	
 	private SpriteBatch batch;
 	private World world;
 	private Janitor hero;
 	private Ghost villain;
+
+
 	
 	@Override
 	public void create() {

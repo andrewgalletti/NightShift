@@ -19,12 +19,13 @@ import java.util.Random;
  */
 public class Ghost extends Sprite {
 
-    private static final int RANGE = 200;
+    private static final int RANGE = 100;
     private static Texture img = new Texture(Gdx.files.internal("Ghost.png"));
     private Body body;
     private World world;
     private Janitor hero;
     private boolean onPatrol = true;
+    private int STEP_SIZE = 2;
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
         super(img,img.getWidth(), img.getHeight());
@@ -60,7 +61,9 @@ public class Ghost extends Sprite {
     }
 
     private void patrol() {
-
+        float x = getX();
+        float y = getY();
+        setPosition(x + STEP_SIZE, y);
     }
 
     private void createPhysicsBody() {

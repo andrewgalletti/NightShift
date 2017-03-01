@@ -60,7 +60,7 @@ public class Ghost extends Sprite {
     }
 
     private void patrol() {
-        
+
     }
 
     private void createPhysicsBody() {

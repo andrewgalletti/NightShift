@@ -1,8 +1,8 @@
 package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class NightShift extends ApplicationAdapter {
+public class NightShift extends ApplicationAdapter implements InputProcessor {
 	
 	private SpriteBatch batch;
 	private World world;
@@ -33,12 +33,10 @@ public class NightShift extends ApplicationAdapter {
 	@Override
 	public void render() {
 		world.step(1f/60f, 6, 2);
+		hero.updateSpritePos();
+		moveGhost();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //		backgroundTexture = new Texture("mymap.tmx");
-
-		//hero.moveJanitor();
-//		villain.wander();
-		move();
 		batch.begin();
 		hero.draw(batch);
 		villain.draw(batch);
@@ -51,7 +49,7 @@ public class NightShift extends ApplicationAdapter {
 		batch.dispose();
 	}
 
-	public void move() {
+	public void moveGhost() {
 		float targetX = hero.getX(); //Player's position
 		float targetY = hero.getY();
 		float spriteX = villain.getX(); //Ghost's
@@ -64,6 +62,31 @@ public class NightShift extends ApplicationAdapter {
 		y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
 		villain.setPosition(x2, y2); //Set enemy's new positions.
 	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		hero.moveJanitor(keycode);
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		hero.resetVelocity();
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {return false;}
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {return false;}
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {return false;}
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {return false;}
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {return false;}
+	@Override
+	public boolean scrolled(int amount) {return false;}
 	
 	public void initContactListener() {
 		world.setContactListener(new ContactListener() {

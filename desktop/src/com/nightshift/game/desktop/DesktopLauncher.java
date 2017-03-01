@@ -1,7 +1,6 @@
 package com.nightshift.game.desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.nightshift.game.NightShift;
@@ -18,4 +17,3 @@ public class DesktopLauncher {
 		new LwjglApplication(new NightShift(), config);
 	}
 }
-

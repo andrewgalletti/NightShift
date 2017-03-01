@@ -3,92 +3,81 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class Janitor extends Sprite {
-	
-	public static final int STEP_SIZE = 10;
+
+	public static final int SPEED = 600;
 
 	private static Texture img = new Texture(Gdx.files.internal("Stand.png"));
-
 	private Body body;
 	private World world;
-	private float prevX, prevY;
-	private boolean spriteFlip = false;
+
+	public PlayerDirection direction = PlayerDirection.UP;
+	public Vector2 velocity = new Vector2(0,0);
 
 	public Janitor(int xPos, int yPos, World world) {
 		super(img,img.getWidth(), img.getHeight());
 		this.setX(xPos);
 		this.setY(yPos);
 		this.world = world;
-		prevX = xPos;
-		prevY = yPos;
 		createPhysicsBody();
 	}
-	
-	public void moveJanitor() {
-		boolean didMove = false;
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			this.translateX(STEP_SIZE);
-			this.body.setTransform(this.getX(), this.getY(), 0);
-			this.setFlip(spriteFlip, false);
-			didMove = true;
+
+	public void moveJanitor(int input) {
+		switch(input) {
+			case(Input.Keys.RIGHT):
+				velocity.x += SPEED;
+				direction = PlayerDirection.RIGHT;
+				break;
+			case(Input.Keys.LEFT):
+				velocity.x -= SPEED;
+				direction = PlayerDirection.LEFT;
+				break;
+			case(Input.Keys.UP):
+				velocity.y += SPEED;
+				direction = PlayerDirection.UP;
+				break;
+			case(Input.Keys.DOWN):
+				velocity.y -= SPEED;
+				direction = PlayerDirection.DOWN;
+				break;
+			default:
+				break;
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			this.translateX(-STEP_SIZE);
-			this.body.setTransform(this.getX(), this.getY(), 0);
-			this.setFlip(spriteFlip, false);
-			didMove = true;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) { 
-			this.translateY(STEP_SIZE);
-			this.body.setTransform(this.getX(), this.getY(), 0);
-			this.setFlip(spriteFlip, false);
-			didMove = true;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			this.translateY(-STEP_SIZE);
-			this.body.setTransform(this.getX(), this.getY(), 0);
-			this.setFlip(spriteFlip, false);
-			didMove = true;
-		}
-		if(didMove) {
-			spriteFlip = !spriteFlip;
-		}
+		this.body.setLinearVelocity(velocity);
 	}
-	
+
+	public void updateSpritePos() {
+		this.setX(body.getPosition().x);
+		this.setY(body.getPosition().y);
+	}
+
+	public void resetVelocity() {
+		velocity.x = 0;
+		velocity.y = 0;
+		body.setLinearVelocity(velocity);
+	}
+
 	public Body getBody() {
 		return this.body;
 	}
-	
-	private void createPhysicsBody() {	
+
+	private void createPhysicsBody() {
 		BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(this.getX(), this.getY());
-        
-        PolygonShape shape = new PolygonShape();
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(this.getX(), this.getY());
+
+		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(this.getWidth()/2, this.getHeight()/2);
-        
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        
-        this.body = this.world.createBody(bodyDef);
-        this.body.createFixture(fixtureDef);
-	}
-	
-	public void savePos() {
-		prevX = this.getX();
-		prevY = this.getY();
-	}
-	
-	public void moveToPreviousPosition() {
-		this.body.setTransform(prevX, prevY, 0);
-		this.setX(prevX);
-		this.setY(prevY);
-		System.out.println("Sprite was moved back.");
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.restitution = .5f;
+		fixtureDef.density = .1f;
+
+		this.body = this.world.createBody(bodyDef);
+		this.body.createFixture(fixtureDef);
 	}
 }

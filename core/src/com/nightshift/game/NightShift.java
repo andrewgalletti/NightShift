@@ -28,6 +28,7 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		villain = new Ghost(Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3, world);
 
 		this.initContactListener();
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		batch = new SpriteBatch();
 
 		hero = new Janitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
-		villain = new Ghost(Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3, world);
+		villain = new Ghost(hero,Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3, world);
 
 		this.initContactListener();
 		Gdx.input.setInputProcessor(this);
@@ -35,7 +35,7 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 	public void render() {
 		world.step(1f/60f, 6, 2);
 		hero.updateSpritePos();
-		moveGhost();
+		villain.moveGhost();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //		backgroundTexture = new Texture("mymap.tmx");
 		batch.begin();
@@ -50,19 +50,7 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		batch.dispose();
 	}
 
-	public void moveGhost() {
-		float targetX = hero.getX(); //Player's position
-		float targetY = hero.getY();
-		float spriteX = villain.getX(); //Ghost's
-		float spriteY = villain.getY();
-		float x2 = villain.getX(); //Ghost's new position
-		float y2 = villain.getY();
-		float angle;
-		angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
-		x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
-		y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
-		villain.setPosition(x2, y2); //Set enemy's new positions.
-	}
+
 
 	@Override
 	public boolean keyDown(int keycode) {

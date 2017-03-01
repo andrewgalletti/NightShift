@@ -35,8 +35,8 @@ public class NightShift extends ApplicationAdapter {
 		world.step(1f/60f, 2, 20);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //		backgroundTexture = new Texture("mymap.tmx");
-		hero.savePos();
-		hero.moveJanitor();
+
+		//hero.moveJanitor();
 //		villain.wander();
 		move();
 		batch.begin();
@@ -72,7 +72,6 @@ public class NightShift extends ApplicationAdapter {
 				System.out.println("Contact began.");
 				if((contact.getFixtureA().getBody() == hero.getBody()&&contact.getFixtureB().getBody() == villain.getBody())||(contact.getFixtureA().getBody() == villain.getBody()&&contact.getFixtureB().getBody() == hero.getBody())){
 					System.out.println("Boolean expression evaluated true.");
-					hero.moveToPreviousPosition();
 				}
 			}
 

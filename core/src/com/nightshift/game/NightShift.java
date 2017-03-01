@@ -2,7 +2,6 @@ package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -11,19 +10,19 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class NightShift extends ApplicationAdapter {
+
+public class NightShift extends ApplicationAdapter{
 	
 	private SpriteBatch batch;
 	private World world;
 	private Janitor hero;
 	private Ghost villain;
+
 //	public static Texture backgroundTexture;
-	
-	@Override
+
 	public void create() {
 		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
-
 		hero = new Janitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
 		villain = new Ghost(Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3, world);
 
@@ -38,7 +37,7 @@ public class NightShift extends ApplicationAdapter {
 		hero.savePos();
 		hero.moveJanitor();
 //		villain.wander();
-		move();
+		follow();
 		batch.begin();
 		hero.draw(batch);
 		villain.draw(batch);
@@ -51,7 +50,7 @@ public class NightShift extends ApplicationAdapter {
 		batch.dispose();
 	}
 
-	public void move() {
+	public void follow() {
 		float targetX = hero.getX(); //Player's position
 		float targetY = hero.getY();
 		float spriteX = villain.getX(); //Ghost's

@@ -27,12 +27,12 @@ public class NightShift extends ApplicationAdapter {
 		hero = new Janitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
 		villain = new Ghost(Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3, world);
 
-//		this.initContactListener();
+		this.initContactListener();
 	}
 
 	@Override
 	public void render() {
-		world.step(1f/60f, 2, 20);
+		world.step(1f/60f, 6, 2);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //		backgroundTexture = new Texture("mymap.tmx");
 

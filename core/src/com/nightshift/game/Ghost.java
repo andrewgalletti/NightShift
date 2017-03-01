@@ -20,7 +20,7 @@ import java.util.Random;
 public class Ghost extends Sprite {
     public static final int STEP_SIZE = 1;
 
-    private static Texture img = new Texture(Gdx.files.internal("Mr. Clean.png"));
+    private static Texture img = new Texture(Gdx.files.internal("Ghost.png"));
     private Body body;
     private World world;
     private int angle = 0;

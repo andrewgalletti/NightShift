@@ -10,19 +10,22 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class NightShift extends ApplicationAdapter {
+public class NightShift extends ApplicationAdapter{
 	
 	private SpriteBatch batch;
 	private World world;
-	private Janitor hero, villain;
+	private Janitor hero;
+	private Ghost villain;
+
+
 	
 	@Override
 	public void create() {
 		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
 		hero = new Janitor(0, 389, world);
-		villain = new Janitor(0, 0, world);
-		this.initContactListener();
+		villain = new Ghost(0, 0, world);
+//		this.initContactListener();
 	}
 
 	@Override
@@ -31,6 +34,7 @@ public class NightShift extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		hero.savePos();
 		hero.moveJanitor();
+		villain.wander();
 		batch.begin();
 		hero.draw(batch);
 		villain.draw(batch);

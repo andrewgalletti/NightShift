@@ -13,7 +13,7 @@ public class Janitor extends Sprite {
 	
 	public static final int STEP_SIZE = 10;
 	
-	private static Texture img = new Texture(Gdx.files.internal("Sprite.png"));
+	private static Texture img = new Texture(Gdx.files.internal("Mr. Clean.png"));
 	private Body body;
 	private World world;
 	private float prevX, prevY;

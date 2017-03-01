@@ -9,6 +9,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.World;
+import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
+
 import java.util.Random;
 
 /**
@@ -16,35 +18,34 @@ import java.util.Random;
  * Most methods come from Janitor class. I didn't do inheritance here because we'll potentially make this class very different.
  */
 public class Ghost extends Sprite {
-    public static final int STEP_SIZE = 50;
+    public static final int STEP_SIZE = 1;
 
-    private static Texture img = new Texture(Gdx.files.internal("Sprite.png"));
+    private static Texture img = new Texture(Gdx.files.internal("Mr. Clean.png"));
     private Body body;
     private World world;
-    private float prevX, prevY;
+    private int angle = 0;
 
     public Ghost(int xPos, int yPos, World world) {
         super(img,img.getWidth(), img.getHeight());
         this.setX(xPos);
         this.setY(yPos);
         this.world = world;
-        prevX = xPos;
-        prevY = yPos;
         createPhysicsBody();
     }
 
-    public void wander() {
-        for (int i = 0; i < 100; i ++){
-            Random rand = new Random();
-            int angle = rand.nextInt(360) + 1;
-            float xPos = (float) ((STEP_SIZE * Math.sin(angle)));
-            float yPos = (float) ((STEP_SIZE) * Math.cos(angle));
-            this.translateX(xPos);
-            this.translateY(yPos);
-            this.body.setTransform(this.getX(),this.getY(),angle);
-        }
-
+    public void move(int angle) {
+        //Not a good method
+        float xPos = (float) (STEP_SIZE * Math.sin(angle));
+        float yPos = (float) (STEP_SIZE * Math.cos(angle));
+        this.translateX(xPos);
+        this.translateY(yPos);
+        this.body.setTransform(this.getX(),this.getY(),angle);
     }
+
+    public void wander() {
+        //Deleted Failed Attempts
+    }
+
     private void createPhysicsBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;

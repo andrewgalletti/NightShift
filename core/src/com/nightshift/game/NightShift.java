@@ -2,6 +2,7 @@ package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -16,33 +17,52 @@ public class NightShift extends ApplicationAdapter {
 	private World world;
 	private Janitor hero;
 	private Ghost villain;
+//	public static Texture backgroundTexture;
 	
 	@Override
 	public void create() {
 		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
-		hero = new Janitor(0, 389, world);
-		villain = new Ghost(0, 0, world);
+
+		hero = new Janitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
+		villain = new Ghost(Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3, world);
+
 //		this.initContactListener();
 	}
 
 	@Override
 	public void render() {
-		world.step(1f/60f, 6, 2);
+		world.step(1f/60f, 2, 20);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//		backgroundTexture = new Texture("mymap.tmx");
 		hero.savePos();
 		hero.moveJanitor();
-		villain.wander();
+//		villain.wander();
+		move();
 		batch.begin();
 		hero.draw(batch);
 		villain.draw(batch);
 		batch.end();
 	}
-	
+
 	@Override
 	public void dispose() {
 		hero.getTexture().dispose();
 		batch.dispose();
+	}
+
+	public void move() {
+		float targetX = hero.getX(); //Player's position
+		float targetY = hero.getY();
+		float spriteX = villain.getX(); //Ghost's
+		float spriteY = villain.getY();
+		float x2 = villain.getX(); //Ghost's new position
+		float y2 = villain.getY();
+		float angle;
+		angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
+		x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
+		y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
+		villain.setPosition(x2, y2); //Set enemy's new positions.
 	}
 	
 	public void initContactListener() {

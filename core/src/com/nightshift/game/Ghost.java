@@ -18,32 +18,49 @@ import java.util.Random;
  * Most methods come from Janitor class. I didn't do inheritance here because we'll potentially make this class very different.
  */
 public class Ghost extends Sprite {
-    public static final int STEP_SIZE = 1;
 
+    private static final int RANGE = 200;
     private static Texture img = new Texture(Gdx.files.internal("Ghost.png"));
     private Body body;
     private World world;
-    private int angle = 0;
+    private Janitor hero;
+    private boolean onPatrol = true;
 
-    public Ghost(int xPos, int yPos, World world) {
+    public Ghost(Janitor hero, int xPos, int yPos, World world) {
         super(img,img.getWidth(), img.getHeight());
+        this.hero = hero;
         this.setX(xPos);
         this.setY(yPos);
         this.world = world;
         createPhysicsBody();
     }
 
-    public void move(int angle) {
-        //Not a good method
-        float xPos = (float) (STEP_SIZE * Math.sin(angle));
-        float yPos = (float) (STEP_SIZE * Math.cos(angle));
-        this.translateX(xPos);
-        this.translateY(yPos);
-        this.body.setTransform(this.getX(),this.getY(),angle);
+    public void moveGhost() {
+        onPatrol = Math.sqrt(Math.pow(this.getX()-hero.getX(),2)+Math.pow(this.getY()-hero.getY(),2)) > RANGE;
+        if(onPatrol) {
+            patrol();
+        }
+        else {
+            chase();
+        }
     }
 
-    public void wander() {
-        //Deleted Failed Attempts
+    private void chase() {
+        float targetX = hero.getX(); //Player's position
+        float targetY = hero.getY();
+        float spriteX = getX(); //Ghost's
+        float spriteY = getY();
+        float x2 = getX(); //Ghost's new position
+        float y2 = getY();
+        float angle;
+        angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
+        x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
+        y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
+        setPosition(x2, y2); //Set enemy's new positions.
+    }
+
+    private void patrol() {
+
     }
 
     private void createPhysicsBody() {

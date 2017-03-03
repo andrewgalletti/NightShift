@@ -26,22 +26,27 @@ public class Janitor extends Sprite {
 	}
 
 	public void moveJanitor(int input) {
+
 		switch(input) {
 			case(Input.Keys.RIGHT):
 				velocity.x += SPEED;
 				direction = PlayerDirection.RIGHT;
+				System.out.println(velocity);
 				break;
 			case(Input.Keys.LEFT):
 				velocity.x -= SPEED;
 				direction = PlayerDirection.LEFT;
+				System.out.println(velocity);
 				break;
 			case(Input.Keys.UP):
 				velocity.y += SPEED;
 				direction = PlayerDirection.UP;
+				System.out.println(velocity);
 				break;
 			case(Input.Keys.DOWN):
 				velocity.y -= SPEED;
 				direction = PlayerDirection.DOWN;
+				System.out.println(velocity);
 				break;
 			default:
 				break;

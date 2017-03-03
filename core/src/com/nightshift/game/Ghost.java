@@ -3,6 +3,7 @@ package com.nightshift.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -19,13 +20,15 @@ import java.util.Random;
  */
 public class Ghost extends Sprite {
 
-    private static final int RANGE = 100;
+    private static final int RANGE = 150;
     private static Texture img = new Texture(Gdx.files.internal("Ghost.png"));
+    public static final int SPEED = 500;
     private Body body;
     private World world;
     private Janitor hero;
     private boolean onPatrol = true;
-    private int STEP_SIZE = 2;
+    private int STEP_SIZE = 1;
+    public Vector2 velocity = new Vector2(0,0);
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
         super(img,img.getWidth(), img.getHeight());
@@ -46,7 +49,7 @@ public class Ghost extends Sprite {
         }
     }
 
-    private void chase() {
+    public void chase() {
         float targetX = hero.getX(); //Player's position
         float targetY = hero.getY();
         float spriteX = getX(); //Ghost's
@@ -60,10 +63,29 @@ public class Ghost extends Sprite {
         setPosition(x2, y2); //Set enemy's new positions.
     }
 
-    private void patrol() {
-        float x = getX();
-        float y = getY();
-        setPosition(x + STEP_SIZE, y);
+//    public void patrol() {
+//        float x = getX();
+//        float y = getY();
+//        float angle = 30;
+//        angle += 10;
+//        x += (float) Math.cos(angle);
+//        y += (float) Math.sin(angle);
+//        setPosition(x + STEP_SIZE, y);
+//    }
+
+    public void patrol() {
+        Random rand = new Random();
+        int targetX = rand.nextInt(1000) + 500; //Player's position
+        int targetY = rand.nextInt(1000) + 500;
+        float spriteX = getX(); //Ghost's
+        float spriteY = getY();
+        float x2 = getX(); //Ghost's new position
+        float y2 = getY();
+        float angle;
+        angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
+        x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
+        y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
+        setPosition(x2, y2); //Set enemy's new positions.
     }
 
     private void createPhysicsBody() {

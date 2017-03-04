@@ -1,6 +1,4 @@
 package com.nightshift.game;
-
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -10,9 +8,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.World;
-import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
-
-import java.util.Random;
 
 /**
  * Created by Cui on 2/22/2017.

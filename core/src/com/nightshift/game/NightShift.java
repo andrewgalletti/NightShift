@@ -67,9 +67,10 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glBlendFunc(GL20.GL_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		world.step(1f / 60f, 6, 2);
 		hero.updateSpritePos();
-		villain1.chase();
+		/*villain1.chase();
 		villain3.patrol();
-		villain4.chase();
+		villain4.chase();*/
+		villain1.moveGhost();
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
@@ -90,20 +91,6 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 	public void dispose() {
 		hero.getTexture().dispose();
 		batch.dispose();
-	}
-
-	public void follow() {
-		float targetX = hero.getX(); //Player's position
-		float targetY = hero.getY();
-		float spriteX = villain1.getX(); //Ghost's
-		float spriteY = villain1.getY();
-		float x2 = villain1.getX(); //Ghost's new position
-		float y2 = villain1.getY();
-		float angle;
-		angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
-		x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
-		y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
-		villain1.setPosition(x2, y2); //Set enemy's new positions.
 	}
 
 	@Override

@@ -26,7 +26,6 @@ public class Janitor extends Sprite {
 	}
 
 	public void moveJanitor(int input) {
-
 		switch(input) {
 			case(Input.Keys.RIGHT):
 				velocity.x += SPEED;

@@ -1,7 +1,6 @@
 package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,12 +17,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.Graphics.DisplayMode;
 
 public class NightShift extends ApplicationAdapter implements InputProcessor {
 	private SpriteBatch batch;
 	private World world;
-	private Janitor hero;
+	//private OldJanitor hero;
+	Janitor hero;
 	private Ghost villain1;
 	private Ghost villain2;
 	private Ghost villain3;
@@ -50,7 +49,8 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		center = new Vector3(layer0.getWidth() * layer0.getTileWidth() / 2, layer0.getHeight() * layer0.getTileHeight() / 2, 0);
 		camera.position.set(center);
 		batch = new SpriteBatch();
-		hero = new Janitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
+		//hero = new OldJanitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
+		hero = new Janitor(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, world);
 		villain1 = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world);
 		villain2 = new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world);
 		villain3 = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world);
@@ -62,11 +62,13 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render() {
+		hero.moveJanitor();
 		world.step(1f / 60f, 2, 20);
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		world.step(1f / 60f, 6, 2);
-		hero.updateSpritePos();
+		hero.updateJanitorPosition();
+		//hero.updateSpritePos();
 		/*villain1.chase();
 		villain3.patrol();
 		villain4.chase();*/
@@ -85,23 +87,24 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		villain3.draw(batch);
 		villain4.draw(batch);
 		batch.end();
+		hero.resetVelocity();
 	}
 
 	@Override
 	public void dispose() {
-		hero.getTexture().dispose();
+		//hero.getTexture().dispose();
 		batch.dispose();
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-		hero.moveJanitor(keycode);
+		//hero.moveJanitor(keycode);
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		hero.resetVelocity();
+		//hero.resetVelocity();
 		return true;
 	}
 

@@ -13,7 +13,7 @@ import java.util.Random;
 
 /**
  * Created by Cui on 2/22/2017.
- * Most methods come from Janitor class. I didn't do inheritance here because we'll potentially make this class very different.
+ * Most methods come from OldJanitor class. I didn't do inheritance here because we'll potentially make this class very different.
  */
 public class Ghost extends Sprite {
 

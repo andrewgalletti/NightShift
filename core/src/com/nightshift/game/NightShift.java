@@ -18,15 +18,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-public class NightShift extends ApplicationAdapter implements InputProcessor {
+public class NightShift extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private World world;
-	//private OldJanitor hero;
-	Janitor hero;
-	private Ghost villain1;
-	private Ghost villain2;
-	private Ghost villain3;
-	private Ghost villain4;
+	private Janitor hero;
+	private Ghost[] enemies;
 	private TiledMap map;
 	private Vector3 center;
 	private OrthographicCamera camera;
@@ -38,26 +34,22 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		world = new World(new Vector2(0, 0), true);
+
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, w, h);
 		camera.update();
-
 		map = new TmxMapLoader().load("mymap.tmx");
 		map.getProperties();
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 		layer0 = (TiledMapTileLayer) map.getLayers().get(0);
 		center = new Vector3(layer0.getWidth() * layer0.getTileWidth() / 2, layer0.getHeight() * layer0.getTileHeight() / 2, 0);
 		camera.position.set(center);
+
 		batch = new SpriteBatch();
-		//hero = new OldJanitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
 		hero = new Janitor(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, world);
-		villain1 = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world);
-		villain2 = new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world);
-		villain3 = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world);
-		villain4 = new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world);
+		spawnEnemies();
 
 		this.initContactListener();
-		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
@@ -68,89 +60,43 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glBlendFunc(GL20.GL_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		world.step(1f / 60f, 6, 2);
 		hero.updateJanitorPosition();
-		//hero.updateSpritePos();
-		/*villain1.chase();
-		villain3.patrol();
-		villain4.chase();*/
-		villain1.moveGhost();
-
+		for(Ghost g: enemies) {
+			g.moveGhost();
+		}
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 
-//		follow();
 		batch.begin();
 		hero.draw(batch);
-		villain1.draw(batch);
-		villain2.draw(batch);
-		villain3.draw(batch);
-		villain4.draw(batch);
+		for(Ghost g: enemies) {
+			g.draw(batch);
+		}
 		batch.end();
 		hero.resetVelocity();
 	}
 
 	@Override
 	public void dispose() {
-		//hero.getTexture().dispose();
 		batch.dispose();
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
-		//hero.moveJanitor(keycode);
-		return true;
+	private void spawnEnemies() {
+		enemies = new Ghost[4];
+		enemies[0] = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world);
+		enemies[1] = new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world);
+		enemies[2] = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world);
+		enemies[3] = new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world);
 	}
 
-	@Override
-	public boolean keyUp(int keycode) {
-		//hero.resetVelocity();
-		return true;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		return false;
-	}
-
-	public void initContactListener() {
+	private void initContactListener() {
 		world.setContactListener(new ContactListener() {
 			@Override
-			public void beginContact(Contact contact) {
-				System.out.println("Contact began.");
-				if ((contact.getFixtureA().getBody() == hero.getBody() && contact.getFixtureB().getBody() == villain1.getBody()) || (contact.getFixtureA().getBody() == villain1.getBody() && contact.getFixtureB().getBody() == hero.getBody())) {
-					System.out.println("Boolean expression evaluated true.");
-				}
-			}
+			public void beginContact(Contact contact) {System.out.println("Contact began.");}
 
 			@Override
-			public void endContact(Contact contact) {
-				System.out.println("Contact ended.");
+			public void endContact(Contact contact) {System.out.println("Contact ended.");
 			}
 
 			@Override

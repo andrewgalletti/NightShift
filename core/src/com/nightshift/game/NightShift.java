@@ -43,9 +43,7 @@ public class NightShift extends ApplicationAdapter implements InputProcessor {
 		map = new TmxMapLoader().load("mymap.tmx");
 		map.getProperties();
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-		layer0 = (TiledMapTileLayer) map.getLayers().get(0);
-		center = new Vector3(layer0.getWidth() * layer0.getTileWidth() / 2, layer0.getHeight() * layer0.getTileHeight() / 2, 0);
-		camera.position.set(center);
+
 		batch = new SpriteBatch();
 		hero = new Janitor(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, world);
 		villain = new Ghost(hero, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3, world);

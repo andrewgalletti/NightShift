@@ -69,6 +69,8 @@ public class Janitor extends Sprite {
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
 		bodyDef.position.set(this.getX(), this.getY());
 
+		this.body = this.world.createBody(bodyDef);
+
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(this.getWidth()/2, this.getHeight()/2);
 
@@ -77,7 +79,8 @@ public class Janitor extends Sprite {
 		fixtureDef.restitution = .5f;
 		fixtureDef.density = .1f;
 
-		this.body = this.world.createBody(bodyDef);
+
 		this.body.createFixture(fixtureDef);
+		shape.dispose();
 	}
 }

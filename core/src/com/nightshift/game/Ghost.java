@@ -1,11 +1,11 @@
 package com.nightshift.game;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import java.util.Random;
 
 /**
  * Created by andre on 3/7/2017.
@@ -24,6 +24,8 @@ public class Ghost {
 
     public Sprite currentSprite;
     public Vector2 velocity = new Vector2(0,0);
+    static private Random random = new Random();
+    private float speed = random.nextFloat() * 75 + 50;
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
         this.world = world;

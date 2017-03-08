@@ -26,6 +26,8 @@ public class Ghost extends Sprite {
     private boolean onPatrol = true;
     private int STEP_SIZE = 1;
     public Vector2 velocity = new Vector2(0,0);
+    static private Random random = new Random();
+    private float speed = random.nextFloat() * 75 + 50;
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
         super(img,img.getWidth(), img.getHeight());
@@ -55,22 +57,20 @@ public class Ghost extends Sprite {
         float y2 = getY();
         float angle;
         angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
-        x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
-        y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
+        x2 += (float) Math.cos(angle) * speed * Gdx.graphics.getDeltaTime();
+        y2 += (float) Math.sin(angle) * speed * Gdx.graphics.getDeltaTime();
         setPosition(x2, y2); //Set enemy's new positions.
     }
 
 
     public void patrol() {
-        Random rand = new Random();
-        int targetX = rand.nextInt(1000) + 500; //Player's position
-        int targetY = rand.nextInt(1000) + 500;
+
         float spriteX = getX(); //Ghost's
         float spriteY = getY();
         float x2 = getX(); //Ghost's new position
         float y2 = getY();
         float angle;
-        angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
+        angle = (float) Math.atan2(10 - spriteY, 10 - spriteX);
         x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
         y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
         setPosition(x2, y2); //Set enemy's new positions.

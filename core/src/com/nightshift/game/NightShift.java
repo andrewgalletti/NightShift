@@ -1,7 +1,6 @@
 package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -55,13 +54,16 @@ public class NightShift extends ApplicationAdapter {
 	@Override
 	public void render() {
 		hero.moveJanitor();
+		for(Ghost g: enemies) {
+			g.moveGhost();
+		}
 		world.step(1f / 60f, 2, 20);
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		world.step(1f / 60f, 6, 2);
 		hero.updateJanitorPosition();
 		for(Ghost g: enemies) {
-			g.moveGhost();
+			g.updateGhostPosition();
 		}
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
@@ -75,6 +77,9 @@ public class NightShift extends ApplicationAdapter {
 		}
 		batch.end();
 		hero.resetVelocity();
+		for(Ghost g: enemies) {
+			g.resetVelocity();
+		}
 	}
 
 	@Override

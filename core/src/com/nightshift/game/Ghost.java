@@ -1,97 +1,103 @@
 package com.nightshift.game;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.World;
-
-import java.util.Random;
+import com.badlogic.gdx.physics.box2d.*;
 
 /**
- * Created by Cui on 2/22/2017.
- * Most methods come from OldJanitor class. I didn't do inheritance here because we'll potentially make this class very different.
+ * Created by andre on 3/7/2017.
  */
-public class Ghost extends Sprite {
-
-    private static final int RANGE = 150;
-    private static Texture img = new Texture(Gdx.files.internal("Ghost.png"));
-    public static final int SPEED = 500;
+public class Ghost {
+    private final float SPEED = 100;
+    private final float RANGE = 150;
+    private final int ANIMATION_FACTOR = 4;
+    private int moveIterCounter = 0;
+    private boolean onPatrol = true;
+    private Sprite[] animation;
     private Body body;
     private World world;
+    private Vector2 position = new Vector2(0,0);
     private Janitor hero;
-    private boolean onPatrol = true;
-    private int STEP_SIZE = 1;
+
+    public Sprite currentSprite;
     public Vector2 velocity = new Vector2(0,0);
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
-        super(img,img.getWidth(), img.getHeight());
-        this.hero = hero;
-        this.setX(xPos);
-        this.setY(yPos);
         this.world = world;
+        this.hero = hero;
+        position.x = xPos;
+        position.y = yPos;
+        initSpriteArray();
+        currentSprite = animation[0];
         createPhysicsBody();
     }
 
     public void moveGhost() {
-        onPatrol = Math.sqrt(Math.pow(this.getX()-hero.getX(),2)+Math.pow(this.getY()-hero.getY(),2)) > RANGE;
+        onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
         if(onPatrol) {
-            //patrol();
+            patrol();
         }
         else {
             chase();
         }
+        moveIterCounter++;
+        currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
+        body.setLinearVelocity(velocity);
     }
 
-    public void chase() {
-        float targetX = hero.getX(); //Player's position
-        float targetY = hero.getY();
-        float spriteX = getX(); //Ghost's
-        float spriteY = getY();
-        float x2 = getX(); //Ghost's new position
-        float y2 = getY();
-        float angle;
-        angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
-        x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
-        y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
-        setPosition(x2, y2); //Set enemy's new positions.
+    private void chase() {
+        velocity.x = hero.getX() - position.x;
+        velocity.y = hero.getY() - position.y;
     }
 
+    private void patrol() {}
 
-    public void patrol() {
-        Random rand = new Random();
-        int targetX = rand.nextInt(1000) + 500; //Player's position
-        int targetY = rand.nextInt(1000) + 500;
-        float spriteX = getX(); //Ghost's
-        float spriteY = getY();
-        float x2 = getX(); //Ghost's new position
-        float y2 = getY();
-        float angle;
-        angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
-        x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
-        y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
-        setPosition(x2, y2); //Set enemy's new positions.
+    private void initSpriteArray() {
+        Texture t0 = new Texture(Gdx.files.internal("Ghost.png"));
+        animation = new Sprite[1];
+        animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());
+        updateSpritePositions();
+    }
+
+    public void updateGhostPosition() {
+        position.x = body.getPosition().x;
+        position.y = body.getPosition().y;
+        updateSpritePositions();
+    }
+
+    private void updateSpritePositions() {
+        for(Sprite s: animation) {
+            s.setX(position.x);
+            s.setY(position.y);
+        }
+    }
+
+    public void resetVelocity() {
+        velocity.x = 0;
+        velocity.y = 0;
+    }
+
+    public void draw(SpriteBatch batch) {
+        currentSprite.draw(batch);
     }
 
     private void createPhysicsBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(this.getX(), this.getY());
+        bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(this.getWidth()/2, this.getHeight()/2);
+        shape.setAsBox(currentSprite.getWidth()/2, currentSprite.getHeight()/2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
+        fixtureDef.restitution = .5f;
+        fixtureDef.density = .1f;
 
         this.body = this.world.createBody(bodyDef);
         this.body.createFixture(fixtureDef);
-    }
-
-    public Body getBody() {
-        return this.body;
     }
 }

@@ -1,86 +1,129 @@
 package com.nightshift.game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-public class Janitor extends Sprite {
+import static com.badlogic.gdx.Gdx.input;
 
-	public static final int SPEED = 600;
+/**
+ * Created by andre on 3/6/2017.
+ */
+public class Janitor {
+    private final float SPEED = 100;
+    private final int ANIMATION_FACTOR = 4;
+    private int moveIterCounter = 0;
+    private Sprite[] animation;
+    private Body body;
+    private World world;
+    private Vector2 position = new Vector2(0,0);
 
-	private static Texture img = new Texture(Gdx.files.internal("Stand.png"));
-	private Body body;
-	private World world;
+    public Sprite currentSprite;
+    public Vector2 velocity = new Vector2(0,0);
 
-	public PlayerDirection direction = PlayerDirection.UP;
-	public Vector2 velocity = new Vector2(0,0);
+    public Janitor(int xPos, int yPos, World world) {
+        position.x = xPos;
+        position.y = yPos;
+        this.world = world;
+        initSpriteArray();
+        currentSprite = animation[0];
+        createPhysicsBody();
+    }
 
-	public Janitor(int xPos, int yPos, World world) {
-		super(img,img.getWidth(), img.getHeight());
-		this.setX(xPos);
-		this.setY(yPos);
-		this.world = world;
-		createPhysicsBody();
-	}
+    public void moveJanitor() {
+        boolean didMove = false;
+        if(input.isKeyPressed(Input.Keys.UP)) {
+            velocity.y += SPEED;
+            didMove = true;
+        }
+        if(input.isKeyPressed(Input.Keys.DOWN)) {
+            velocity.y -= SPEED;
+            didMove = true;
+        }
+        if(input.isKeyPressed(Input.Keys.RIGHT)) {
+            velocity.x += SPEED;
+            didMove = true;
+        }
+        if(input.isKeyPressed(Input.Keys.LEFT)) {
+            velocity.x -= SPEED;
+            didMove = true;
+        }
 
-	public void moveJanitor(int input) {
-		switch(input) {
-			case(Input.Keys.RIGHT):
-				velocity.x += SPEED;
-				direction = PlayerDirection.RIGHT;
-				break;
-			case(Input.Keys.LEFT):
-				velocity.x -= SPEED;
-				direction = PlayerDirection.LEFT;
-				break;
-			case(Input.Keys.UP):
-				velocity.y += SPEED;
-				direction = PlayerDirection.UP;
-				break;
-			case(Input.Keys.DOWN):
-				velocity.y -= SPEED;
-				direction = PlayerDirection.DOWN;
-				break;
-			default:
-				break;
-		}
-		this.body.setLinearVelocity(velocity);
-	}
+        if(didMove) {
+            moveIterCounter++;
+            currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
+        }
 
-	public void updateSpritePos() {
-		this.setX(body.getPosition().x);
-		this.setY(body.getPosition().y);
-	}
+        body.setLinearVelocity(velocity);
+    }
 
-	public void resetVelocity() {
-		velocity.x = 0;
-		velocity.y = 0;
-		body.setLinearVelocity(velocity);
-	}
+    public void updateJanitorPosition() {
+        position.x = body.getPosition().x;
+        position.y = body.getPosition().y;
+        updateSpritePositions();
+    }
 
-	public Body getBody() {
-		return this.body;
-	}
+    private void updateSpritePositions() {
+        for (Sprite s: animation) {
+            s.setX(position.x);
+            s.setY(position.y);
+        }
+    }
 
-	private void createPhysicsBody() {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		bodyDef.position.set(this.getX(), this.getY());
+    public void resetVelocity() {
+        velocity.x = 0;
+        velocity.y = 0;
+    }
 
-		this.body = this.world.createBody(bodyDef);
+    public float getX() {
+        return position.x;
+    }
 
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(this.getWidth()/2, this.getHeight()/2);
+    public float getY() {
+        return position.y;
+    }
 
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.restitution = .5f;
-		fixtureDef.density = .1f;
+    public void draw(SpriteBatch batch) {
+        currentSprite.draw(batch);
+    }
+
+    private void initSpriteArray() {
+        Texture t0 = new Texture(Gdx.files.internal("Stand.png"));
+        Texture t1 = new Texture(Gdx.files.internal("Left Step.png"));
+        Texture t2 = new Texture(Gdx.files.internal("Stand.png"));
+        Texture t3 = new Texture(Gdx.files.internal("Right Step.png"));
+        animation = new Sprite[4];
+        animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());
+        animation[1] = new Sprite(t1,t1.getWidth(),t1.getHeight());
+        animation[2] = new Sprite(t2,t2.getWidth(),t2.getHeight());
+        animation[3] = new Sprite(t3,t3.getWidth(),t3.getHeight());
+        updateSpritePositions();
+    }
+
+    private void createPhysicsBody() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(currentSprite.getWidth()/2, currentSprite.getHeight()/2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.restitution = .5f;
+        fixtureDef.density = .1f;
+
+        this.body = this.world.createBody(bodyDef);
+        this.body.createFixture(fixtureDef);
+    }
 
 
-		this.body.createFixture(fixtureDef);
-		shape.dispose();
-	}
+    public Body getBody() {
+        return this.body;
+    }
 }
+

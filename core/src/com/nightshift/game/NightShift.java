@@ -5,11 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -17,11 +13,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+import java.util.ArrayList;
+
 public class NightShift extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private World world;
 	private Janitor hero;
-	private Ghost[] enemies;
+	private ArrayList<Ghost> enemies;
 	private TiledMap map;
 	private Vector3 center;
 	private OrthographicCamera camera;
@@ -88,17 +86,27 @@ public class NightShift extends ApplicationAdapter {
 	}
 
 	private void spawnEnemies() {
-		enemies = new Ghost[4];
-		enemies[0] = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world);
-		enemies[1] = new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world);
-		enemies[2] = new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world);
-		enemies[3] = new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world);
+		enemies = new ArrayList<Ghost>();
+		enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world));
+		enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world));
+		enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world));
+		enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world));
 	}
 
 	private void initContactListener() {
 		world.setContactListener(new ContactListener() {
 			@Override
-			public void beginContact(Contact contact) {System.out.println("Contact began.");}
+			public void beginContact(Contact contact) {
+				Body b1 = contact.getFixtureA().getBody();
+				Body b2 = contact.getFixtureB().getBody();
+				if(janitorOnGhost(b1,b2)) {
+					System.out.println("Janitor on Ghost collision did occur.");
+				}
+				else
+					if(ghostOnGhost(b1,b2))
+						System.out.println("Ghost on Ghost collision did occur.");
+
+			}
 
 			@Override
 			public void endContact(Contact contact) {System.out.println("Contact ended.");
@@ -112,5 +120,29 @@ public class NightShift extends ApplicationAdapter {
 			public void postSolve(Contact contact, ContactImpulse impulse) {
 			}
 		});
+	}
+
+	private boolean janitorOnGhost(Body b1, Body b2) {
+		for(Ghost g: enemies) {
+			if((b1 == hero.getBody()&& b2 == g.getBody()||(b1 == g.getBody() && b2 == hero.getBody()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean ghostOnGhost(Body b1, Body b2) {
+		boolean b1IsGhost = false;
+		for(Ghost g: enemies) {
+			if(b1 == g.getBody())
+				b1IsGhost = true;
+		}
+		if(b1IsGhost) {
+			for(Ghost g: enemies) {
+				if(b2 == g.getBody())
+					return true;
+			}
+		}
+		return false;
 	}
 }

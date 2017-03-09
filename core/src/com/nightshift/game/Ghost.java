@@ -121,4 +121,8 @@ public class Ghost {
         this.body = this.world.createBody(bodyDef);
         this.body.createFixture(fixtureDef);
     }
+
+    public Body getBody() {
+        return this.body;
+    }
 }

@@ -11,7 +11,6 @@ import java.util.Random;
  * Created by andre on 3/7/2017.
  */
 public class Ghost {
-    private final float SPEED = 100;
     private final float RANGE = 150;
     private final int ANIMATION_FACTOR = 4;
     private int moveIterCounter = 0;
@@ -26,7 +25,7 @@ public class Ghost {
     public Sprite currentSprite;
     public Vector2 velocity = new Vector2(0,0);
     static private Random random = new Random();
-    private float speed = random.nextFloat() * 75 + 50;
+    private float speed = random.nextFloat() * 25 + 30;
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
         this.world = world;
@@ -48,6 +47,9 @@ public class Ghost {
         }
         moveIterCounter++;
         currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
+
+        if(velocity.x != 0 && velocity.y != 0)
+            scaleVelocity();
         body.setLinearVelocity(velocity);
     }
 
@@ -81,6 +83,22 @@ public class Ghost {
     public void resetVelocity() {
         velocity.x = 0;
         velocity.y = 0;
+    }
+
+    private void scaleVelocity() {
+        double theta = Math.atan(Math.abs(velocity.x)/Math.abs(velocity.y));
+        if(velocity.x < 0) {
+            velocity.x = -1*(float)(speed * Math.sin(theta));
+        }
+        else {
+            velocity.x = (float)(speed * Math.sin(theta));
+        }
+        if(velocity.y < 0) {
+            velocity.y = -1*(float)(speed * Math.cos(theta));
+        }
+        else {
+            velocity.y = (float)(speed * Math.cos(theta));
+        }
     }
 
     public void draw(SpriteBatch batch) {

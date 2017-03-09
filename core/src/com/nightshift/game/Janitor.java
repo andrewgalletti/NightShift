@@ -11,14 +11,16 @@ import static com.badlogic.gdx.Gdx.input;
 public class Janitor {
     private final float SPEED = 100;
     private final int ANIMATION_FACTOR = 4;
-    private int moveIterCounter = 0;
-    private Sprite[] animation;
-    private Body body;
-    private World world;
-    private Vector2 position = new Vector2(0,0);
 
-    public Sprite currentSprite;
-    public Vector2 velocity = new Vector2(0,0);
+    public int lives = 3;
+    private int moveIterCounter = 0;
+
+    private World world;
+    private Body body;
+    private Sprite currentSprite;
+    private Sprite[] animation;
+    private Vector2 position = new Vector2(0,0);
+    private Vector2 velocity = new Vector2(0,0);
 
     public Janitor(int xPos, int yPos, World world) {
         position.x = xPos;
@@ -115,7 +117,6 @@ public class Janitor {
         this.body = this.world.createBody(bodyDef);
         this.body.createFixture(fixtureDef);
     }
-
 
     public Body getBody() {
         return this.body;

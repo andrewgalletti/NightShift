@@ -8,21 +8,21 @@ import com.badlogic.gdx.physics.box2d.*;
 import java.util.Random;
 
 public class Ghost {
-    private final float RANGE = 150;
-    private final int ANIMATION_FACTOR = 4;
+    private static final float RANGE = 150;
+    private static final int ANIMATION_FACTOR = 4;
+    private static Random random = new Random();
+
+    private float speed = random.nextFloat() * 25 + 30;
     private int moveIterCounter = 0;
     private boolean onPatrol = true;
-    private Sprite[] animation;
-    private Body body;
 
     private World world;
-    private Vector2 position = new Vector2(0,0);
     private Janitor hero;
-
-    public Sprite currentSprite;
-    public Vector2 velocity = new Vector2(0,0);
-    static private Random random = new Random();
-    private float speed = random.nextFloat() * 25 + 30;
+    private Body body;
+    private Sprite currentSprite;
+    private Sprite[] animation;
+    private Vector2 position = new Vector2(0,0);
+    private Vector2 velocity = new Vector2(0,0);
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
         this.world = world;

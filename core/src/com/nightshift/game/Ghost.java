@@ -18,6 +18,7 @@ public class Ghost {
     private boolean onPatrol = true;
     private Sprite[] animation;
     private Body body;
+
     private World world;
     private Vector2 position = new Vector2(0,0);
     private Janitor hero;

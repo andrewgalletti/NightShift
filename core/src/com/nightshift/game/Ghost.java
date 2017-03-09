@@ -7,9 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import java.util.Random;
 
-/**
- * Created by andre on 3/7/2017.
- */
 public class Ghost {
     private final float RANGE = 150;
     private final int ANIMATION_FACTOR = 4;

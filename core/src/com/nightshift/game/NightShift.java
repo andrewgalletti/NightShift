@@ -26,7 +26,6 @@ public class NightShift extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private TiledMapRenderer tiledMapRenderer;
 	private TiledMapTileLayer layer0;
-//	public static Texture backgroundTexture;
 
 	public void create() {
 		float w = Gdx.graphics.getWidth();
@@ -119,7 +118,6 @@ public class NightShift extends ApplicationAdapter {
 				else
 					if(ghostOnGhost(b1,b2))
 						System.out.println("Ghost on Ghost collision did occur.");
-
 			}
 
 			@Override

@@ -1,6 +1,7 @@
 package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -55,6 +56,7 @@ public class NightShift extends ApplicationAdapter {
 		for(Ghost g: enemies) {
 			g.moveGhost();
 		}
+		combat();
 		world.step(1f / 60f, 2, 20);
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -77,6 +79,18 @@ public class NightShift extends ApplicationAdapter {
 		hero.resetVelocity();
 		for(Ghost g: enemies) {
 			g.resetVelocity();
+		}
+	}
+
+	public void combat() {
+		ArrayList<Ghost> enemiesWithinRange = new ArrayList<Ghost>();
+		for(Ghost g: enemies) {
+			if(Math.sqrt(Math.pow(hero.getX()-g.getX(),2)+Math.pow(hero.getY()-g.getY(),2)) < 40)
+				enemiesWithinRange.add(g);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			System.out.println("Pressed Space");
+			enemies.removeAll(enemiesWithinRange);
 		}
 	}
 

@@ -101,6 +101,14 @@ public class Ghost {
         }
     }
 
+    public float getX() {
+        return position.x;
+    }
+
+    public float getY() {
+        return position.y;
+    }
+
     public void draw(SpriteBatch batch) {
         currentSprite.draw(batch);
     }

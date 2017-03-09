@@ -41,7 +41,7 @@ public class Ghost extends Sprite {
     public void moveGhost() {
         onPatrol = Math.sqrt(Math.pow(this.getX()-hero.getX(),2)+Math.pow(this.getY()-hero.getY(),2)) > RANGE;
         if(onPatrol) {
-            //patrol();
+            patrol();
         }
         else {
             chase();
@@ -64,15 +64,19 @@ public class Ghost extends Sprite {
 
 
     public void patrol() {
-
+        Random random = new Random();
+        float targetY = random.nextFloat()*1000 + 20;
+        float targetX = random.nextFloat()*100 + 50;
+        System.out.println(targetX);
+        System.out.println(targetY);
         float spriteX = getX(); //Ghost's
         float spriteY = getY();
         float x2 = getX(); //Ghost's new position
         float y2 = getY();
         float angle;
-        angle = (float) Math.atan2(10 - spriteY, 10 - spriteX);
-        x2 += (float) Math.cos(angle) * 125 * Gdx.graphics.getDeltaTime();
-        y2 += (float) Math.sin(angle) * 125 * Gdx.graphics.getDeltaTime();
+        angle = (float) Math.atan2(targetY - spriteY, targetX - spriteX);
+        x2 += (float) Math.cos(angle) * 25 * Gdx.graphics.getDeltaTime();
+        y2 += (float) Math.sin(angle) * 25 * Gdx.graphics.getDeltaTime();
         setPosition(x2, y2); //Set enemy's new positions.
     }
 

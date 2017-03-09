@@ -61,7 +61,8 @@ public class NightShift extends ApplicationAdapter {
 		world.step(1f / 60f, 6, 2);
 		hero.updateJanitorPosition();
 		for(Ghost g: enemies) {
-			g.moveGhost();
+			//g.moveGhost();
+			g.patrol();
 		}
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();

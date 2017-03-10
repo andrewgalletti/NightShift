@@ -12,8 +12,9 @@ public class Janitor {
     private final float SPEED = 100;
     private final int ANIMATION_FACTOR = 4;
 
-    public int lives = 3;
+    private int lives = 3;
     private int moveIterCounter = 0;
+    private float remainingInvulnerability;
 
     private World world;
     private Body body;
@@ -58,6 +59,10 @@ public class Janitor {
         body.setLinearVelocity(velocity);
     }
 
+    public void update() {
+        remainingInvulnerability -= Gdx.graphics.getDeltaTime();
+    }
+
     public void updateJanitorPosition() {
         position.x = body.getPosition().x;
         position.y = body.getPosition().y;
@@ -85,6 +90,9 @@ public class Janitor {
     }
 
     public void draw(SpriteBatch batch) {
+        if(remainingInvulnerability > 0 && System.currentTimeMillis() % 400 < 150) {
+            return;
+        }
         currentSprite.draw(batch);
     }
 
@@ -120,6 +128,18 @@ public class Janitor {
 
     public Body getBody() {
         return this.body;
+    }
+
+    public void takeDamage() {
+        if(remainingInvulnerability < 0) {
+            lives--;
+            remainingInvulnerability = 4;
+            System.out.println("Took damage");
+        }
+    }
+
+    public boolean isDead() {
+        return lives < 1;
     }
 }
 

@@ -52,6 +52,7 @@ public class NightShift extends ApplicationAdapter {
 	@Override
 	public void render() {
 		hero.moveJanitor();
+		hero.update();
 		for(Ghost g: enemies) {
 			g.moveGhost();
 		}
@@ -113,18 +114,14 @@ public class NightShift extends ApplicationAdapter {
 				Body b1 = contact.getFixtureA().getBody();
 				Body b2 = contact.getFixtureB().getBody();
 				if(janitorOnGhost(b1,b2)) {
-					hero.lives--;
-					if(hero.lives == 0)
+					hero.takeDamage();
+					if(hero.isDead())
 						System.exit(0);
-					System.out.println("Janitor on Ghost collision did occur.");
 				}
-				else
-					if(ghostOnGhost(b1,b2))
-						System.out.println("Ghost on Ghost collision did occur.");
 			}
 
 			@Override
-			public void endContact(Contact contact) {System.out.println("Contact ended.");
+			public void endContact(Contact contact) {
 			}
 
 			@Override

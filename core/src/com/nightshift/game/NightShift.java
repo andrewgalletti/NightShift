@@ -85,7 +85,7 @@ public class NightShift extends ApplicationAdapter {
 	public void combat() {
 		ArrayList<Ghost> enemiesWithinRange = new ArrayList<Ghost>();
 		for(Ghost g: enemies) {
-			if(Math.sqrt(Math.pow(hero.getX()-g.getX(),2)+Math.pow(hero.getY()-g.getY(),2)) < 40)
+			if(Math.sqrt(Math.pow(hero.getX()-g.getX(),2)+Math.pow(hero.getY()-g.getY(),2)) < 70)
 				enemiesWithinRange.add(g);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {

@@ -15,7 +15,6 @@ public class Ghost {
     private float speed = random.nextFloat() * 25 + 30;
     private int moveIterCounter = 0;
     private boolean onPatrol = true;
-    public int combatCounter = 0;
 
     private World world;
     private Janitor hero;

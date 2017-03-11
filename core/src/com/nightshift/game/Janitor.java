@@ -19,7 +19,8 @@ public class Janitor {
     private World world;
     private Body body;
     private Sprite currentSprite;
-    private Sprite[] animation;
+    private Sprite[][] animation;
+    private PlayerDirection direction = PlayerDirection.FRONT;
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
 
@@ -28,7 +29,7 @@ public class Janitor {
         position.y = yPos;
         this.world = world;
         initSpriteArray();
-        currentSprite = animation[0];
+        currentSprite = animation[0][0];
         createPhysicsBody();
     }
 
@@ -36,24 +37,41 @@ public class Janitor {
         boolean didMove = false;
         if(input.isKeyPressed(Input.Keys.UP)) {
             velocity.y += SPEED;
+            direction = PlayerDirection.BACK;
             didMove = true;
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {
             velocity.y -= SPEED;
+            direction = PlayerDirection.FRONT;
             didMove = true;
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)) {
             velocity.x += SPEED;
+            direction = PlayerDirection.RIGHT;
             didMove = true;
         }
         if(input.isKeyPressed(Input.Keys.LEFT)) {
             velocity.x -= SPEED;
+            direction = PlayerDirection.LEFT;
             didMove = true;
         }
 
         if(didMove) {
             moveIterCounter++;
-            currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
+            switch(direction) {
+                case FRONT:
+                    currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    break;
+                case RIGHT:
+                    currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    break;
+                case BACK:
+                    currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    break;
+                case LEFT:
+                    currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    break;
+            }
         }
 
         body.setLinearVelocity(velocity);
@@ -70,9 +88,11 @@ public class Janitor {
     }
 
     private void updateSpritePositions() {
-        for (Sprite s: animation) {
-            s.setX(position.x);
-            s.setY(position.y);
+        for (Sprite[] directionalSprites: animation) {
+            for(Sprite s: directionalSprites) {
+                s.setX(position.x);
+                s.setY(position.y);
+            }
         }
     }
 
@@ -97,15 +117,33 @@ public class Janitor {
     }
 
     private void initSpriteArray() {
-        Texture t0 = new Texture(Gdx.files.internal("Stand.png"));
-        Texture t1 = new Texture(Gdx.files.internal("Left Step.png"));
-        Texture t2 = new Texture(Gdx.files.internal("Stand.png"));
-        Texture t3 = new Texture(Gdx.files.internal("Right Step.png"));
-        animation = new Sprite[4];
-        animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());
-        animation[1] = new Sprite(t1,t1.getWidth(),t1.getHeight());
-        animation[2] = new Sprite(t2,t2.getWidth(),t2.getHeight());
-        animation[3] = new Sprite(t3,t3.getWidth(),t3.getHeight());
+        animation = new Sprite[4][4];
+        Texture texture = new Texture(Gdx.files.internal("Stand.png"));
+        int width = texture.getWidth();
+        int height = texture.getHeight();
+        //Forward Sprite Set
+        animation[0][0] = new Sprite(texture,width,height);
+        animation[0][1] = new Sprite(new Texture(Gdx.files.internal("Right Step.png")),width,height);
+        animation[0][2] = new Sprite(texture,width,height);
+        animation[0][3] = new Sprite(new Texture(Gdx.files.internal("Left Step.png")),width,height);
+        //Right Sprite Set
+        texture = new Texture(Gdx.files.internal("Right Side Stand.png"));
+        animation[1][0] = new Sprite(texture,width,height);
+        animation[1][1] = new Sprite(new Texture(Gdx.files.internal("Right Side Right Step.png")),width,height);
+        animation[1][2] = new Sprite(texture,width,height);
+        animation[1][3] = new Sprite(new Texture(Gdx.files.internal("Right Side Left Step.png")),width,height);
+        //Back Sprite Set
+        texture = new Texture(Gdx.files.internal("Back Stand.png"));
+        animation[2][0] = new Sprite(texture,width,height);
+        animation[2][1] = new Sprite(new Texture(Gdx.files.internal("Back Right Step.png")),width,height);
+        animation[2][2] = new Sprite(texture,width,height);
+        animation[2][3] = new Sprite(new Texture(Gdx.files.internal("Back Left Step.png")),width,height);
+        //Left Sprite Set
+        texture = new Texture(Gdx.files.internal("Left Side Stand.png"));
+        animation[3][0] = new Sprite(texture,width,height);
+        animation[3][1] = new Sprite(new Texture(Gdx.files.internal("Left Side Right Step.png")),width,height);
+        animation[3][2] = new Sprite(texture,width,height);
+        animation[3][3] = new Sprite(new Texture(Gdx.files.internal("Left Side Left Step.png")),width,height);
         updateSpritePositions();
     }
 

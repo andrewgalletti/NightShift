@@ -10,6 +10,7 @@ import static com.badlogic.gdx.Gdx.input;
 
 public class Janitor {
     private final float SPEED = 100;
+    private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
     private int lives = 3;
@@ -73,7 +74,6 @@ public class Janitor {
                     break;
             }
         }
-
         body.setLinearVelocity(velocity);
     }
 
@@ -179,5 +179,25 @@ public class Janitor {
     public boolean isDead() {
         return lives < 1;
     }
-}
 
+    public boolean isGhostInHitBox(Ghost g) {
+        double theta = 0;
+        boolean withinRange = Math.sqrt(Math.pow(this.getX()-g.getX(),2)+Math.pow(this.getY()-g.getY(),2)) < ATTACK_RANGE;
+        if(!withinRange)
+            return false;
+        switch(direction) {
+            case BACK:
+                theta = Math.atan(Math.abs(g.getX()-this.getX())/(g.getY()-this.getY()));
+                break;
+            case RIGHT:
+                theta = Math.atan(Math.abs(g.getY()-this.getY())/(g.getX()-this.getX()));
+                break;
+            case FRONT:
+                theta = Math.atan(Math.abs(g.getX()-this.getX())/(this.getY()-g.getY()));
+                break;
+            case LEFT:
+                theta = Math.atan(Math.abs(g.getY()-this.getY())/(this.getX()-g.getX()));
+        }
+        return theta > 0 && theta <= Math.toRadians(45);
+    }
+}

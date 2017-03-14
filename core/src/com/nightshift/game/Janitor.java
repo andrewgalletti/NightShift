@@ -13,7 +13,7 @@ public class Janitor {
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
-    private int lives = 3;
+    private int lives = Integer.MAX_VALUE;
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
 

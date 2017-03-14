@@ -90,7 +90,11 @@ public class NightShift extends ApplicationAdapter {
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			System.out.println("Pressed Space");
-			enemies.removeAll(enemiesWithinRange);
+			for(Ghost g: enemiesWithinRange) {
+				g.lives--;
+				if(g.lives < 1)
+					enemies.remove(g);
+			}
 		}
 	}
 
@@ -119,7 +123,7 @@ public class NightShift extends ApplicationAdapter {
 						System.exit(0);
 				}
 				else {
-					//if(ghostOnGhost(b1,b2))
+					ghostOnGhost(b1,b2);
 				}
 			}
 
@@ -146,19 +150,22 @@ public class NightShift extends ApplicationAdapter {
 		return false;
 	}
 
-	private boolean ghostOnGhost(Body b1, Body b2) {
-		boolean b1IsGhost = false;
-		for(Ghost g: enemies) {
-			if(b1 == g.getBody()) {
-				b1IsGhost = true;
+	private void ghostOnGhost(Body b1, Body b2) {
+		Ghost ghost = null;
+		for(Ghost g1: enemies) {
+			if(b1 == g1.getBody()) {
+				ghost = g1;
+				break;
 			}
 		}
-		if(b1IsGhost) {
-			for(Ghost g: enemies) {
-				if(b2 == g.getBody())
-					return true;
+		if(ghost != null) {
+			for(Ghost g2: enemies) {
+				if(b2 == g2.getBody()) {
+					ghost.mergeGhosts(g2);
+					enemies.remove(g2);
+					return;
+				}
 			}
 		}
-		return false;
 	}
 }

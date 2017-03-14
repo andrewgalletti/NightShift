@@ -8,11 +8,14 @@ import com.badlogic.gdx.physics.box2d.*;
 import java.util.Random;
 
 public class Ghost {
-    private static final float RANGE = 150;
+    //private static final float RANGE = 150;
+    private static final float RANGE = 0;
     private static final int ANIMATION_FACTOR = 4;
     private static Random random = new Random();
 
-    private float speed = random.nextFloat() * 25 + 30;
+    public int lives = 1;
+    public int damage = 1;
+    private float speed = random.nextFloat() * 10 + 20;
     private int moveIterCounter = 0;
     private boolean onPatrol = true;
 
@@ -23,12 +26,16 @@ public class Ghost {
     private Sprite[] animation;
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
+    private Vector2 acceleration = new Vector2(0,0);
+    private Vector2 post = new Vector2(0,0);
 
     public Ghost(Janitor hero, int xPos, int yPos, World world) {
         this.world = world;
         this.hero = hero;
         position.x = xPos;
         position.y = yPos;
+        post.x = xPos;
+        post.y = yPos;
         initSpriteArray();
         currentSprite = animation[0];
         createPhysicsBody();
@@ -56,7 +63,20 @@ public class Ghost {
     }
 
     private void patrol() {
-
+        //TODO implement angle control 
+        if(Math.sqrt(Math.pow(position.x-post.x,2)+Math.pow(position.y-post.y,2)) > 150) {
+            velocity.x += 50*(post.x - position.x);
+            velocity.y += 50*(post.y - position.y);
+        }
+        else {
+            if(moveIterCounter % 30 == 0 /*&& random.nextFloat() >= .5*/) {
+                int x = 6;
+                acceleration.x = x*random.nextFloat()-x/2;
+                acceleration.y = x*random.nextFloat()-x/2;
+            }
+            velocity.x += acceleration.x;
+            velocity.y += acceleration.y;
+        }
     }
 
     private void initSpriteArray() {
@@ -80,8 +100,10 @@ public class Ghost {
     }
 
     public void resetVelocity() {
-        velocity.x = 0;
-        velocity.y = 0;
+        if(!onPatrol) {
+            velocity.x = 0;
+            velocity.y = 0;
+        }
     }
 
     private void scaleVelocity() {
@@ -133,7 +155,13 @@ public class Ghost {
         return this.body;
     }
 
-    public void mergeGhosts() {
-
+    public void mergeGhosts(Ghost g) {
+        double totalArea = currentSprite.getWidth() * currentSprite.getHeight() + g.currentSprite.getWidth() * g.currentSprite.getHeight();
+        double scaleFactor = Math.sqrt(totalArea/(currentSprite.getWidth()*currentSprite.getHeight()));
+        for(Sprite s: animation) {
+            s.setScale((float)scaleFactor);
+        }
+        lives += g.lives;
+        damage += g.damage;
     }
 }

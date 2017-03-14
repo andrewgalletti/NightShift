@@ -55,7 +55,9 @@ public class Ghost {
         velocity.y = hero.getY() - position.y;
     }
 
-    private void patrol() {}
+    private void patrol() {
+
+    }
 
     private void initSpriteArray() {
         Texture t0 = new Texture(Gdx.files.internal("Ghost.png"));
@@ -129,5 +131,9 @@ public class Ghost {
 
     public Body getBody() {
         return this.body;
+    }
+
+    public void mergeGhosts() {
+
     }
 }

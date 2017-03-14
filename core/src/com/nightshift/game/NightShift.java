@@ -149,7 +149,7 @@ public class NightShift extends ApplicationAdapter {
 	private boolean ghostOnGhost(Body b1, Body b2) {
 		boolean b1IsGhost = false;
 		for(Ghost g: enemies) {
-			if(b1 == g.getBody())
+			if(b1 == g.getBody()) {
 				b1IsGhost = true;
 			}
 		}

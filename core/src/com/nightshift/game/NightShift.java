@@ -118,6 +118,9 @@ public class NightShift extends ApplicationAdapter {
 					if(hero.isDead())
 						System.exit(0);
 				}
+				else {
+					//if(ghostOnGhost(b1,b2))
+				}
 			}
 
 			@Override
@@ -148,6 +151,7 @@ public class NightShift extends ApplicationAdapter {
 		for(Ghost g: enemies) {
 			if(b1 == g.getBody())
 				b1IsGhost = true;
+			}
 		}
 		if(b1IsGhost) {
 			for(Ghost g: enemies) {

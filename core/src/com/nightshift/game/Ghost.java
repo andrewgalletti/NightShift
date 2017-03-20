@@ -62,22 +62,23 @@ public class Ghost {
     }
 
     private void patrol() {
+        //If outside range of "post" forgoes acceleration manipulation and b-lines it back within range.
         if(Math.sqrt(Math.pow(position.x-post.x,2)+Math.pow(position.y-post.y,2)) > 150) {
             velocity.x += 50*(post.x - position.x);
             velocity.y += 50*(post.y - position.y);
         }
         else {
-            if(moveIterCounter % 30 == 0) {
+            if(moveIterCounter % 60 == 0) {
                 //Length of the velocity vector.
                 double magnitudeOfVelocity = Math.sqrt(Math.pow(velocity.x,2)+Math.pow(velocity.y,2));
                 //Standard position angle of velocity, in radians, calculated with inverse cosine to avoid undefined solutions.
                 double angleOfVelocity = Math.acos(Math.abs(velocity.x)/magnitudeOfVelocity);
                 //Randomly assigned positive value of acceleration.
-                double magnitudeOfAcceleration = random.nextDouble();
+                double magnitudeOfAcceleration = 3*random.nextDouble();
                 //Randomly assigned value of angle, in radians, formed between the velocity and acceleration vectors.
                 double angleOfAcceleration = Math.PI/2*random.nextDouble()-Math.PI/4;
 
-                //Converts standard position angle.
+                //Converts standard position angle to raw angle, and assigns random angle if directional components of velocity are both zero.
                 if(velocity.x < 0 && velocity.y > 0) {
                     angleOfVelocity = Math.PI - angleOfVelocity;
                 }
@@ -86,6 +87,23 @@ public class Ghost {
                 }
                 else if(velocity.x > 0 && velocity.y < 0) {
                     angleOfVelocity = 2*Math.PI - angleOfVelocity;
+                }
+                else {
+                    if(velocity.x == 0) {
+                        if(velocity.y > 0)
+                            angleOfVelocity = Math.PI/2;
+                        if(velocity.y < 0)
+                            angleOfVelocity = 3*Math.PI/2;
+                    }
+                    if(velocity.y == 0) {
+                        if(velocity.x > 0)
+                            angleOfVelocity = 0;
+                        if(velocity.x < 0)
+                            angleOfVelocity = Math.PI;
+                    }
+                    if(velocity.x == 0 && velocity.y == 0) {
+                        angleOfVelocity = 2*Math.PI*random.nextDouble();
+                    }
                 }
 
                 //Calculates and assigns component vectors of acceleration.

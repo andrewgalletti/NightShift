@@ -14,7 +14,7 @@ public class OldJanitor extends Sprite {
 	private Body body;
 	private World world;
 
-	public PlayerDirection direction = PlayerDirection.UP;
+	public PlayerDirection direction = PlayerDirection.FRONT;
 	public Vector2 velocity = new Vector2(0,0);
 
 	public OldJanitor(int xPos, int yPos, World world) {
@@ -39,12 +39,12 @@ public class OldJanitor extends Sprite {
 				break;
 			case(Input.Keys.UP):
 				velocity.y += SPEED;
-				direction = PlayerDirection.UP;
+				direction = PlayerDirection.FRONT;
 				System.out.println(velocity);
 				break;
 			case(Input.Keys.DOWN):
 				velocity.y -= SPEED;
-				direction = PlayerDirection.DOWN;
+				direction = PlayerDirection.BACK;
 				System.out.println(velocity);
 				break;
 			default:

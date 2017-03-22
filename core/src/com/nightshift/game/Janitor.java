@@ -109,6 +109,10 @@ public class Janitor {
         }
     }
 
+    public void revertBodyPosition() {
+        body.setTransform(position,body.getAngle());
+    }
+
     public void resetVelocity() {
         velocity.x = 0;
         velocity.y = 0;

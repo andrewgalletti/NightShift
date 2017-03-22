@@ -71,6 +71,8 @@ public class NightShift extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		world.step(1f / 60f, 6, 2);
+		if(mapCollisionDidOccur())
+			hero.revertBodyPosition();
 		hero.updateJanitorPosition();
 		for(Ghost g: enemies) {
 			g.updateGhostPosition();
@@ -195,6 +197,17 @@ public class NightShift extends ApplicationAdapter {
 				break;
 		}
 
+		for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
+			Rectangle rect = r.getRectangle();
+			if(Intersector.overlaps(player,rect))
+				return true;
+		}
+
+		return false;
+	}
+
+	public boolean mapCollisionDidOccur() {
+		Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
 		for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
 			Rectangle rect = r.getRectangle();
 			if(Intersector.overlaps(player,rect))

@@ -6,3 +6,4 @@ package com.nightshift.game;
 public enum PlayerDirection {
     LEFT, RIGHT, FRONT, BACK,
 }
+

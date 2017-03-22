@@ -17,6 +17,7 @@ public class Janitor {
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
 
+    private NightShift game;
     private World world;
     private Body body;
     private Sprite currentSprite;
@@ -24,37 +25,49 @@ public class Janitor {
     private PlayerDirection direction = PlayerDirection.FRONT;
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
+    private Vector2 dimensions = new Vector2(0,0);
 
-    public Janitor(int xPos, int yPos, World world) {
+    public Janitor(int xPos, int yPos, NightShift game) {
+        this.game = game;
+        world = game.getWorld();
         position.x = xPos;
         position.y = yPos;
-        this.world = world;
         initSpriteArray();
         currentSprite = animation[0][0];
+        dimensions.x = currentSprite.getWidth();
+        dimensions.y = currentSprite.getHeight();
         createPhysicsBody();
     }
 
     public void moveJanitor() {
         boolean didMove = false;
         if(input.isKeyPressed(Input.Keys.UP)) {
-            velocity.y += SPEED;
             direction = PlayerDirection.BACK;
-            didMove = true;
+            if(!game.mapCollisionWillOccur()) {
+                velocity.y += SPEED;
+                didMove = true;
+            }
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {
-            velocity.y -= SPEED;
             direction = PlayerDirection.FRONT;
-            didMove = true;
+            if(!game.mapCollisionWillOccur()) {
+                velocity.y -= SPEED;
+                didMove = true;
+            }
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)) {
-            velocity.x += SPEED;
             direction = PlayerDirection.RIGHT;
-            didMove = true;
+            if(!game.mapCollisionWillOccur()) {
+                velocity.x += SPEED;
+                didMove = true;
+            }
         }
         if(input.isKeyPressed(Input.Keys.LEFT)) {
-            velocity.x -= SPEED;
             direction = PlayerDirection.LEFT;
-            didMove = true;
+            if(!game.mapCollisionWillOccur()) {
+                velocity.x -= SPEED;
+                didMove = true;
+            }
         }
 
         if(didMove) {
@@ -99,14 +112,6 @@ public class Janitor {
     public void resetVelocity() {
         velocity.x = 0;
         velocity.y = 0;
-    }
-
-    public float getX() {
-        return position.x;
-    }
-
-    public float getY() {
-        return position.y;
     }
 
     public void draw(SpriteBatch batch) {
@@ -164,8 +169,24 @@ public class Janitor {
         this.body.createFixture(fixtureDef);
     }
 
+    public PlayerDirection getDirection() {
+        return direction;
+    }
+
     public Body getBody() {
         return this.body;
+    }
+
+    public Vector2 getDimensions() {
+        return dimensions;
+    }
+
+    public float getX() {
+        return position.x;
+    }
+
+    public float getY() {
+        return position.y;
     }
 
     public void takeDamage() {
@@ -200,4 +221,5 @@ public class Janitor {
         }
         return theta > 0 && theta <= Math.toRadians(45);
     }
+
 }

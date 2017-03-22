@@ -5,9 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -29,7 +30,8 @@ public class NightShift extends ApplicationAdapter {
 	private Vector3 center;
 	private OrthographicCamera camera;
 	private TiledMapRenderer tiledMapRenderer;
-	private TiledMapTileLayer objectLayer;
+	private TiledMapTileLayer mapTileLayer;
+	private MapLayer objectLayer;
 	private MapObjects mapObjects;
 
 	public void create() {
@@ -40,17 +42,18 @@ public class NightShift extends ApplicationAdapter {
 		map = new TmxMapLoader().load("mymap.tmx");
 		map.getProperties();
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-		objectLayer = (TiledMapTileLayer) map.getLayers().get(0);
-		mapObjects = objectLayer.getObjects();;
+		mapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
+		objectLayer = map.getLayers().get(1);
+		mapObjects = objectLayer.getObjects();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, w, h);
 		camera.update();
-		center = new Vector3(objectLayer.getWidth() * objectLayer.getTileWidth() / 2, objectLayer.getHeight() * objectLayer.getTileHeight() / 2, 0);
+		center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2, mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
 		camera.position.set(center);
 
 		batch = new SpriteBatch();
-		hero = new Janitor(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, world);
+		hero = new Janitor(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2-20, this);
 		spawnEnemies();
 
 		this.initContactListener();
@@ -70,14 +73,12 @@ public class NightShift extends ApplicationAdapter {
 		world.step(1f / 60f, 6, 2);
 		hero.updateJanitorPosition();
 		for(Ghost g: enemies) {
-			//g.moveGhost();
 			g.updateGhostPosition();
 		}
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
-
 		batch.begin();
 		hero.draw(batch);
 		for(Ghost g: enemies) {
@@ -175,5 +176,35 @@ public class NightShift extends ApplicationAdapter {
 				}
 			}
 		}
+	}
+
+	public boolean mapCollisionWillOccur() {
+		Rectangle player = new Rectangle(0,0,0,0);
+		switch(hero.getDirection()) {
+			case BACK:
+				player = new Rectangle(hero.getX(),hero.getY()+1,hero.getDimensions().x,hero.getDimensions().y);
+				break;
+			case LEFT:
+				player = new Rectangle(hero.getX()-1,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+				break;
+			case FRONT:
+				player = new Rectangle(hero.getX(),hero.getY()-1,hero.getDimensions().x,hero.getDimensions().y);
+				break;
+			case RIGHT:
+				player = new Rectangle(hero.getX()+1,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+				break;
+		}
+
+		for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
+			Rectangle rect = r.getRectangle();
+			if(Intersector.overlaps(player,rect))
+				return true;
+		}
+
+		return false;
+	}
+
+	public World getWorld() {
+		return this.world;
 	}
 }

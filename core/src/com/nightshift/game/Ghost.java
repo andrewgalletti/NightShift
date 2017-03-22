@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Ghost {
     private static final float RANGE = 150;
-    private static final int ANIMATION_FACTOR = 4;
+    private static final int ANIMATION_FACTOR = 6;
     private static Random random = new Random();
 
     public int lives = 1;
@@ -43,10 +43,10 @@ public class Ghost {
     public void moveGhost() {
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
         if(onPatrol) {
-            patrol();
+            //patrol();
         }
         else {
-            chase();
+            //chase();
         }
         moveIterCounter++;
         currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
@@ -119,8 +119,17 @@ public class Ghost {
 
     private void initSpriteArray() {
         Texture t0 = new Texture(Gdx.files.internal("Ghost.png"));
-        animation = new Sprite[1];
+        Texture t1 = new Texture(Gdx.files.internal("Ghost2.png"));
+        Texture t2 = new Texture(Gdx.files.internal("Ghost3.png"));
+        Texture t3 = new Texture(Gdx.files.internal("Ghost4.png"));
+
+        animation = new Sprite[6];
         animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());
+        animation[1] = new Sprite(t1,t1.getWidth(),t1.getHeight());
+        animation[2] = new Sprite(t2,t2.getWidth(),t2.getHeight());
+        animation[3] = new Sprite(t3,t3.getWidth(),t3.getHeight());
+        animation[4] = new Sprite(t2,t2.getWidth(),t2.getHeight());
+        animation[5] = new Sprite(t1,t1.getWidth(),t1.getHeight());
         updateSpritePositions();
     }
 

@@ -68,13 +68,13 @@ public class Ghost {
             velocity.y += 50*(post.y - position.y);
         }
         else {
-            if(moveIterCounter % 60 == 0) {
+            if(moveIterCounter % 90 == 0) {
                 //Length of the velocity vector.
                 double magnitudeOfVelocity = Math.sqrt(Math.pow(velocity.x,2)+Math.pow(velocity.y,2));
                 //Standard position angle of velocity, in radians, calculated with inverse cosine to avoid undefined solutions.
                 double angleOfVelocity = Math.acos(Math.abs(velocity.x)/magnitudeOfVelocity);
                 //Randomly assigned positive value of acceleration.
-                double magnitudeOfAcceleration = 3*random.nextDouble();
+                double magnitudeOfAcceleration = 5*random.nextDouble();
                 //Randomly assigned value of angle, in radians, formed between the velocity and acceleration vectors.
                 double angleOfAcceleration = Math.PI/2*random.nextDouble()-Math.PI/4;
 

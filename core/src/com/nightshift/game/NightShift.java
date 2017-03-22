@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -25,21 +29,24 @@ public class NightShift extends ApplicationAdapter {
 	private Vector3 center;
 	private OrthographicCamera camera;
 	private TiledMapRenderer tiledMapRenderer;
-	private TiledMapTileLayer layer0;
+	private TiledMapTileLayer objectLayer;
+	private MapObjects mapObjects;
 
 	public void create() {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		world = new World(new Vector2(0, 0), true);
 
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, w, h);
-		camera.update();
 		map = new TmxMapLoader().load("mymap.tmx");
 		map.getProperties();
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-		layer0 = (TiledMapTileLayer) map.getLayers().get(0);
-		center = new Vector3(layer0.getWidth() * layer0.getTileWidth() / 2, layer0.getHeight() * layer0.getTileHeight() / 2, 0);
+		objectLayer = (TiledMapTileLayer) map.getLayers().get(0);
+		mapObjects = objectLayer.getObjects();;
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, w, h);
+		camera.update();
+		center = new Vector3(objectLayer.getWidth() * objectLayer.getTileWidth() / 2, objectLayer.getHeight() * objectLayer.getTileHeight() / 2, 0);
 		camera.position.set(center);
 
 		batch = new SpriteBatch();

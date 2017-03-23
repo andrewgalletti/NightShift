@@ -181,19 +181,21 @@ public class NightShift extends ApplicationAdapter {
 	}
 
 	public boolean mapCollisionWillOccur() {
+		int threshold = 3;
 		Rectangle player = new Rectangle(0,0,0,0);
+
 		switch(hero.getDirection()) {
 			case BACK:
-				player = new Rectangle(hero.getX(),hero.getY()+1,hero.getDimensions().x,hero.getDimensions().y);
+				player = new Rectangle(hero.getX(),hero.getY()+threshold,hero.getDimensions().x,hero.getDimensions().y);
 				break;
 			case LEFT:
-				player = new Rectangle(hero.getX()-1,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+				player = new Rectangle(hero.getX()-threshold,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
 				break;
 			case FRONT:
-				player = new Rectangle(hero.getX(),hero.getY()-1,hero.getDimensions().x,hero.getDimensions().y);
+				player = new Rectangle(hero.getX(),hero.getY()-threshold,hero.getDimensions().x,hero.getDimensions().y);
 				break;
 			case RIGHT:
-				player = new Rectangle(hero.getX()+1,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+				player = new Rectangle(hero.getX()+threshold,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
 				break;
 		}
 

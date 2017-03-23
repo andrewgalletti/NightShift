@@ -46,7 +46,7 @@ public class Ghost {
             //patrol();
         }
         else {
-            chase();
+            //chase();
         }
         moveIterCounter++;
         currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];

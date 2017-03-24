@@ -62,7 +62,7 @@ public class NightShift extends ApplicationAdapter {
 	@Override
 	public void render() {
 		hero.moveJanitor();
-		hero.update();
+		hero.updateTimers();
 		for(Ghost g: enemies) {
 			g.moveGhost();
 		}
@@ -99,9 +99,9 @@ public class NightShift extends ApplicationAdapter {
 			if(hero.isGhostInHitBox(g))
 				enemiesWithinRange.add(g);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			System.out.println("Pressed Space");
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && hero.readyToAttack()) {
 			for(Ghost g: enemiesWithinRange) {
+				hero.applyAttackDelay();
 				g.lives--;
 				if(g.lives < 1)
 					enemies.remove(g);

@@ -16,6 +16,7 @@ public class Janitor {
     private int lives = Integer.MAX_VALUE;
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
+    private float remainingAttackDelay;
 
     private NightShift game;
     private World world;
@@ -90,8 +91,9 @@ public class Janitor {
         body.setLinearVelocity(velocity);
     }
 
-    public void update() {
+    public void updateTimers() {
         remainingInvulnerability -= Gdx.graphics.getDeltaTime();
+        remainingAttackDelay -= Gdx.graphics.getDeltaTime();
     }
 
     public void updateJanitorPosition() {
@@ -226,4 +228,11 @@ public class Janitor {
         return theta > 0 && theta <= Math.toRadians(45);
     }
 
+    public void applyAttackDelay() {
+        remainingAttackDelay = .5f;
+    }
+
+    public boolean readyToAttack() {
+        return remainingAttackDelay <= 0 && remainingInvulnerability <= 0;
+    }
 }

@@ -43,10 +43,8 @@ public class Ghost {
     public void moveGhost() {
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
         if(onPatrol) {
-            //patrol();
         }
         else {
-            //chase();
         }
         moveIterCounter++;
         currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
@@ -203,10 +201,9 @@ public class Ghost {
     }
 
     public void mergeGhosts(Ghost g) {
-        double totalArea = currentSprite.getWidth() * currentSprite.getHeight() + g.currentSprite.getWidth() * g.currentSprite.getHeight();
-        double scaleFactor = Math.sqrt(totalArea/(currentSprite.getWidth()*currentSprite.getHeight()));
+        float scaleFactor = lives + g.lives;
         for(Sprite s: animation) {
-            s.setScale((float)scaleFactor);
+            s.setScale(scaleFactor);
         }
         lives += g.lives;
         damage += g.damage;

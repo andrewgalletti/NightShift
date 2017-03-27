@@ -2,6 +2,7 @@ package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -61,32 +62,38 @@ public class NightShift extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		//Moves janitor and ghosts with velocity.
 		hero.moveJanitor();
 		hero.updateTimers();
 		for(Ghost g: enemies) {
 			g.moveGhost();
 		}
 		combat();
-		world.step(1f / 60f, 2, 20);
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glBlendFunc(GL20.GL_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		//Two world steps to modify hero velocity.
 		world.step(1f / 60f, 6, 2);
+		//world.step(1f / 60f, 6, 2);
+		//Tests for map collisions and updates entities' positional fields.
 		if(mapCollisionDidOccur())
 			hero.revertBodyPosition();
-		hero.updateJanitorPosition();
+		else
+			hero.updateJanitorPosition();
 		for(Ghost g: enemies) {
 			g.updateGhostPosition();
 		}
+		//Clears the screen and renders the map.
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
+		//Draws sprites on screen.
 		batch.begin();
 		hero.draw(batch);
 		for(Ghost g: enemies) {
 			g.draw(batch);
 		}
 		batch.end();
+		//Resets janitor velocity for next render iteration, and conditionally resets ghost
+		//velocity based on movement status (patrol vs chase) to promote smooth movement.
 		hero.resetVelocity();
 		for(Ghost g: enemies) {
 			g.resetVelocity();
@@ -100,8 +107,8 @@ public class NightShift extends ApplicationAdapter {
 				enemiesWithinRange.add(g);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && hero.readyToAttack()) {
+			hero.applyAttackDelay();
 			for(Ghost g: enemiesWithinRange) {
-				hero.applyAttackDelay();
 				g.lives--;
 				if(g.lives < 1)
 					enemies.remove(g);
@@ -172,8 +179,8 @@ public class NightShift extends ApplicationAdapter {
 		if(ghost != null) {
 			for(Ghost g2: enemies) {
 				if(b2 == g2.getBody()) {
-					ghost.mergeGhosts(g2);
-					enemies.remove(g2);
+					//ghost.mergeGhosts(g2);
+					//enemies.remove(g2);
 					return;
 				}
 			}
@@ -222,4 +229,5 @@ public class NightShift extends ApplicationAdapter {
 	public World getWorld() {
 		return this.world;
 	}
+
 }

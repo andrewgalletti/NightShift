@@ -1,4 +1,5 @@
-package com.nightshift.game;
+package refactor;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,9 +7,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import refactor.Ghost;
+import com.nightshift.game.NightShift;
+import com.nightshift.game.PlayerDirection;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import static com.badlogic.gdx.Gdx.input;
 
-public class Janitor {
+public class Janitor extends Sprite{
     private final float SPEED = 100;
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
@@ -17,7 +22,7 @@ public class Janitor {
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
 
-    private NightShift game;
+    private GameScreen game;
     private World world;
     private Body body;
     private Sprite currentSprite;
@@ -26,17 +31,24 @@ public class Janitor {
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
     private Vector2 dimensions = new Vector2(0,0);
+    private Stage stage;
 
-    public Janitor(int xPos, int yPos, NightShift game) {
+    public Janitor(GameScreen game) {
         this.game = game;
         world = game.getWorld();
-        position.x = xPos;
-        position.y = yPos;
+//        position.x = xPos;
+//        position.y = yPos;
+
         initSpriteArray();
         currentSprite = animation[0][0];
         dimensions.x = currentSprite.getWidth();
         dimensions.y = currentSprite.getHeight();
         createPhysicsBody();
+        setPosition(100,100);
+    }
+    public void setPosition(float x, float y) {
+        setX(x);
+        setY(y);
     }
 
     public void moveJanitor() {

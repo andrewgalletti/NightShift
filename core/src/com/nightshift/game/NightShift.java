@@ -1,8 +1,10 @@
 package com.nightshift.game;
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
@@ -19,10 +21,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+
 import java.util.ArrayList;
 
-public class NightShift extends ApplicationAdapter {
-	private SpriteBatch batch;
+public class NightShift extends Game {
+	public SpriteBatch batch;
 	private World world;
 	private Janitor hero;
 	private ArrayList<Ghost> enemies;
@@ -33,6 +36,9 @@ public class NightShift extends ApplicationAdapter {
 	private TiledMapTileLayer mapTileLayer;
 	private MapLayer objectLayer;
 	private MapObjects mapObjects;
+	private String livesDisplay;
+	private Menu screen;
+	BitmapFont font;
 
 	public void create() {
 		float w = Gdx.graphics.getWidth();
@@ -56,7 +62,11 @@ public class NightShift extends ApplicationAdapter {
 		hero = new Janitor(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2-20, this);
 		spawnEnemies();
 
+		font = new BitmapFont();
+		livesDisplay = "Remaining lives: " + hero.lives;
+
 		this.initContactListener();
+		this.setScreen(new Menu(this));
 	}
 
 	@Override
@@ -82,6 +92,8 @@ public class NightShift extends ApplicationAdapter {
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 		batch.begin();
+		font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		font.draw(batch, livesDisplay, 25, Gdx.graphics.getHeight() - 10);
 		hero.draw(batch);
 		for(Ghost g: enemies) {
 			g.draw(batch);
@@ -128,8 +140,9 @@ public class NightShift extends ApplicationAdapter {
 			public void beginContact(Contact contact) {
 				Body b1 = contact.getFixtureA().getBody();
 				Body b2 = contact.getFixtureB().getBody();
-				if(janitorOnGhost(b1,b2)) {
-					hero.takeDamage();
+				if(janitorOnGhost(b1,b2) && (System.currentTimeMillis() % 6 == 0)) {
+					hero.lives--;
+					livesDisplay = "Remaining lives: " + hero.lives;
 					if(hero.isDead())
 						System.exit(0);
 				}
@@ -213,11 +226,14 @@ public class NightShift extends ApplicationAdapter {
 			if(Intersector.overlaps(player,rect))
 				return true;
 		}
-
 		return false;
 	}
 
 	public World getWorld() {
 		return this.world;
+	}
+
+	public void setScreen(Menu screen) {
+		this.screen = screen;
 	}
 }

@@ -13,12 +13,12 @@ public class Janitor {
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
-    private int lives = Integer.MAX_VALUE;
+    private int lives = 3;
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
     private float remainingAttackDelay;
 
-    private NightShift game;
+    private GameScreen stage;
     private World world;
     private Body body;
     private Sprite currentSprite;
@@ -28,9 +28,9 @@ public class Janitor {
     private Vector2 velocity = new Vector2(0,0);
     private Vector2 dimensions = new Vector2(0,0);
 
-    public Janitor(int xPos, int yPos, NightShift game) {
-        this.game = game;
-        world = game.getWorld();
+    public Janitor(int xPos, int yPos, GameScreen stage) {
+        this.stage = stage;
+        world = stage.getWorld();
         position.x = xPos;
         position.y = yPos;
         initSpriteArray();
@@ -44,28 +44,28 @@ public class Janitor {
         boolean didMove = false;
         if(input.isKeyPressed(Input.Keys.UP)) {
             direction = PlayerDirection.BACK;
-            if(!game.mapCollisionWillOccur()) {
+            if(!stage.mapCollisionWillOccur()) {
                 velocity.y += SPEED;
                 didMove = true;
             }
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {
             direction = PlayerDirection.FRONT;
-            if(!game.mapCollisionWillOccur()) {
+            if(!stage.mapCollisionWillOccur()) {
                 velocity.y -= SPEED;
                 didMove = true;
             }
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)) {
             direction = PlayerDirection.RIGHT;
-            if(!game.mapCollisionWillOccur()) {
+            if(!stage.mapCollisionWillOccur()) {
                 velocity.x += SPEED;
                 didMove = true;
             }
         }
         if(input.isKeyPressed(Input.Keys.LEFT)) {
             direction = PlayerDirection.LEFT;
-            if(!game.mapCollisionWillOccur()) {
+            if(!stage.mapCollisionWillOccur()) {
                 velocity.x -= SPEED;
                 didMove = true;
             }

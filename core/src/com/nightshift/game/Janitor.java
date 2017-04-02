@@ -16,8 +16,9 @@ public class Janitor {
     public int lives = 40;
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
+    private float remainingAttackDelay;
 
-    private NightShift game;
+    private GameScreen game;
     private World world;
     private Body body;
     private Sprite currentSprite;
@@ -27,7 +28,7 @@ public class Janitor {
     private Vector2 velocity = new Vector2(0,0);
     private Vector2 dimensions = new Vector2(0,0);
 
-    public Janitor(int xPos, int yPos, NightShift game) {
+    public Janitor(int xPos, int yPos, GameScreen game) {
         this.game = game;
         world = game.getWorld();
         position.x = xPos;
@@ -90,8 +91,9 @@ public class Janitor {
         body.setLinearVelocity(velocity);
     }
 
-    public void update() {
+    public void updateTimers() {
         remainingInvulnerability -= Gdx.graphics.getDeltaTime();
+        remainingAttackDelay -= Gdx.graphics.getDeltaTime();
     }
 
     public void updateJanitorPosition() {
@@ -226,4 +228,11 @@ public class Janitor {
         return theta > 0 && theta <= Math.toRadians(45);
     }
 
+    public void applyAttackDelay() {
+        remainingAttackDelay = .5f;
+    }
+
+    public boolean readyToAttack() {
+        return remainingAttackDelay <= 0;
+    }
 }

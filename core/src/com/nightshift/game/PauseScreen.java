@@ -2,9 +2,6 @@ package com.nightshift.game;
 
 import com.badlogic.gdx.Screen;
 
-/**
- * Created by andre on 3/29/2017.
- */
 public class PauseScreen implements Screen {
     @Override
     public void show() {

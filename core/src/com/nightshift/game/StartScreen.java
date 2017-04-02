@@ -1,11 +1,24 @@
 package com.nightshift.game;
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/**
- * Created by andre on 3/29/2017.
- */
 public class StartScreen implements Screen {
+
+    NightShift game;
+    OrthographicCamera camera;
+    SpriteBatch batch = new SpriteBatch();
+    BitmapFont font = new BitmapFont();
+
+    public StartScreen(NightShift game) {
+        this.game = game;
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+    }
+
     @Override
     public void show() {
 
@@ -13,7 +26,21 @@ public class StartScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
+        font.draw(batch, "Welcome to NightShift!!! ", 100, 150);
+        font.draw(batch, "Tap anywhere to begin!", 100, 100);
+        batch.end();
+
+        if (Gdx.input.isTouched()) {
+            game.setScreen();
+            dispose();
+        }
     }
 
     @Override

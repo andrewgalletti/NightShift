@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import static com.badlogic.gdx.Gdx.input;
 
 public class Janitor {
-    private final float SPEED = 100;
+    private final float SPEED = 30000;
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
@@ -41,54 +41,48 @@ public class Janitor {
     }
 
     public void moveJanitor() {
-        boolean didMove = false;
         if(input.isKeyPressed(Input.Keys.UP)) {
             direction = PlayerDirection.BACK;
-            if(!game.mapCollisionWillOccur()) {
-                velocity.y += SPEED;
-                didMove = true;
-            }
+            movementHelper();
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {
             direction = PlayerDirection.FRONT;
-            if(!game.mapCollisionWillOccur()) {
-                velocity.y -= SPEED;
-                didMove = true;
-            }
+            movementHelper();
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)) {
             direction = PlayerDirection.RIGHT;
-            if(!game.mapCollisionWillOccur()) {
-                velocity.x += SPEED;
-                didMove = true;
-            }
+            movementHelper();
         }
         if(input.isKeyPressed(Input.Keys.LEFT)) {
             direction = PlayerDirection.LEFT;
-            if(!game.mapCollisionWillOccur()) {
-                velocity.x -= SPEED;
-                didMove = true;
-            }
+            movementHelper();
         }
+        body.setLinearVelocity(velocity);
+    }
 
-        if(didMove) {
+    private void movementHelper() {
+        if(!game.mapCollisionWillOccur()) {
             moveIterCounter++;
             switch(direction) {
                 case FRONT:
+                    velocity.y -= SPEED;
                     currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case RIGHT:
+                    velocity.x += SPEED;
                     currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case BACK:
+                    velocity.y += SPEED;
                     currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case LEFT:
+                    velocity.x -= SPEED;
                     currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
             }
         }
-        body.setLinearVelocity(velocity);
+
     }
 
     public void updateTimers() {
@@ -109,10 +103,13 @@ public class Janitor {
                 s.setY(position.y);
             }
         }
+        if(body != null)
+            getPositionData();
     }
 
     public void revertBodyPosition() {
         body.setTransform(position,body.getAngle());
+        getPositionData();
     }
 
     public void resetVelocity() {
@@ -164,7 +161,7 @@ public class Janitor {
         bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(currentSprite.getWidth()/2, currentSprite.getHeight()/2);
+        shape.setAsBox(currentSprite.getWidth()/2,currentSprite.getHeight()/2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -233,6 +230,12 @@ public class Janitor {
     }
 
     public boolean readyToAttack() {
-        return remainingAttackDelay <= 0;
+        return remainingAttackDelay <= 0 && remainingInvulnerability <= 0;
+    }
+
+    private void getPositionData() {
+        //System.out.println("===Positional Data===\nPosition Vector: (" + position.x + ", " + position.y + ")");
+        //System.out.println("Body Position: (" + body.getPosition().x + ", " + body.getPosition().y + ")");
+        //System.out.println("Sprite Position: (" + currentSprite.getX() + ", " + currentSprite.getY() + ")");
     }
 }

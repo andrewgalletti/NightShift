@@ -91,8 +91,8 @@ public class Janitor {
     }
 
     public void updateJanitorPosition() {
-        position.x = body.getPosition().x;
-        position.y = body.getPosition().y;
+        position.x = body.getPosition().x - currentSprite.getWidth()/2;
+        position.y = body.getPosition().y - currentSprite.getHeight()/2;
         updateSpritePositions();
     }
 
@@ -107,9 +107,9 @@ public class Janitor {
             getPositionData();
     }
 
-    public void revertBodyPosition() {
-        body.setTransform(position,body.getAngle());
-        getPositionData();
+    public void revertPosition() {
+        body.setTransform(position.x + currentSprite.getWidth()/2, position.y + currentSprite.getHeight()/2, body.getAngle());
+        updateSpritePositions();
     }
 
     public void resetVelocity() {
@@ -158,7 +158,7 @@ public class Janitor {
     private void createPhysicsBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
+        bodyDef.position.set(currentSprite.getX() + currentSprite.getWidth()/2, currentSprite.getY() + currentSprite.getHeight()/2);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(currentSprite.getWidth()/2,currentSprite.getHeight()/2);

@@ -70,12 +70,12 @@ public class GameScreen implements Screen {
         hero.moveJanitor();
         hero.updateTimers();
         for(Ghost g: enemies) {
-            g.moveGhost();
+            //g.moveGhost();
         }
         combat();
         world.step(1f / 60f, 6, 2);
         if(mapCollisionDidOccur())
-            hero.revertBodyPosition();
+            hero.revertPosition();
         else
             hero.updateJanitorPosition();
         for(Ghost g: enemies) {
@@ -240,6 +240,15 @@ public class GameScreen implements Screen {
         }
 
         return false;
+    }
+
+    public void checkGhostCollisions() {
+        Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+        for(Ghost g: enemies) {
+            Rectangle ghost = new Rectangle(g.getX(),g.getY(),g.getWidth(),g.getHeight());
+            if(Intersector.overlaps(player,ghost))
+                hero.takeDamage();
+        }
     }
 
     public World getWorld() {

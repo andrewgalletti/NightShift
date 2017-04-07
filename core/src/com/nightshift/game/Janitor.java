@@ -11,7 +11,7 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import static com.badlogic.gdx.Gdx.input;
 
 public class Janitor {
-    private final float SPEED = 300;
+    private final float SPEED = 2f;
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
@@ -45,6 +45,7 @@ public class Janitor {
     public void moveJanitor() {
         if(input.isKeyPressed(Input.Keys.UP)) {
             direction = PlayerDirection.BACK;
+            getPositionData();
             movementHelper();
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {
@@ -108,6 +109,7 @@ public class Janitor {
     }
 
     public void revertPosition() {
+        System.out.println("REVERTED");
         body.setTransform((position.x + currentSprite.getWidth() / 2) / Constants.PIXELS_TO_METERS,
                 (position.y + currentSprite.getHeight() / 2) / Constants.PIXELS_TO_METERS, body.getAngle());
         updateSpritePositions();
@@ -159,8 +161,8 @@ public class Janitor {
     private void createPhysicsBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set((currentSprite.getX() + currentSprite.getWidth()/2) / Constants.PIXELS_TO_METERS ,
-                (currentSprite.getY() + currentSprite.getHeight()/2 / Constants.PIXELS_TO_METERS));
+        bodyDef.position.set((currentSprite.getX() + currentSprite.getWidth()/2) / Constants.PIXELS_TO_METERS,
+                (currentSprite.getY() + currentSprite.getHeight()/2) / Constants.PIXELS_TO_METERS);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(currentSprite.getWidth() / 2 / Constants.PIXELS_TO_METERS,
@@ -237,8 +239,8 @@ public class Janitor {
     }
 
     private void getPositionData() {
-        //System.out.println("===Positional Data===\nPosition Vector: (" + position.x + ", " + position.y + ")");
-        //System.out.println("Body Position: (" + body.getPosition().x + ", " + body.getPosition().y + ")");
-        //System.out.println("Sprite Position: (" + currentSprite.getX() + ", " + currentSprite.getY() + ")");
+        System.out.println("===Positional Data===\nPosition Vector: (" + position.x + ", " + position.y + ")");
+        System.out.println("Body Position: (" + body.getPosition().x + ", " + body.getPosition().y + ")");
+        System.out.println("Sprite Position: (" + currentSprite.getX() + ", " + currentSprite.getY() + ")");
     }
 }

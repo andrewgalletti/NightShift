@@ -6,6 +6,8 @@ import com.badlogic.gdx.Screen;
 
 public class NightShift extends Game {
 
+	public static final int V_WIDTH = 400;
+	public static final int V_HEIGHT = 400;
 	private Screen currentScreen;
 	private StartScreen start;
 	private GameScreen[] levels;
@@ -13,8 +15,8 @@ public class NightShift extends Game {
 	public void create() {
 		start = new StartScreen(this);
 		levels = new GameScreen[3];
-		levels[0] = new GameScreen("mymap.tmx");
-		//levels[1] = new GameScreen("easymap.tmx");
+		levels[0] = new GameScreen("easymap.tmx");
+		levels[1] = new GameScreen("easymap.tmx");
 		//levels[2] = new GameScreen("hardmap.tmx");
 
 

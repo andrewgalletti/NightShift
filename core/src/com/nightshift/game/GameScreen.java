@@ -38,8 +38,8 @@ public class GameScreen implements Screen {
     public GameScreen(String fileName) {
         this.world = new World(new Vector2(0, 0), true);
 
-        float w = Gdx.graphics.getWidth() / Constants.PIXELS_TO_METERS;
-        float h = Gdx.graphics.getHeight() / Constants.PIXELS_TO_METERS;
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
 
         map = new TmxMapLoader().load(fileName);
         map.getProperties();
@@ -51,13 +51,14 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-        center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2 / Constants.PIXELS_TO_METERS,
-                mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2 / Constants.PIXELS_TO_METERS, 0);
+        center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
+                mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
         camera.position.set(center);
 
         batch = new SpriteBatch();
-        this.hero = new Janitor(Gdx.graphics.getWidth() / 2 / Constants.PIXELS_TO_METERS,
-                Gdx.graphics.getHeight() / 2 / Constants.PIXELS_TO_METERS, this);
+       // this.hero = new Janitor(Gdx.graphics.getWidth() / 2 / Constants.PIXELS_TO_METERS,
+                //Gdx.graphics.getHeight() / 2 / Constants.PIXELS_TO_METERS, this);
+        this.hero = new Janitor(35, 35, this);
         spawnEnemies();
         initContactListener();
     }
@@ -125,7 +126,7 @@ public class GameScreen implements Screen {
 
     private void spawnEnemies() {
         enemies = new ArrayList<Ghost>();
-        enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world));
+        //enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world));

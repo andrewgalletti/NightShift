@@ -38,8 +38,8 @@ public class GameScreen implements Screen {
     public GameScreen(String fileName) {
         this.world = new World(new Vector2(0, 0), true);
 
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
+        float w = Gdx.graphics.getWidth() / Constants.PIXELS_TO_METERS;
+        float h = Gdx.graphics.getHeight() / Constants.PIXELS_TO_METERS;
 
         map = new TmxMapLoader().load(fileName);
         map.getProperties();
@@ -51,11 +51,13 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-        center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2, mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
+        center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2 / Constants.PIXELS_TO_METERS,
+                mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2 / Constants.PIXELS_TO_METERS, 0);
         camera.position.set(center);
 
         batch = new SpriteBatch();
-        this.hero = new Janitor(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2-20, this);
+        this.hero = new Janitor(Gdx.graphics.getWidth() / 2 / Constants.PIXELS_TO_METERS,
+                Gdx.graphics.getHeight() / 2 / Constants.PIXELS_TO_METERS, this);
         spawnEnemies();
         initContactListener();
     }
@@ -204,7 +206,7 @@ public class GameScreen implements Screen {
     }
 
     public boolean mapCollisionWillOccur() {
-        int threshold = 3;
+        int threshold = 2;
         Rectangle player = new Rectangle(0,0,0,0);
 
         switch(hero.getDirection()) {

@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
 import static com.badlogic.gdx.Gdx.input;
 
 public class Janitor {
-    private final float SPEED = 30000;
+    private final float SPEED = 300;
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
@@ -28,7 +30,7 @@ public class Janitor {
     private Vector2 velocity = new Vector2(0,0);
     private Vector2 dimensions = new Vector2(0,0);
 
-    public Janitor(int xPos, int yPos, GameScreen game) {
+    public Janitor(float xPos, float yPos, GameScreen game) {
         this.game = game;
         world = game.getWorld();
         position.x = xPos;
@@ -91,8 +93,8 @@ public class Janitor {
     }
 
     public void updateJanitorPosition() {
-        position.x = body.getPosition().x - currentSprite.getWidth()/2;
-        position.y = body.getPosition().y - currentSprite.getHeight()/2;
+        position.x = Constants.PIXELS_TO_METERS * body.getPosition().x - currentSprite.getWidth()/2;
+        position.y = Constants.PIXELS_TO_METERS * body.getPosition().y - currentSprite.getHeight()/2;
         updateSpritePositions();
     }
 
@@ -103,12 +105,11 @@ public class Janitor {
                 s.setY(position.y);
             }
         }
-        if(body != null)
-            getPositionData();
     }
 
     public void revertPosition() {
-        body.setTransform(position.x + currentSprite.getWidth()/2, position.y + currentSprite.getHeight()/2, body.getAngle());
+        body.setTransform((position.x + currentSprite.getWidth() / 2) / Constants.PIXELS_TO_METERS,
+                (position.y + currentSprite.getHeight() / 2) / Constants.PIXELS_TO_METERS, body.getAngle());
         updateSpritePositions();
     }
 
@@ -158,10 +159,12 @@ public class Janitor {
     private void createPhysicsBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(currentSprite.getX() + currentSprite.getWidth()/2, currentSprite.getY() + currentSprite.getHeight()/2);
+        bodyDef.position.set((currentSprite.getX() + currentSprite.getWidth()/2) / Constants.PIXELS_TO_METERS ,
+                (currentSprite.getY() + currentSprite.getHeight()/2 / Constants.PIXELS_TO_METERS));
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(currentSprite.getWidth()/2,currentSprite.getHeight()/2);
+        shape.setAsBox(currentSprite.getWidth() / 2 / Constants.PIXELS_TO_METERS,
+                currentSprite.getHeight() / 2 / Constants.PIXELS_TO_METERS);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

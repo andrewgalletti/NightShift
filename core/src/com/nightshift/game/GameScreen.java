@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
         camera.position.set(center);
 
         batch = new SpriteBatch();
-        this.hero = new Janitor(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2-20, this);
+        this.hero = new Janitor(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4-20, this);
         spawnEnemies();
         initContactListener();
     }
@@ -123,7 +123,7 @@ public class GameScreen implements Screen {
 
     private void spawnEnemies() {
         enemies = new ArrayList<Ghost>();
-        enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world));
+        //enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world));

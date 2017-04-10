@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
     private Janitor hero;
     private World world;
     private SpriteBatch batch;
-    private ArrayList<Ghost> enemies = new ArrayList<Ghost>();
+    private ArrayList<Ghost> enemies;
     private TiledMap map;
     private Vector3 center;
     private OrthographicCamera camera;
@@ -35,11 +35,24 @@ public class GameScreen implements Screen {
     private MapLayer objectLayer;
     private MapObjects mapObjects;
 
-    public GameScreen(String fileName) {
+    public GameScreen(int levelIndex) {
         this.world = new World(new Vector2(0, 0), true);
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+
+        String fileName = "";
+        switch(levelIndex) {
+            case 0:
+                fileName = "mymap.tmx";
+                break;
+            case 1:
+                fileName = "easymap.tmx";
+                break;
+            case 2:
+                fileName = "hardmap.tmx";
+                break;
+        }
 
         map = new TmxMapLoader().load(fileName);
         map.getProperties();
@@ -57,7 +70,7 @@ public class GameScreen implements Screen {
 
         batch = new SpriteBatch();
         this.hero = new Janitor(35, 35, this);
-        //spawnEnemies();
+        spawnEnemies(levelIndex);
         initContactListener();
     }
 
@@ -122,11 +135,38 @@ public class GameScreen implements Screen {
 
     }
 
-    private void spawnEnemies() {
-        //enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4, world));
-        enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world));
-        enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world));
-        enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world));
+    private void spawnEnemies(int levelIndex) {
+        enemies = new ArrayList<Ghost>();
+        switch(levelIndex) {
+            case 0:
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 2,
+                        Gdx.graphics.getHeight() / 4, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4,
+                        Gdx.graphics.getHeight() / 4, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 8,
+                        Gdx.graphics.getHeight() * 7 / 8 - 10, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4 + 25,
+                        Gdx.graphics.getHeight() * 3 / 4 + 15, world));
+                break;
+            case 1:
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4,
+                        Gdx.graphics.getHeight() * 3 / 4, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 2 / 4,
+                        Gdx.graphics.getHeight() * 3 / 4, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4,
+                        Gdx.graphics.getHeight() * 3 / 4, world));
+                break;
+            case 2:
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4 - 25,
+                        Gdx.graphics.getHeight() * 3 / 4 - 15, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 4 / 5,
+                        Gdx.graphics.getHeight() / 4, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 2 / 5,
+                        Gdx.graphics.getHeight() / 4, world));
+                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4,
+                        Gdx.graphics.getHeight() * 3 / 4 + 25, world));
+                break;
+        }
     }
 
     private void initContactListener() {

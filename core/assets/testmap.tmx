@@ -23,12 +23,6 @@
 79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79
 </data>
  </layer>
- <objectgroup name="Object Layer 1">
-  <object id="1" x="2" y="0" width="510" height="26"/>
-  <object id="2" x="0" y="2" width="22" height="506"/>
-  <object id="3" x="2" y="486" width="510" height="24"/>
-  <object id="4" x="492" y="6" width="16" height="500"/>
- </objectgroup>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="csv">
 31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,
@@ -49,4 +43,10 @@
 31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31
 </data>
  </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" x="2" y="0" width="510" height="26"/>
+  <object id="2" x="0" y="2" width="22" height="506"/>
+  <object id="3" x="2" y="486" width="510" height="24"/>
+  <object id="4" x="486" y="6" width="22" height="500"/>
+ </objectgroup>
 </map>

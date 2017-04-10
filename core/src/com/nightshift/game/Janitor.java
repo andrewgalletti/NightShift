@@ -15,7 +15,7 @@ public class Janitor {
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
-    public int lives = 4;
+    public int lives = 40;
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
     private float remainingAttackDelay;
@@ -45,7 +45,6 @@ public class Janitor {
     public void moveJanitor() {
         if(input.isKeyPressed(Input.Keys.UP)) {
             direction = PlayerDirection.BACK;
-            getPositionData();
             movementHelper();
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {

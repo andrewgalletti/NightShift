@@ -128,32 +128,32 @@ public class Janitor {
 
     private void initSpriteArray() {
         animation = new Sprite[4][4];
-        Texture texture = new Texture(Gdx.files.internal("Stand.png"));
+        Texture texture = new Texture(Gdx.files.internal("Sprites/Player/Stand.png"));
         int width = texture.getWidth();
         int height = texture.getHeight();
         //Forward Sprite Set
         animation[0][0] = new Sprite(texture,width,height);
-        animation[0][1] = new Sprite(new Texture(Gdx.files.internal("Right Step.png")),width,height);
+        animation[0][1] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Right Step.png")),width,height);
         animation[0][2] = new Sprite(texture,width,height);
-        animation[0][3] = new Sprite(new Texture(Gdx.files.internal("Left Step.png")),width,height);
+        animation[0][3] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Left Step.png")),width,height);
         //Right Sprite Set
-        texture = new Texture(Gdx.files.internal("Right Side Stand.png"));
+        texture = new Texture(Gdx.files.internal("Sprites/Player/Right Side Stand.png"));
         animation[1][0] = new Sprite(texture,width,height);
-        animation[1][1] = new Sprite(new Texture(Gdx.files.internal("Right Side Right Step.png")),width,height);
+        animation[1][1] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Right Side Right Step.png")),width,height);
         animation[1][2] = new Sprite(texture,width,height);
-        animation[1][3] = new Sprite(new Texture(Gdx.files.internal("Right Side Left Step.png")),width,height);
+        animation[1][3] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Right Side Left Step.png")),width,height);
         //Back Sprite Set
-        texture = new Texture(Gdx.files.internal("Back Stand.png"));
+        texture = new Texture(Gdx.files.internal("Sprites/Player/Back Stand.png"));
         animation[2][0] = new Sprite(texture,width,height);
-        animation[2][1] = new Sprite(new Texture(Gdx.files.internal("Back Right Step.png")),width,height);
+        animation[2][1] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Back Right Step.png")),width,height);
         animation[2][2] = new Sprite(texture,width,height);
-        animation[2][3] = new Sprite(new Texture(Gdx.files.internal("Back Left Step.png")),width,height);
+        animation[2][3] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Back Left Step.png")),width,height);
         //Left Sprite Set
-        texture = new Texture(Gdx.files.internal("Left Side Stand.png"));
+        texture = new Texture(Gdx.files.internal("Sprites/Player/Left Side Stand.png"));
         animation[3][0] = new Sprite(texture,width,height);
-        animation[3][1] = new Sprite(new Texture(Gdx.files.internal("Left Side Right Step.png")),width,height);
+        animation[3][1] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Left Side Right Step.png")),width,height);
         animation[3][2] = new Sprite(texture,width,height);
-        animation[3][3] = new Sprite(new Texture(Gdx.files.internal("Left Side Left Step.png")),width,height);
+        animation[3][3] = new Sprite(new Texture(Gdx.files.internal("Sprites/Player/Left Side Left Step.png")),width,height);
         updateSpritePositions();
     }
 

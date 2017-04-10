@@ -37,20 +37,19 @@ public class GameScreen implements Screen {
 
     public GameScreen(int levelIndex) {
         this.world = new World(new Vector2(0, 0), true);
-
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
         String fileName = "";
         switch(levelIndex) {
             case 0:
-                fileName = "mymap.tmx";
+                fileName = "Maps/mymap.tmx";
                 break;
             case 1:
-                fileName = "easymap.tmx";
+                fileName = "Maps/easymap.tmx";
                 break;
             case 2:
-                fileName = "hardmap.tmx";
+                fileName = "Maps/hardmap.tmx";
                 break;
         }
 

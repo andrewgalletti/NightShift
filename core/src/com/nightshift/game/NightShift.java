@@ -3,9 +3,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 
 import static com.badlogic.gdx.Gdx.input;
-
 
 public class NightShift extends Game {
 
@@ -15,6 +15,7 @@ public class NightShift extends Game {
 	private StartScreen start;
 	private PauseScreen pause;
 	private GameScreen[] levels;
+	private Sound startMusic;
 
 	public void create() {
 		start = new StartScreen(this);
@@ -24,7 +25,8 @@ public class NightShift extends Game {
 		levels[0] = new GameScreen(0);
 		levels[1] = new GameScreen(1);
 		levels[2] = new GameScreen(2);
-
+		startMusic = Gdx.audio.newSound(Gdx.files.internal("Sounds/StartScreen.mp3"));
+		startMusic.loop();
 		currentScreen = start;
 	}
 

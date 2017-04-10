@@ -22,7 +22,6 @@ public class Ghost {
     private World world;
     private Janitor hero;
     private Body body;
-    private Rectangle rectBody;
     private Sprite currentSprite;
     private Sprite[] animation;
     private Vector2 position = new Vector2(0,0);

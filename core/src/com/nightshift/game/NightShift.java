@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 
 
 public class NightShift extends Game {
+
 	public static final int V_WIDTH = 400;
 	public static final int V_HEIGHT = 400;
 	private Screen currentScreen;

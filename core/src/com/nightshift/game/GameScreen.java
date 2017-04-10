@@ -51,11 +51,14 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-        center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2, mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
+        center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
+                mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
         camera.position.set(center);
 
         batch = new SpriteBatch();
+
         this.hero = new Janitor(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/6-20, this);
+
         spawnEnemies();
         initContactListener();
     }
@@ -204,7 +207,7 @@ public class GameScreen implements Screen {
     }
 
     public boolean mapCollisionWillOccur() {
-        int threshold = 3;
+        int threshold = 2;
         Rectangle player = new Rectangle(0,0,0,0);
 
         switch(hero.getDirection()) {

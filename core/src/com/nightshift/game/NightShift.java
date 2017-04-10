@@ -15,9 +15,9 @@ public class NightShift extends Game {
 	public void create() {
 		start = new StartScreen(this);
 		levels = new GameScreen[3];
-		levels[0] = new GameScreen("easymap.tmx");
+		levels[0] = new GameScreen("mymap.tmx");
 		levels[1] = new GameScreen("easymap.tmx");
-		//levels[2] = new GameScreen("hardmap.tmx");
+		levels[2] = new GameScreen("hardmap.tmx");
 
 
 		currentScreen = start;
@@ -35,7 +35,7 @@ public class NightShift extends Game {
 
 	public void setScreen() {
 		if(currentScreen instanceof StartScreen) {
-			currentScreen = levels[0];
+			currentScreen = levels[2];
 		}
 	}
 }

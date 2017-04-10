@@ -84,7 +84,6 @@ public class Janitor {
                     break;
             }
         }
-
     }
 
     public void updateTimers() {

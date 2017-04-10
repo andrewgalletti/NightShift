@@ -190,13 +190,13 @@ public class GameScreen implements Screen {
 
         switch(hero.getDirection()) {
             case BACK:
-                player = new Rectangle(hero.getX(),hero.getY()+threshold,hero.getDimensions().x,hero.getDimensions().y);
+                player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y + threshold);
                 break;
             case LEFT:
-                player = new Rectangle(hero.getX()-threshold,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+                player = new Rectangle(hero.getX() - threshold,hero.getY(),hero.getDimensions().x + threshold,hero.getDimensions().y);
                 break;
             case FRONT:
-                player = new Rectangle(hero.getX(),hero.getY()-threshold,hero.getDimensions().x,hero.getDimensions().y);
+                player = new Rectangle(hero.getX(),hero.getY() - threshold,hero.getDimensions().x,hero.getDimensions().y);
                 break;
             case RIGHT:
                 player = new Rectangle(hero.getX()+threshold,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);

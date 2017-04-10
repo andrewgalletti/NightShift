@@ -26,7 +26,7 @@ public class NightShift extends Game {
 		levels[1] = new GameScreen(1);
 		levels[2] = new GameScreen(2);
 		startMusic = Gdx.audio.newSound(Gdx.files.internal("Sounds/StartScreen.mp3"));
-		startMusic.loop();
+		//startMusic.loop();
 		currentScreen = start;
 	}
 

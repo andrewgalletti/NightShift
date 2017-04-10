@@ -119,10 +119,10 @@ public class Ghost {
     }
 
     private void initSpriteArray() {
-        Texture t0 = new Texture(Gdx.files.internal("Ghost.png"));
-        Texture t1 = new Texture(Gdx.files.internal("Ghost2.png"));
-        Texture t2 = new Texture(Gdx.files.internal("Ghost3.png"));
-        Texture t3 = new Texture(Gdx.files.internal("Ghost4.png"));
+        Texture t0 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost.png"));
+        Texture t1 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost2.png"));
+        Texture t2 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost3.png"));
+        Texture t3 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost4.png"));
 
         animation = new Sprite[6];
         animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());

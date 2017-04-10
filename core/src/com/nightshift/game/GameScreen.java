@@ -60,7 +60,6 @@ public class GameScreen implements Screen {
         this.hero = new Janitor(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/6-20, this);
 
         spawnEnemies();
-        initContactListener();
     }
 
     @Override
@@ -77,6 +76,7 @@ public class GameScreen implements Screen {
         }
         combat();
         world.step(1f / 60f, 6, 2);
+        checkGhostCollisions();
         if(mapCollisionDidOccur())
             hero.revertPosition();
         else
@@ -130,64 +130,6 @@ public class GameScreen implements Screen {
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() * 3 / 4, world));
         enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4, Gdx.graphics.getHeight() * 3 / 4, world));
-    }
-
-    private void initContactListener() {
-        world.setContactListener(new ContactListener() {
-            @Override
-            public void beginContact(Contact contact) {
-                Body b1 = contact.getFixtureA().getBody();
-                Body b2 = contact.getFixtureB().getBody();
-                if(janitorOnGhost(b1,b2)) {
-                    hero.takeDamage();
-                    if(hero.isDead())
-                        System.exit(0);
-                }
-                else {
-                    ghostOnGhost(b1,b2);
-                }
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-            }
-        });
-    }
-
-    private boolean janitorOnGhost(Body b1, Body b2) {
-        for(Ghost g: enemies) {
-            if((b1 == hero.getBody()&& b2 == g.getBody()||(b1 == g.getBody() && b2 == hero.getBody()))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void ghostOnGhost(Body b1, Body b2) {
-        Ghost ghost = null;
-        for(Ghost g1: enemies) {
-            if(b1 == g1.getBody()) {
-                ghost = g1;
-                break;
-            }
-        }
-        if(ghost != null) {
-            for(Ghost g2: enemies) {
-                if(b2 == g2.getBody()) {
-                    //ghost.mergeGhosts(g2);
-                    //enemies.remove(g2);
-                    return;
-                }
-            }
-        }
     }
 
     public void combat() {

@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
         camera.position.set(center);
 
         batch = new SpriteBatch();
-        this.hero = new Janitor(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4-20, this);
+        this.hero = new Janitor(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()/6-20, this);
         spawnEnemies();
         initContactListener();
     }
@@ -70,7 +70,7 @@ public class GameScreen implements Screen {
         hero.moveJanitor();
         hero.updateTimers();
         for(Ghost g: enemies) {
-            //g.moveGhost();
+            g.moveGhost();
         }
         combat();
         world.step(1f / 60f, 6, 2);

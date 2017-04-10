@@ -45,7 +45,6 @@ public class Janitor {
     public void moveJanitor() {
         if(input.isKeyPressed(Input.Keys.UP)) {
             direction = PlayerDirection.BACK;
-            getPositionData();
             movementHelper();
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {

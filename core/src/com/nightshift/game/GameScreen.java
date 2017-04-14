@@ -73,11 +73,6 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
         hero.moveJanitor();
         hero.updateTimers();
@@ -88,17 +83,16 @@ public class GameScreen implements Screen {
         }
         world.step(1f / 60f, 6, 2);
         checkGhostCollisions();
-        if(mapCollisionDidOccur())
-            hero.revertPosition();
-        else
-            hero.updateJanitorPosition();
+        hero.updateJanitorPosition();
         for(Ghost g: enemies) {
             g.updateGhostPosition();
         }
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
         batch.begin();
         hero.draw(batch);
         for(Ghost g: enemies) {
@@ -109,30 +103,6 @@ public class GameScreen implements Screen {
         for(Ghost g: enemies) {
             g.resetVelocity();
         }
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    public void dispose() {
-
     }
 
     private void spawnEnemies(int levelIndex) {
@@ -213,17 +183,6 @@ public class GameScreen implements Screen {
         return false;
     }
 
-    public boolean mapCollisionDidOccur() {
-        Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
-        for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
-            Rectangle rect = r.getRectangle();
-            if(Intersector.overlaps(player,rect))
-                return true;
-        }
-
-        return false;
-    }
-
     public void checkGhostCollisions() {
         Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
         for(Ghost g: enemies) {
@@ -238,4 +197,12 @@ public class GameScreen implements Screen {
     public World getWorld() {
         return world;
     }
+
+    @Override
+    public void show() {}
+    public void resize(int width, int height) {}
+    public void pause() {}
+    public void resume() {}
+    public void hide() {}
+    public void dispose() {}
 }

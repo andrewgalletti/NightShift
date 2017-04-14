@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import static com.badlogic.gdx.Gdx.input;
 
@@ -45,53 +44,45 @@ public class Janitor {
     public void moveJanitor() {
         if(input.isKeyPressed(Input.Keys.UP)) {
             direction = PlayerDirection.BACK;
-            movementHelper();
+            setVelocity();
             currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {
             direction = PlayerDirection.FRONT;
-            movementHelper();
+            setVelocity();
             currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)) {
             direction = PlayerDirection.RIGHT;
-            movementHelper();
+            setVelocity();
             currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         if(input.isKeyPressed(Input.Keys.LEFT)) {
             direction = PlayerDirection.LEFT;
-            movementHelper();
+            setVelocity();
             currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         body.setLinearVelocity(velocity);
     }
 
-    private void movementHelper() {
+    private void setVelocity() {
         if(!game.mapCollisionWillOccur()) {
             moveIterCounter++;
             switch(direction) {
                 case FRONT:
                     velocity.y -= SPEED;
-                    //currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case RIGHT:
                     velocity.x += SPEED;
-                    //currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case BACK:
                     velocity.y += SPEED;
-                    //currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case LEFT:
                     velocity.x -= SPEED;
-                    //currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
             }
         }
-        else {
-            System.out.println("No go bro.\n" + velocity.x + ", " + velocity.y);
-        }
-
     }
 
     public void updateTimers() {
@@ -112,13 +103,6 @@ public class Janitor {
                 s.setY(position.y);
             }
         }
-    }
-
-    public void revertPosition() {
-        System.out.println("REVERTED");
-        body.setTransform((position.x + currentSprite.getWidth() / 2) / Constants.PIXELS_TO_METERS,
-                (position.y + currentSprite.getHeight() / 2) / Constants.PIXELS_TO_METERS, body.getAngle());
-        updateSpritePositions();
     }
 
     public void resetVelocity() {
@@ -169,18 +153,7 @@ public class Janitor {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set((currentSprite.getX() + currentSprite.getWidth()/2) / Constants.PIXELS_TO_METERS,
                 (currentSprite.getY() + currentSprite.getHeight()/2) / Constants.PIXELS_TO_METERS);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(currentSprite.getWidth() / 2 / Constants.PIXELS_TO_METERS,
-                currentSprite.getHeight() / 2 / Constants.PIXELS_TO_METERS);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.restitution = .5f;
-        fixtureDef.density = .1f;
-
         this.body = this.world.createBody(bodyDef);
-        this.body.createFixture(fixtureDef);
     }
 
     public PlayerDirection getDirection() {
@@ -242,11 +215,5 @@ public class Janitor {
 
     public boolean readyToAttack() {
         return remainingAttackDelay <= 0 && remainingInvulnerability <= 0;
-    }
-
-    private void getPositionData() {
-        System.out.println("===Positional Data===\nPosition Vector: (" + position.x + ", " + position.y + ")");
-        System.out.println("Body Position: (" + body.getPosition().x + ", " + body.getPosition().y + ")");
-        System.out.println("Sprite Position: (" + currentSprite.getX() + ", " + currentSprite.getY() + ")");
     }
 }

@@ -194,17 +194,7 @@ public class Ghost {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(currentSprite.getWidth()/2, currentSprite.getHeight()/2);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.restitution = .5f;
-        fixtureDef.density = .1f;
-
         this.body = this.world.createBody(bodyDef);
-        this.body.createFixture(fixtureDef);
     }
 
     public Body getBody() {

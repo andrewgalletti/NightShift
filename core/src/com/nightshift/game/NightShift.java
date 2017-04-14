@@ -34,6 +34,11 @@ public class NightShift extends Game {
 	public void render() {
 		checkPause();
 		currentScreen.render(Gdx.graphics.getDeltaTime());
+		/*if(currentScreen instanceof GameScreen)
+			currentScreen.render(Gdx.graphics.getDeltaTime());
+		else {
+			super.render();
+		}*/
 	}
 
 	@Override

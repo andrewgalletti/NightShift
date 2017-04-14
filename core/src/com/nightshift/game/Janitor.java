@@ -46,18 +46,22 @@ public class Janitor {
         if(input.isKeyPressed(Input.Keys.UP)) {
             direction = PlayerDirection.BACK;
             movementHelper();
+            currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         if(input.isKeyPressed(Input.Keys.DOWN)) {
             direction = PlayerDirection.FRONT;
             movementHelper();
+            currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         if(input.isKeyPressed(Input.Keys.RIGHT)) {
             direction = PlayerDirection.RIGHT;
             movementHelper();
+            currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         if(input.isKeyPressed(Input.Keys.LEFT)) {
             direction = PlayerDirection.LEFT;
             movementHelper();
+            currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
         body.setLinearVelocity(velocity);
     }
@@ -68,22 +72,26 @@ public class Janitor {
             switch(direction) {
                 case FRONT:
                     velocity.y -= SPEED;
-                    currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    //currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case RIGHT:
                     velocity.x += SPEED;
-                    currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    //currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case BACK:
                     velocity.y += SPEED;
-                    currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    //currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
                 case LEFT:
                     velocity.x -= SPEED;
-                    currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
+                    //currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
                     break;
             }
         }
+        else {
+            System.out.println("No go bro.\n" + velocity.x + ", " + velocity.y);
+        }
+
     }
 
     public void updateTimers() {

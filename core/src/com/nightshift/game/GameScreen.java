@@ -68,7 +68,7 @@ public class GameScreen implements Screen {
         camera.position.set(center);
 
         batch = new SpriteBatch();
-        this.hero = new Janitor(35, 35, this);
+        this.hero = new Janitor(45, 45, this);
         spawnEnemies(levelIndex);
     }
 
@@ -81,10 +81,11 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         hero.moveJanitor();
         hero.updateTimers();
+        combat();
+
         for(Ghost g: enemies) {
             g.moveGhost();
         }
-        combat();
         world.step(1f / 60f, 6, 2);
         checkGhostCollisions();
         if(mapCollisionDidOccur())
@@ -185,7 +186,7 @@ public class GameScreen implements Screen {
     }
 
     public boolean mapCollisionWillOccur() {
-        int threshold = 2;
+        int threshold = 10;
         Rectangle player = new Rectangle(0,0,0,0);
 
         switch(hero.getDirection()) {
@@ -193,13 +194,13 @@ public class GameScreen implements Screen {
                 player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y + threshold);
                 break;
             case LEFT:
-                player = new Rectangle(hero.getX() - threshold,hero.getY(),hero.getDimensions().x + threshold,hero.getDimensions().y);
+                player = new Rectangle(hero.getX() - threshold + 6,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
                 break;
             case FRONT:
-                player = new Rectangle(hero.getX(),hero.getY() - threshold,hero.getDimensions().x,hero.getDimensions().y);
+                player = new Rectangle(hero.getX(),hero.getY() - threshold + 6,hero.getDimensions().x,hero.getDimensions().y);
                 break;
             case RIGHT:
-                player = new Rectangle(hero.getX()+threshold,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+                player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x + threshold,hero.getDimensions().y);
                 break;
         }
 
@@ -227,8 +228,10 @@ public class GameScreen implements Screen {
         Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
         for(Ghost g: enemies) {
             Rectangle ghost = new Rectangle(g.getX(),g.getY(),g.getWidth(),g.getHeight());
-            if(Intersector.overlaps(player,ghost))
+            if(Intersector.overlaps(player,ghost)) {
                 hero.takeDamage();
+                return;
+            }
         }
     }
 

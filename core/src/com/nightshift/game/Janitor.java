@@ -88,9 +88,9 @@ public class Janitor {
                     break;
             }
         }
-        else {
-            System.out.println("No go bro.\n" + velocity.x + ", " + velocity.y);
-        }
+      //  else {
+      //      System.out.println("No go bro.\n" + velocity.x + ", " + velocity.y);
+      //  }
 
     }
 

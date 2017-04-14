@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import java.util.Random;
 
 public class Ghost {
-    private static final float RANGE = 150;
+    private static final float RANGE = 250;
     private static final int ANIMATION_FACTOR = 6;
     private static Random random = new Random();
 

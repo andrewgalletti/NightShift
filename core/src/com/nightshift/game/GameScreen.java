@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
         String fileName = "";
         switch(levelIndex) {
             case 0:
-                fileName = "Maps/mymap.tmx";
+                fileName = "Maps/testmap.tmx";
                 break;
             case 1:
                 fileName = "Maps/easymap.tmx";

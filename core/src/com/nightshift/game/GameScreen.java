@@ -32,13 +32,19 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMapTileLayer mapTileLayer;
-    private MapLayer objectLayer;
+    private MapLayer wallLayer;
+    private MapLayer enemyLayer;
+    private MapLayer endPointLayer;
     private MapObjects mapObjects;
+
+    public int levelIndex;
 
     public GameScreen(int levelIndex) {
         this.world = new World(new Vector2(0, 0), true);
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+
+        this.levelIndex = levelIndex;
 
         String fileName = "";
         switch(levelIndex) {
@@ -57,8 +63,10 @@ public class GameScreen implements Screen {
         map.getProperties();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         mapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
-        objectLayer = map.getLayers().get(1);
-        mapObjects = objectLayer.getObjects();
+        wallLayer = map.getLayers().get(1);
+        //enemyLayer = map.getLayers().get(2);
+        //endPointLayer = map.getLayers().get(3);
+        mapObjects = wallLayer.getObjects();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);

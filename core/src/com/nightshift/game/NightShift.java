@@ -14,17 +14,12 @@ public class NightShift extends Game {
 	private Screen currentScreen;
 	private StartScreen start;
 	private PauseScreen pause;
-	private GameScreen[] levels;
 	private Sound startMusic;
 
 	public void create() {
 		start = new StartScreen(this);
 		pause = new PauseScreen(this);
-		levels = new GameScreen[3];
 
-		levels[0] = new GameScreen(0);
-		levels[1] = new GameScreen(1);
-		levels[2] = new GameScreen(2);
 		startMusic = Gdx.audio.newSound(Gdx.files.internal("Sounds/StartScreen.mp3"));
 		//startMusic.loop();
 		currentScreen = start;
@@ -48,13 +43,18 @@ public class NightShift extends Game {
 
 	public void setScreen() {
 		if(currentScreen instanceof StartScreen) {
-			currentScreen = levels[0];
+			currentScreen = new GameScreen(0);
+			return;
+		}
+		if(currentScreen instanceof GameScreen) {
+			int index = ((GameScreen) currentScreen).levelIndex;
+			currentScreen = new GameScreen((index + 1) % 3);
 		}
 	}
 
 	public void setScreen(int level) {
 		try {
-			currentScreen = levels[level];
+			currentScreen = new GameScreen(level);
 			System.out.println("Changed Levels to: " + level);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {

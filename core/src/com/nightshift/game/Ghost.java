@@ -1,5 +1,6 @@
 package com.nightshift.game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +25,7 @@ public class Ghost {
     private Body body;
     private Sprite currentSprite;
     private Sprite[] animation;
+    private Color originalColor;
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
     private Vector2 acceleration = new Vector2(0,0);
@@ -38,6 +40,7 @@ public class Ghost {
         post.y = yPos;
         initSpriteArray();
         currentSprite = animation[0];
+        originalColor = currentSprite.getColor();
         createPhysicsBody();
     }
 
@@ -45,9 +48,15 @@ public class Ghost {
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
         if(onPatrol) {
             patrol();
+            for(Sprite s: animation) {
+                s.setColor(originalColor);
+            }
         }
         else {
             chase();
+            for(Sprite s: animation) {
+                s.setColor(300,0,0,1);
+            }
         }
         moveIterCounter++;
         currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];

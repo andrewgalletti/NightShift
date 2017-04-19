@@ -16,7 +16,7 @@ public class Ghost {
 
     public int lives = 1;
     public int damage = 1;
-    private float speed = random.nextFloat() * 10 + 50;
+    private float speed = random.nextFloat() * 20 + 50;
     private int moveIterCounter = 0;
     private boolean onPatrol = true;
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="11">
  <tileset firstgid="1" name="image" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="image.png" width="512" height="512"/>
  </tileset>
@@ -23,7 +23,7 @@
 79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79
 </data>
  </layer>
- <objectgroup name="Object Layer 1">
+ <objectgroup name="Walls">
   <object id="1" x="0" y="0" width="510" height="32"/>
   <object id="2" x="0" y="0" width="34" height="510"/>
   <object id="3" x="0" y="480" width="512" height="34"/>
@@ -32,6 +32,9 @@
   <object id="6" x="0" y="258" width="322" height="30"/>
   <object id="7" x="192" y="128" width="320" height="30"/>
   <object id="8" x="128" y="384" width="32" height="130"/>
+ </objectgroup>
+ <objectgroup name="Start/End">
+  <object id="10" x="448.485" y="63.6364" width="30.303" height="30.303"/>
  </objectgroup>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="csv">

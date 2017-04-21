@@ -177,7 +177,7 @@ public class Janitor {
     }
 
     public void takeDamage() {
-        if(remainingInvulnerability < 0) {
+        if(remainingInvulnerability <= 0) {
             lives--;
             remainingInvulnerability = 4;
             System.out.println("Took damage");

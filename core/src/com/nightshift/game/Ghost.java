@@ -15,7 +15,6 @@ public class Ghost {
     private static Random random = new Random();
 
     public int lives = 1;
-    public int damage = 1;
     private float speed = random.nextFloat() * 10 + 50;
     private int moveIterCounter = 0;
     private boolean onPatrol = true;
@@ -31,7 +30,7 @@ public class Ghost {
     private Vector2 acceleration = new Vector2(0,0);
     private Vector2 post = new Vector2(0,0);
 
-    public Ghost(Janitor hero, int xPos, int yPos, World world) {
+    public Ghost(Janitor hero, float xPos, float yPos, World world) {
         this.world = world;
         this.hero = hero;
         position.x = xPos;
@@ -204,19 +203,5 @@ public class Ghost {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
         this.body = this.world.createBody(bodyDef);
-    }
-
-    public Body getBody() {
-        return this.body;
-    }
-
-    public void mergeGhosts(Ghost g) {
-        double totalArea = currentSprite.getWidth() * currentSprite.getHeight() + g.currentSprite.getWidth() * g.currentSprite.getHeight();
-        double scaleFactor = Math.sqrt(totalArea/(currentSprite.getWidth()*currentSprite.getHeight()));
-        for(Sprite s: animation) {
-            s.setScale((float)scaleFactor);
-        }
-        lives += g.lives;
-        damage += g.damage;
     }
 }

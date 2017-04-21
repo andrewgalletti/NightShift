@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
+    private static MapData mapData;
+
     private Janitor hero;
     private World world;
     private SpriteBatch batch;
@@ -33,43 +35,24 @@ public class GameScreen implements Screen {
     private TiledMapRenderer tiledMapRenderer;
     private TiledMapTileLayer mapTileLayer;
     private MapLayer wallLayer;
-    private MapLayer enemyLayer;
-    private MapLayer endPointLayer;
     private MapObjects mapObjects;
 
-    public int levelIndex;
+    private int levelIndex;
 
     public GameScreen(int levelIndex) {
+        mapData = new MapData();
         this.world = new World(new Vector2(0, 0), true);
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-
         this.levelIndex = levelIndex;
 
-        String fileName = "";
-        switch(levelIndex) {
-            case 0:
-                fileName = "Maps/easymap.tmx";
-                break;
-            case 1:
-                fileName = "Maps/spiralmap.tmx";
-                break;
-            case 2:
-                fileName = "Maps/hardmap.tmx";
-                break;
-        }
-
-        map = new TmxMapLoader().load(fileName);
+        map = new TmxMapLoader().load(mapData.getFileName(levelIndex));
         map.getProperties();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         mapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
         wallLayer = map.getLayers().get(1);
-        //enemyLayer = map.getLayers().get(2);
-        //endPointLayer = map.getLayers().get(3);
         mapObjects = wallLayer.getObjects();
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, w, h);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
         center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
                 mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
@@ -77,7 +60,7 @@ public class GameScreen implements Screen {
 
         batch = new SpriteBatch();
         this.hero = new Janitor(45, 45, this);
-        spawnEnemies(levelIndex);
+        spawnEnemies();
     }
 
     @Override
@@ -113,37 +96,10 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void spawnEnemies(int levelIndex) {
+    private void spawnEnemies() {
         enemies = new ArrayList<Ghost>();
-        switch(levelIndex) {
-            case 0:
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 2,
-                        Gdx.graphics.getHeight() / 4, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4,
-                        Gdx.graphics.getHeight() / 4, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 8,
-                        Gdx.graphics.getHeight() * 7 / 8 - 10, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4 + 25,
-                        Gdx.graphics.getHeight() * 3 / 4 + 15, world));
-                break;
-            case 1:
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4,
-                        Gdx.graphics.getHeight() * 3 / 4, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 2 / 4,
-                        Gdx.graphics.getHeight() * 3 / 4, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4,
-                        Gdx.graphics.getHeight() * 3 / 4, world));
-                break;
-            case 2:
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() / 4 - 25,
-                        Gdx.graphics.getHeight() * 3 / 4 - 15, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 4 / 5,
-                        Gdx.graphics.getHeight() / 4, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 2 / 5,
-                        Gdx.graphics.getHeight() / 4, world));
-                enemies.add(new Ghost(hero, Gdx.graphics.getWidth() * 3 / 4,
-                        Gdx.graphics.getHeight() * 3 / 4 + 25, world));
-                break;
+        for(Vector2 pos: mapData.getEnemies(levelIndex)) {
+            enemies.add(new Ghost(hero, pos.x, pos.y, world));
         }
     }
 
@@ -204,6 +160,10 @@ public class GameScreen implements Screen {
 
     public World getWorld() {
         return world;
+    }
+
+    public int getLevelIndex() {
+        return this.levelIndex;
     }
 
     @Override

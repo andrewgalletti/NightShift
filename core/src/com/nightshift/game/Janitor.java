@@ -14,7 +14,7 @@ public class Janitor {
     private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
-    public int lives = 4;
+    public int lives;
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
     private float remainingAttackDelay;
@@ -179,8 +179,8 @@ public class Janitor {
     public void takeDamage() {
         if(remainingInvulnerability <= 0) {
             lives--;
-            remainingInvulnerability = 4;
-            System.out.println("Took damage");
+            remainingInvulnerability = 3;
+            System.out.println("Took damage\nRemaining Lives: " + lives);
         }
     }
 

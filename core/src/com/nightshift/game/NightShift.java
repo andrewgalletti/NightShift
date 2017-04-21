@@ -43,18 +43,18 @@ public class NightShift extends Game {
 
 	public void setScreen() {
 		if(currentScreen instanceof StartScreen) {
-			currentScreen = new GameScreen(0);
+			currentScreen = new GameScreen(this,0);
 			return;
 		}
 		if(currentScreen instanceof GameScreen) {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
-			currentScreen = new GameScreen((index + 1) % 3);
+			currentScreen = new GameScreen(this,(index + 1) % 3);
 		}
 	}
 
 	public void setScreen(int level) {
 		try {
-			currentScreen = new GameScreen(level);
+			currentScreen = new GameScreen(this, level);
 			System.out.println("Changed Levels to: " + level);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {

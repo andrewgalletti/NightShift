@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 public class MapData {
+    private static int lives = 4;
+
     public MapData () {}
 
     public String getFileName(int levelIndex) {
@@ -44,5 +46,13 @@ public class MapData {
                 break;
         }
         return enemyLocations;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public int getLives() {
+        return lives;
     }
 }

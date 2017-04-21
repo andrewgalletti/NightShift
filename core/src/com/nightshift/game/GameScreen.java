@@ -25,6 +25,7 @@ public class GameScreen implements Screen {
 
     private static MapData mapData;
 
+    private NightShift game;
     private Janitor hero;
     private World world;
     private SpriteBatch batch;
@@ -35,20 +36,26 @@ public class GameScreen implements Screen {
     private TiledMapRenderer tiledMapRenderer;
     private TiledMapTileLayer mapTileLayer;
     private MapLayer wallLayer;
+    private MapLayer winLayer;
     private MapObjects mapObjects;
 
     private int levelIndex;
 
-    public GameScreen(int levelIndex) {
+    public GameScreen(NightShift game, int levelIndex) {
         mapData = new MapData();
+        this.game = game;
         this.world = new World(new Vector2(0, 0), true);
         this.levelIndex = levelIndex;
+
+        this.hero = new Janitor(45, 45, this);
+        this.hero.lives = mapData.getLives();
 
         map = new TmxMapLoader().load(mapData.getFileName(levelIndex));
         map.getProperties();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         mapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
         wallLayer = map.getLayers().get(1);
+        winLayer = map.getLayers().get(2);
         mapObjects = wallLayer.getObjects();
 
         camera = new OrthographicCamera();
@@ -57,9 +64,7 @@ public class GameScreen implements Screen {
         center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
                 mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
         camera.position.set(center);
-
         batch = new SpriteBatch();
-        this.hero = new Janitor(45, 45, this);
         spawnEnemies();
     }
 
@@ -73,12 +78,12 @@ public class GameScreen implements Screen {
             g.moveGhost();
         }
         world.step(1f / 60f, 6, 2);
+        checkWin();
         checkGhostCollisions();
         hero.updateJanitorPosition();
         for(Ghost g: enemies) {
             g.updateGhostPosition();
         }
-
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         tiledMapRenderer.setView(camera);
@@ -154,6 +159,17 @@ public class GameScreen implements Screen {
             if(Intersector.overlaps(player,ghost)) {
                 hero.takeDamage();
                 return;
+            }
+        }
+    }
+
+    private void checkWin() {
+        Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+        for(RectangleMapObject r: winLayer.getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = r.getRectangle();
+            if(Intersector.overlaps(player,rect)) {
+                game.setScreen();
+                mapData.setLives(hero.lives);
             }
         }
     }

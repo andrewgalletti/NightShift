@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
-    private static MapData mapData;
+    private static MapData mapData = new MapData();
 
     private NightShift game;
     private Janitor hero;
@@ -42,13 +42,9 @@ public class GameScreen implements Screen {
     private int levelIndex;
 
     public GameScreen(NightShift game, int levelIndex) {
-        mapData = new MapData();
         this.game = game;
         this.world = new World(new Vector2(0, 0), true);
         this.levelIndex = levelIndex;
-
-        this.hero = new Janitor(45, 45, this);
-        this.hero.lives = mapData.getLives();
 
         map = new TmxMapLoader().load(mapData.getFileName(levelIndex));
         map.getProperties();
@@ -64,7 +60,9 @@ public class GameScreen implements Screen {
         center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
                 mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
         camera.position.set(center);
-        batch = new SpriteBatch();
+
+        this.hero = new Janitor(45, 45, this);
+        this.batch = new SpriteBatch();
         spawnEnemies();
     }
 
@@ -72,29 +70,32 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         hero.moveJanitor();
         hero.updateTimers();
-        combat();
-
         for(Ghost g: enemies) {
             g.moveGhost();
         }
+
         world.step(1f / 60f, 6, 2);
         checkWin();
         checkGhostCollisions();
+
         hero.updateJanitorPosition();
         for(Ghost g: enemies) {
             g.updateGhostPosition();
         }
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
         batch.begin();
+        game.health.draw(batch);
         hero.draw(batch);
         for(Ghost g: enemies) {
             g.draw(batch);
         }
         batch.end();
+
         hero.resetVelocity();
         for(Ghost g: enemies) {
             g.resetVelocity();
@@ -105,22 +106,6 @@ public class GameScreen implements Screen {
         enemies = new ArrayList<Ghost>();
         for(Vector2 pos: mapData.getEnemies(levelIndex)) {
             enemies.add(new Ghost(hero, pos.x, pos.y, world));
-        }
-    }
-
-    public void combat() {
-        ArrayList<Ghost> enemiesWithinRange = new ArrayList<Ghost>();
-        for(Ghost g: enemies) {
-            if(hero.isGhostInHitBox(g))
-                enemiesWithinRange.add(g);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && hero.readyToAttack()) {
-            hero.applyAttackDelay();
-            for(Ghost g: enemiesWithinRange) {
-                g.lives--;
-                if(g.lives < 1)
-                    enemies.remove(g);
-            }
         }
     }
 
@@ -157,7 +142,7 @@ public class GameScreen implements Screen {
         for(Ghost g: enemies) {
             Rectangle ghost = new Rectangle(g.getX(),g.getY(),g.getWidth(),g.getHeight());
             if(Intersector.overlaps(player,ghost)) {
-                hero.takeDamage();
+                hero.takeDamage(game.health);
                 return;
             }
         }
@@ -169,7 +154,6 @@ public class GameScreen implements Screen {
             Rectangle rect = r.getRectangle();
             if(Intersector.overlaps(player,rect)) {
                 game.setScreen();
-                mapData.setLives(hero.lives);
             }
         }
     }

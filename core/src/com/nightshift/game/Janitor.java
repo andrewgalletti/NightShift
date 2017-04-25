@@ -11,13 +11,10 @@ import static com.badlogic.gdx.Gdx.input;
 
 public class Janitor {
     private final float SPEED = 2f;
-    private final int ATTACK_RANGE = 70;
     private final int ANIMATION_FACTOR = 4;
 
-    public int lives;
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
-    private float remainingAttackDelay;
 
     private GameScreen game;
     private World world;
@@ -87,7 +84,6 @@ public class Janitor {
 
     public void updateTimers() {
         remainingInvulnerability -= Gdx.graphics.getDeltaTime();
-        remainingAttackDelay -= Gdx.graphics.getDeltaTime();
     }
 
     public void updateJanitorPosition() {
@@ -160,10 +156,6 @@ public class Janitor {
         return direction;
     }
 
-    public Body getBody() {
-        return this.body;
-    }
-
     public Vector2 getDimensions() {
         return dimensions;
     }
@@ -176,44 +168,12 @@ public class Janitor {
         return position.y;
     }
 
-    public void takeDamage() {
+    public void takeDamage(LifeBar health) {
         if(remainingInvulnerability <= 0) {
-            lives--;
+            health.takeDamage();
             remainingInvulnerability = 3;
-            System.out.println("Took damage\nRemaining Lives: " + lives);
+            System.out.println("Took damage\nRemaining Lives: " + health.getLives());
         }
     }
 
-    public boolean isDead() {
-        return lives == 0;
-    }
-
-    public boolean isGhostInHitBox(Ghost g) {
-        double theta = 0;
-        boolean withinRange = Math.sqrt(Math.pow(this.getX()-g.getX(),2)+Math.pow(this.getY()-g.getY(),2)) < ATTACK_RANGE;
-        if(!withinRange)
-            return false;
-        switch(direction) {
-            case BACK:
-                theta = Math.atan(Math.abs(g.getX()-this.getX())/(g.getY()-this.getY()));
-                break;
-            case RIGHT:
-                theta = Math.atan(Math.abs(g.getY()-this.getY())/(g.getX()-this.getX()));
-                break;
-            case FRONT:
-                theta = Math.atan(Math.abs(g.getX()-this.getX())/(this.getY()-g.getY()));
-                break;
-            case LEFT:
-                theta = Math.atan(Math.abs(g.getY()-this.getY())/(this.getX()-g.getX()));
-        }
-        return theta > 0 && theta <= Math.toRadians(45);
-    }
-
-    public void applyAttackDelay() {
-        remainingAttackDelay = .5f;
-    }
-
-    public boolean readyToAttack() {
-        return remainingAttackDelay <= 0 && remainingInvulnerability <= 0;
-    }
 }

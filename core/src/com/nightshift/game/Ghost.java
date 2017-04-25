@@ -1,10 +1,8 @@
 package com.nightshift.game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import java.util.Random;
@@ -13,8 +11,8 @@ public class Ghost {
     private static final float RANGE = 250;
     private static final int ANIMATION_FACTOR = 6;
     private static Random random = new Random();
+    private static final float BASE_ALPHA = .3f;
 
-    public int lives = 1;
     private float speed = random.nextFloat() * 20 + 50;
     private int moveIterCounter = 0;
     private boolean onPatrol = true;
@@ -24,7 +22,6 @@ public class Ghost {
     private Body body;
     private Sprite currentSprite;
     private Sprite[] animation;
-    private Color originalColor;
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
     private Vector2 acceleration = new Vector2(0,0);
@@ -39,7 +36,6 @@ public class Ghost {
         post.y = yPos;
         initSpriteArray();
         currentSprite = animation[0];
-        originalColor = currentSprite.getColor();
         createPhysicsBody();
     }
 
@@ -47,16 +43,11 @@ public class Ghost {
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
         if(onPatrol) {
             patrol();
-            for(Sprite s: animation) {
-                s.setColor(originalColor);
-            }
         }
         else {
             chase();
-            for(Sprite s: animation) {
-                s.setColor(300,0,0,1);
-            }
         }
+        applyAlpha();
         moveIterCounter++;
         currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
 
@@ -139,6 +130,11 @@ public class Ghost {
         animation[3] = new Sprite(t3,t3.getWidth(),t3.getHeight());
         animation[4] = new Sprite(t2,t2.getWidth(),t2.getHeight());
         animation[5] = new Sprite(t1,t1.getWidth(),t1.getHeight());
+
+        for(Sprite s: animation) {
+            s.setAlpha(BASE_ALPHA);
+        }
+
         updateSpritePositions();
     }
 
@@ -203,5 +199,20 @@ public class Ghost {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
         this.body = this.world.createBody(bodyDef);
+    }
+
+    private void applyAlpha() {
+        if(onPatrol) {
+            for (Sprite s: animation) {
+                s.setAlpha(BASE_ALPHA);
+            }
+        }
+        else {
+            for(Sprite s: animation) {
+                float d = (float)(Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)));
+                float alpha = (1 - BASE_ALPHA) * (RANGE - d) / RANGE + BASE_ALPHA;
+                s.setAlpha(alpha);
+            }
+        }
     }
 }

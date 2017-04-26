@@ -11,8 +11,8 @@ public class StartScreen implements Screen {
     NightShift game;
     OrthographicCamera camera;
     SpriteBatch batch = new SpriteBatch();
-    BitmapFont font = new BitmapFont();
-
+    BitmapFont font1 = new BitmapFont(Gdx.files.internal("font/white32.fnt"));
+    BitmapFont font2 = new BitmapFont(Gdx.files.internal("font/white64.fnt"));
     public StartScreen(NightShift game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -33,8 +33,8 @@ public class StartScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        font.draw(batch, "Welcome to NightShift!!! ", 100, 150);
-        font.draw(batch, "Tap anywhere to begin!", 100, 100);
+        font2.draw(batch, "NightShift", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()*2/3);
+        font1.draw(batch, "Tap anywhere to begin!", 100, 200);
         batch.end();
 
         if (Gdx.input.isTouched()) {

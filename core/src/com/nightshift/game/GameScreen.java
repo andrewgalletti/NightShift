@@ -4,7 +4,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -18,6 +20,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,8 @@ public class GameScreen implements Screen {
     private MapLayer wallLayer;
     private MapLayer winLayer;
     private MapObjects mapObjects;
+    private FitViewport fitViewport;
+    private Sprite aspectRatios;
 
     private int levelIndex;
 
@@ -54,12 +59,17 @@ public class GameScreen implements Screen {
         winLayer = map.getLayers().get(2);
         mapObjects = wallLayer.getObjects();
 
+        Gdx.graphics.setWindowedMode(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
         camera.update();
-        center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
-                mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0);
-        camera.position.set(center);
+        fitViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
+        //fitViewport.apply();
+        //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
+        //mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0)
+        //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+
+        //FIGURE OUT WHAT THE HELL THIS ALL DOES
 
         this.hero = new Janitor(45, 45, this);
         this.batch = new SpriteBatch();
@@ -168,9 +178,13 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {}
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+        fitViewport.update(width,height);
+        //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+    }
     public void pause() {}
     public void resume() {}
     public void hide() {}
-    public void dispose() {}
+    public void dispose() {
+    }
 }

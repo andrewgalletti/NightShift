@@ -32,7 +32,7 @@
   <object id="7" x="128" y="128" width="256" height="32"/>
   <object id="8" x="352" y="130" width="32" height="252"/>
   <object id="9" x="254" y="258" width="34" height="124"/>
-  <object id="10" x="256" y="354" width="130" height="30"/>
+  <object id="10" x="256" y="354" width="126" height="30"/>
  </objectgroup>
  <objectgroup name="Start/End">
   <object id="12" x="320" y="320" width="32" height="30"/>

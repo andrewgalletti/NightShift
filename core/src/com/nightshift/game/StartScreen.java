@@ -37,7 +37,7 @@ public class StartScreen implements Screen {
         font.draw(batch, "Tap anywhere to begin!", 100, 100);
         batch.end();
 
-        if (Gdx.input.isTouched()) {
+        if(Gdx.input.isTouched()) {
             game.setScreen();
             dispose();
         }

@@ -20,7 +20,7 @@ public class NightShift extends Game {
 	public void create() {
 		start = new StartScreen(this);
 		pause = new PauseScreen(this);
-		health = new LifeBar();
+		health = new LifeBar(this);
 		startMusic = Gdx.audio.newSound(Gdx.files.internal("Sounds/StartScreen.mp3"));
 		//startMusic.loop();
 		currentScreen = start;
@@ -30,7 +30,7 @@ public class NightShift extends Game {
 	public void render() {
 		checkPause();
 		currentScreen.render(Gdx.graphics.getDeltaTime());
-		/*if(currentScreen instanceof GameScreen)
+		/*if(currentScreen instanceof GameScreen || currentScreen instanceof PauseScreen)
 			currentScreen.render(Gdx.graphics.getDeltaTime());
 		else {
 			super.render();
@@ -51,6 +51,13 @@ public class NightShift extends Game {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
 			currentScreen = new GameScreen(this,(index + 1) % 3);
 		}
+		if(currentScreen instanceof GameOverScreen) {
+			currentScreen = start;
+		}
+	}
+
+	public void endGame() {
+		//currentScreen = new GameOverScreen();
 	}
 
 	public void setScreen(int level) {

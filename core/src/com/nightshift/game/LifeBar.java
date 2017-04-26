@@ -8,10 +8,12 @@ import java.util.ArrayList;
 
 public class LifeBar extends Sprite {
 
+    private NightShift game;
     private int lives = 4;
     private ArrayList<Sprite> hearts;
 
-    public LifeBar() {
+    public LifeBar(NightShift game) {
+        this.game = game;
         Texture texture = new Texture(Gdx.files.internal("Sprites/Heart.png"));
         float scale = .07f;
         float w = scale * texture.getWidth();
@@ -36,10 +38,6 @@ public class LifeBar extends Sprite {
         if(hearts.size() >= 1)
             hearts.remove(lives);
         else
-            System.out.println();
-    }
-
-    public int getLives() {
-        return lives;
+            game.endGame();
     }
 }

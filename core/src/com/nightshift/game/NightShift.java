@@ -49,7 +49,7 @@ public class NightShift extends Game {
 		}
 		if(currentScreen instanceof GameScreen) {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
-			currentScreen = new GameScreen(this,(index + 1) % 3);
+			currentScreen = new GameScreen(this,(index + 1) % 4);
 		}
 	}
 

@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
@@ -41,8 +42,7 @@ public class GameScreen implements Screen {
     private MapLayer wallLayer;
     private MapLayer winLayer;
     private MapObjects mapObjects;
-    private FitViewport fitViewport;
-    private Sprite aspectRatios;
+    private Viewport gameViewport;
 
     private int levelIndex;
 
@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
         camera.update();
-        fitViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
+        gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
         //fitViewport.apply();
         //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
         //mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0)
@@ -179,8 +179,8 @@ public class GameScreen implements Screen {
     @Override
     public void show() {}
     public void resize(int width, int height) {
-        fitViewport.update(width,height);
-        //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        gameViewport.update(width,height);
+        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
     }
     public void pause() {}
     public void resume() {}

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -24,6 +23,8 @@ import com.nightshift.game.sprites.Janitor;
 import com.nightshift.game.NightShift;
 import com.nightshift.game.data.Constants;
 import com.nightshift.game.data.MapData;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
 
 
 import java.util.ArrayList;
@@ -53,8 +54,7 @@ public class GameScreen implements Screen {
     private MapLayer wallLayer;
     //Object that stores the walls as an array of RectangleMapObject.
     private MapObjects mapObjects;
-    private FitViewport fitViewport;
-    private Sprite aspectRatios;
+    private Viewport gameViewport;
 
     public GameScreen(NightShift game, int levelIndex) {
         this.game = game;
@@ -75,7 +75,9 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
         //camera.setToOrtho(false, (int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
         camera.update();
-        fitViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
+
+        gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
+
         //fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
 
         //fitViewport.apply();
@@ -195,8 +197,8 @@ public class GameScreen implements Screen {
     @Override
     public void show() {}
     public void resize(int width, int height) {
-        fitViewport.update(width,height);
-        //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        gameViewport.update(width,height);
+        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
     }
     public void pause() {}
     public void resume() {}

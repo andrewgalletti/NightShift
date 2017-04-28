@@ -69,10 +69,14 @@ public class GameScreen implements Screen {
         mapObjects = wallLayer.getObjects();
 
         Gdx.graphics.setWindowedMode(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
+        //Gdx.graphics.setWindowedMode((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+        //camera.setToOrtho(false, (int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
         camera.update();
         fitViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
+        //fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
+
         //fitViewport.apply();
         //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
         //mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0)
@@ -172,6 +176,7 @@ public class GameScreen implements Screen {
         for(RectangleMapObject r: winLayer.getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = r.getRectangle();
             if(Intersector.overlaps(player,rect)) {
+                mapData.previousScreenDimensions = new Vector2(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
                 game.setScreen();
             }
         }

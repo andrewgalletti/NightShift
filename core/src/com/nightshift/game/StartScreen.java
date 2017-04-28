@@ -13,6 +13,7 @@ public class StartScreen implements Screen {
     SpriteBatch batch = new SpriteBatch();
     BitmapFont font1 = new BitmapFont(Gdx.files.internal("font/white32.fnt"));
     BitmapFont font2 = new BitmapFont(Gdx.files.internal("font/white64.fnt"));
+
     public StartScreen(NightShift game) {
         this.game = game;
         camera = new OrthographicCamera();

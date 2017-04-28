@@ -12,15 +12,11 @@ public class NightShift extends Game {
 	public static final int V_WIDTH = 400;
 	public static final int V_HEIGHT = 400;
 	private Screen currentScreen;
-	private StartScreen start;
-	private PauseScreen pause;
 	public LifeBar health;
 
 	public void create() {
-		start = new StartScreen(this);
-		pause = new PauseScreen(this);
 		health = new LifeBar(this);
-		currentScreen = start;
+		currentScreen = new StartScreen(this);
 	}
 
 	@Override
@@ -49,12 +45,13 @@ public class NightShift extends Game {
 			currentScreen = new GameScreen(this,(index + 1) % 3);
 		}
 		if(currentScreen instanceof GameOverScreen) {
-			currentScreen = start;
+			currentScreen = new GameScreen(this, 0);
 		}
 	}
 
 	public void endGame() {
-		//currentScreen = new GameOverScreen();
+		currentScreen = new GameOverScreen(this);
+		health = new LifeBar(this);
 	}
 
 	public void setScreen(int level) {
@@ -69,7 +66,7 @@ public class NightShift extends Game {
 
 	public void checkPause() {
 		if(input.isKeyPressed(Input.Keys.ESCAPE)) {
-			currentScreen = pause;
+			currentScreen = new PauseScreen(this);
 		}
 	}
 }

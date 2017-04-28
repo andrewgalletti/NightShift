@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 public class MapData {
 
-    public MapData() {}
+    public Vector2 previousScreenDimensions;
+
+    public MapData() {
+        previousScreenDimensions = new Vector2(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
+    }
 
     public String getFileName(int levelIndex) {
         String fileName = "";

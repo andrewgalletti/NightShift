@@ -14,15 +14,12 @@ public class NightShift extends Game {
 	private Screen currentScreen;
 	private StartScreen start;
 	private PauseScreen pause;
-	private Sound startMusic;
 	public LifeBar health;
 
 	public void create() {
 		start = new StartScreen(this);
 		pause = new PauseScreen(this);
 		health = new LifeBar(this);
-		startMusic = Gdx.audio.newSound(Gdx.files.internal("Sounds/StartScreen.mp3"));
-		//startMusic.loop();
 		currentScreen = start;
 	}
 

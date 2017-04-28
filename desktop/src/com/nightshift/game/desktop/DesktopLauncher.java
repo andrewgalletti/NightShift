@@ -12,8 +12,6 @@ public class DesktopLauncher {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 		config.title = "Night Shift";
-		Constants.setScreenWidth(screenSize.width);
-		Constants.setScreenHeight(screenSize.height);
 		//The dimensions of the map. When we change map size, change these
 		//config.width = 500;
 		config.width = screenSize.width;

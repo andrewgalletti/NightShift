@@ -2,6 +2,7 @@ package com.nightshift.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,11 +15,14 @@ public class GameOverScreen implements Screen {
     SpriteBatch batch = new SpriteBatch();
     BitmapFont font1 = new BitmapFont(Gdx.files.internal("font/white32.fnt"));
     BitmapFont font2 = new BitmapFont(Gdx.files.internal("font/white64.fnt"));
+    Sound ghostChuckle;
 
     public GameOverScreen(NightShift game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+        this.ghostChuckle = Gdx.audio.newSound(Gdx.files.internal("Sounds/GhostChuckle.mp3"));
+        ghostChuckle.play();
     }
 
     @Override

@@ -48,7 +48,7 @@ public class Ghost {
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
 
         if(prevOnPatrol && !onPatrol)
-            ghostChuckle.play(.5f);
+            ghostChuckle.play(.3f);
     }
 
     public void moveGhost() {

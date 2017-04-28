@@ -1,10 +1,13 @@
-package com.nightshift.game;
+package com.nightshift.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nightshift.game.NightShift;
+import com.nightshift.game.data.Constants;
+
 import java.util.ArrayList;
 
 public class LifeBar extends Sprite {

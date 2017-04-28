@@ -1,4 +1,4 @@
-package com.nightshift.game;
+package com.nightshift.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nightshift.game.NightShift;
+import com.nightshift.game.data.Constants;
 
 public class GameOverScreen implements Screen {
 

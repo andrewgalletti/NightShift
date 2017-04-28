@@ -1,41 +1,49 @@
-package com.nightshift.game;
-
+package com.nightshift.game.screens;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nightshift.game.NightShift;
+import com.nightshift.game.data.Constants;
 
-public class PauseScreen implements Screen {
+public class StartScreen implements Screen {
 
     NightShift game;
     OrthographicCamera camera;
     SpriteBatch batch = new SpriteBatch();
-    BitmapFont font = new BitmapFont();
+    BitmapFont font1 = new BitmapFont(Gdx.files.internal("font/white32.fnt"));
+    BitmapFont font2 = new BitmapFont(Gdx.files.internal("font/white64.fnt"));
 
-    public PauseScreen(NightShift game) {
+    public StartScreen(NightShift game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
     }
 
     @Override
-    public void show() {}
+    public void show() {
+
+    }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(0.1f, 0.3f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        font.draw(batch, "Type Level Number", 100, 150);
-        changeLevel();
+        font2.draw(batch, "NightShift", Constants.VIEWPORT_WIDTH/2 - 50, Constants.VIEWPORT_HEIGHT/2 + 100);
+        font1.draw(batch, "Tap anywhere to begin!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2);
         batch.end();
+
+        if(Gdx.input.isTouched()) {
+            game.setScreen();
+            dispose();
+        }
     }
 
     @Override
@@ -61,19 +69,5 @@ public class PauseScreen implements Screen {
     @Override
     public void dispose() {
 
-    }
-
-    public void changeLevel() {
-        if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-            game.setScreen(0);
-            return;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-            game.setScreen(1);
-            return;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
-            game.setScreen(2);
-        }
     }
 }

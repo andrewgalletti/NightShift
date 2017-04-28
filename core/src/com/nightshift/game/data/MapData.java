@@ -1,6 +1,8 @@
-package com.nightshift.game;
+package com.nightshift.game.data;
 
 import com.badlogic.gdx.math.Vector2;
+import com.nightshift.game.data.Constants;
+
 import java.util.ArrayList;
 
 public class MapData {
@@ -49,5 +51,25 @@ public class MapData {
                 break;
         }
         return enemyLocations;
+    }
+
+    public Vector2 janitorSpawn(int levelIndex) {
+        Vector2 spawn = new Vector2();
+        switch(levelIndex) {
+            case 0:
+                spawn.x = 45;
+                spawn.y = 45;
+                break;
+            case 1:
+                spawn.x = 45;
+                spawn.y = 45;
+                break;
+            case 2:
+                spawn.x = 45;
+                spawn.y = 45;
+                break;
+        }
+
+        return spawn;
     }
 }

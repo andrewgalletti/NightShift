@@ -1,4 +1,4 @@
-package com.nightshift.game;
+package com.nightshift.game.data;
 
 /**
  * Created by andre on 2/23/2017.

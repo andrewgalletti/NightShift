@@ -1,4 +1,4 @@
-package com.nightshift.game;
+package com.nightshift.game.sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.nightshift.game.data.Constants;
+import com.nightshift.game.data.PlayerDirection;
+import com.nightshift.game.screens.GameScreen;
 
 import static com.badlogic.gdx.Gdx.input;
 

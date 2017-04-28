@@ -1,10 +1,8 @@
-package com.nightshift.game;
+package com.nightshift.game.screens;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayer;
@@ -20,9 +18,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nightshift.game.sprites.Ghost;
+import com.nightshift.game.sprites.Janitor;
+import com.nightshift.game.NightShift;
+import com.nightshift.game.data.Constants;
+import com.nightshift.game.data.MapData;
 
 
 import java.util.ArrayList;
@@ -84,7 +85,8 @@ public class GameScreen implements Screen {
 
         //FIGURE OUT WHAT THE HELL THIS ALL DOES
 
-        this.hero = new Janitor(45, 45, this);
+        Vector2 spawn = mapData.janitorSpawn(levelIndex);
+        this.hero = new Janitor((int)spawn.x, (int)spawn.y, this);
         this.batch = new SpriteBatch();
         spawnEnemies();
     }

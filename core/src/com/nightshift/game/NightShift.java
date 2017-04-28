@@ -3,14 +3,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
+import com.nightshift.game.screens.GameOverScreen;
+import com.nightshift.game.screens.GameScreen;
+import com.nightshift.game.screens.PauseScreen;
+import com.nightshift.game.screens.StartScreen;
+import com.nightshift.game.sprites.LifeBar;
 
 import static com.badlogic.gdx.Gdx.input;
 
 public class NightShift extends Game {
 
-	public static final int V_WIDTH = 400;
-	public static final int V_HEIGHT = 400;
 	private Screen currentScreen;
 	public LifeBar health;
 
@@ -23,11 +25,6 @@ public class NightShift extends Game {
 	public void render() {
 		checkPause();
 		currentScreen.render(Gdx.graphics.getDeltaTime());
-		/*if(currentScreen instanceof GameScreen || currentScreen instanceof PauseScreen)
-			currentScreen.render(Gdx.graphics.getDeltaTime());
-		else {
-			super.render();
-		}*/
 	}
 
 	@Override
@@ -60,7 +57,7 @@ public class NightShift extends Game {
 			System.out.println("Changed Levels to: " + level);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
-			//
+			//You aaaare the only exception.
 		}
 	}
 

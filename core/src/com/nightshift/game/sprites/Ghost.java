@@ -1,4 +1,4 @@
-package com.nightshift.game;
+package com.nightshift.game.sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,13 +6,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+
 import java.util.Random;
 
 public class Ghost {
     private static final float RANGE = 250;
+    private static final float BASE_ALPHA = .3f;
     private static final int ANIMATION_FACTOR = 6;
     private static Random random = new Random();
-    private static final float BASE_ALPHA = .3f;
 
     private float speed = random.nextFloat() * 20 + 50;
     private int moveIterCounter = 0;
@@ -43,7 +44,7 @@ public class Ghost {
         createPhysicsBody();
     }
 
-    public void playSound() {
+    private void playSound() {
         boolean prevOnPatrol = onPatrol;
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
 

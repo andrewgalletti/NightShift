@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.nightshift.game.Constants;
 import com.nightshift.game.NightShift;
 
 public class DesktopLauncher {
@@ -13,7 +14,9 @@ public class DesktopLauncher {
 		config.title = "Night Shift";
 		//The dimensions of the map. When we change map size, change these
 		config.width = 500;
+		//config.width = screenSize.width;
 		config.height = 500;
+		//config.height = screenSize.height;
 
 		new LwjglApplication(new NightShift(), config);
 	}

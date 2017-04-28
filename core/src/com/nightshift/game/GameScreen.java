@@ -20,39 +20,48 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
+    //MapData returns enemy spawn locations and map file name based on a level index.
     private static MapData mapData = new MapData();
+    private int levelIndex;
 
+    //Provides a reference to NightShift for access to LifeBar and to setScreen() method.
     private NightShift game;
     private Janitor hero;
+    //World used for Box2d physics.
     private World world;
+    //Used to draw Sprite objects on the screen.
     private SpriteBatch batch;
     private ArrayList<Ghost> enemies;
-    private TiledMap map;
     private Vector3 center;
     private OrthographicCamera camera;
+    private TiledMap map;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMapTileLayer mapTileLayer;
-    private MapLayer wallLayer;
+    //Map layer that contains the end location stored as a RectangleMapObject.
     private MapLayer winLayer;
+    //Map layer that contains the walls in MapObjects.
+    private MapLayer wallLayer;
+    //Object that stores the walls as an array of RectangleMapObject.
     private MapObjects mapObjects;
     private Viewport gameViewport;
 
-    private int levelIndex;
-
     public GameScreen(NightShift game, int levelIndex) {
         this.game = game;
+        //Initializes a world with no gravity.
         this.world = new World(new Vector2(0, 0), true);
         this.levelIndex = levelIndex;
 
         map = new TmxMapLoader().load(mapData.getFileName(levelIndex));
-        map.getProperties();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         mapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
         wallLayer = map.getLayers().get(1);
@@ -60,10 +69,16 @@ public class GameScreen implements Screen {
         mapObjects = wallLayer.getObjects();
 
         Gdx.graphics.setWindowedMode(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
+        //Gdx.graphics.setWindowedMode((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+        //camera.setToOrtho(false, (int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
         camera.update();
+
         gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
+
+        //fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
+
         //fitViewport.apply();
         //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
         //mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0)
@@ -163,6 +178,7 @@ public class GameScreen implements Screen {
         for(RectangleMapObject r: winLayer.getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = r.getRectangle();
             if(Intersector.overlaps(player,rect)) {
+                mapData.previousScreenDimensions = new Vector2(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
                 game.setScreen();
             }
         }
@@ -185,6 +201,6 @@ public class GameScreen implements Screen {
     public void pause() {}
     public void resume() {}
     public void hide() {}
-    public void dispose() {
-    }
+    public void dispose() {}
 }
+

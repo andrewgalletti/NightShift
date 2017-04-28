@@ -11,14 +11,18 @@ import static com.badlogic.gdx.Gdx.input;
 
 public class Janitor {
     private final float SPEED = 2f;
+    //Used to slow walking animation by changing sprites every 4 * 1/60ths of a second.
     private final int ANIMATION_FACTOR = 4;
 
+    //Counts every world step that is spent in motion for purpose of animation.
     private int moveIterCounter = 0;
     private float remainingInvulnerability;
 
     private GameScreen game;
     private World world;
+    //Physical representation of the Janitor used by Box2d to out physics.
     private Body body;
+    //Current sprite to be drawn in this iteration of the world step.
     private Sprite currentSprite;
     private Sprite[][] animation;
     private PlayerDirection direction = PlayerDirection.FRONT;
@@ -86,6 +90,7 @@ public class Janitor {
         remainingInvulnerability -= Gdx.graphics.getDeltaTime();
     }
 
+    //Converts from Box2d coordinate system to LibGdx coordinate system and stores them in the position vector.
     public void updateJanitorPosition() {
         position.x = Constants.PIXELS_TO_METERS * body.getPosition().x - currentSprite.getWidth()/2;
         position.y = Constants.PIXELS_TO_METERS * body.getPosition().y - currentSprite.getHeight()/2;
@@ -93,8 +98,8 @@ public class Janitor {
     }
 
     private void updateSpritePositions() {
-        for (Sprite[] directionalSprites: animation) {
-            for(Sprite s: directionalSprites) {
+        for (Sprite[] directionalSpriteSet: animation) {
+            for(Sprite s: directionalSpriteSet) {
                 s.setX(position.x);
                 s.setY(position.y);
             }
@@ -106,6 +111,7 @@ public class Janitor {
         velocity.y = 0;
     }
 
+    //Draws the current sprite and flashes during invulnerability.
     public void draw(SpriteBatch batch) {
         if(remainingInvulnerability > 0 && System.currentTimeMillis() % 400 < 150) {
             return;
@@ -172,7 +178,6 @@ public class Janitor {
         if(remainingInvulnerability <= 0) {
             health.takeDamage();
             remainingInvulnerability = 3;
-            System.out.println("Took damage\nRemaining Lives: " + health.getLives());
         }
     }
 

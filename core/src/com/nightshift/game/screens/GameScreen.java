@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
         winLayer = map.getLayers().get(2);
         mapObjects = wallLayer.getObjects();
 
-        Gdx.graphics.setWindowedMode(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
+        //Gdx.graphics.setWindowedMode(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
         //Gdx.graphics.setWindowedMode((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);

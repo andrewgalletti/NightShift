@@ -23,10 +23,10 @@ public class MapData {
                 fileName = "Maps/easymap.tmx";
                 break;
             case 2:
-                fileName = "Maps/spiralmap.tmx";
+                fileName = "Maps/hardmap.tmx";
                 break;
             case 3:
-                fileName = "Maps/hardmap.tmx";
+                fileName = "Maps/spiralmap.tmx";
                 break;
         }
         return fileName;
@@ -71,6 +71,10 @@ public class MapData {
                 spawn.y = 45;
                 break;
             case 2:
+                spawn.x = 45;
+                spawn.y = 45;
+                break;
+            case 3:
                 spawn.x = 45;
                 spawn.y = 45;
                 break;

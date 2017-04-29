@@ -9,15 +9,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nightshift.game.NightShift;
 import com.nightshift.game.data.Constants;
 
-public class StartScreen implements Screen {
-
+/**
+ * Created by Cui on 4/29/2017.
+ */
+public class SuccessScreen implements Screen{
     NightShift game;
     OrthographicCamera camera;
     SpriteBatch batch = new SpriteBatch();
     BitmapFont font1 = new BitmapFont(Gdx.files.internal("font/white32.fnt"));
     BitmapFont font2 = new BitmapFont(Gdx.files.internal("font/white64.fnt"));
 
-    public StartScreen(NightShift game) {
+    public SuccessScreen(NightShift game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -37,8 +39,8 @@ public class StartScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        font2.draw(batch, "NightShift", Constants.VIEWPORT_WIDTH/2 - 50, Constants.VIEWPORT_HEIGHT/2 + 100);
-        font1.draw(batch, "Press any key to begin!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2);
+        font2.draw(batch, "You have escaped!", 50, Constants.VIEWPORT_HEIGHT/2 + 100);
+        font1.draw(batch, "Press any key to restart!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2 - 50);
         batch.end();
 
         if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
@@ -46,29 +48,20 @@ public class StartScreen implements Screen {
             dispose();
         }
     }
-
-    @Override
     public void resize(int width, int height) {
 
     }
-
-    @Override
     public void pause() {
 
     }
-
-    @Override
     public void resume() {
 
     }
-
-    @Override
     public void hide() {
 
     }
-
-    @Override
     public void dispose() {
 
     }
+
 }

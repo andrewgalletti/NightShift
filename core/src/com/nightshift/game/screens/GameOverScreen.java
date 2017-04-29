@@ -1,6 +1,7 @@
 package com.nightshift.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -39,10 +40,10 @@ public class GameOverScreen implements Screen {
         font2.setColor(100,0,0,.85f);
         font2.draw(batch, "GAME OVER", (int)(Constants.VIEWPORT_WIDTH/2.5), Constants.VIEWPORT_HEIGHT/2 + 100);
         font1.setColor(100,0,0,.85f);
-        font1.draw(batch, "Tap anywhere to restart!", (int)(Constants.VIEWPORT_WIDTH/3.6), Constants.VIEWPORT_HEIGHT/2);
+        font1.draw(batch, "Press any key to restart!", (int)(Constants.VIEWPORT_WIDTH/3.6), Constants.VIEWPORT_HEIGHT/2);
         batch.end();
 
-        if(Gdx.input.isTouched()) {
+        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
             game.setScreen();
             dispose();
         }

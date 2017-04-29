@@ -78,10 +78,6 @@ public class MapData {
                 spawn.x = 45;
                 spawn.y = 45;
                 break;
-            case 3:
-                spawn.x = 45;
-                spawn.y = 45;
-                break;
         }
 
         return spawn;

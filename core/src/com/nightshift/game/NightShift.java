@@ -3,10 +3,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.nightshift.game.screens.GameOverScreen;
-import com.nightshift.game.screens.GameScreen;
-import com.nightshift.game.screens.PauseScreen;
-import com.nightshift.game.screens.StartScreen;
+import com.nightshift.game.screens.*;
 import com.nightshift.game.sprites.LifeBar;
 
 import static com.badlogic.gdx.Gdx.input;
@@ -41,7 +38,7 @@ public class NightShift extends Game {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
 			currentScreen = new GameScreen(this,(index + 1) % 4);
 		}
-		if(currentScreen instanceof GameOverScreen) {
+		if(currentScreen instanceof GameOverScreen || currentScreen instanceof SuccessScreen) {
 			currentScreen = new GameScreen(this, 0);
 		}
 	}
@@ -49,6 +46,10 @@ public class NightShift extends Game {
 	public void endGame() {
 		currentScreen = new GameOverScreen(this);
 		health = new LifeBar(this);
+	}
+
+	public void success() {
+		currentScreen = new SuccessScreen(this);
 	}
 
 	public void setScreen(int level) {

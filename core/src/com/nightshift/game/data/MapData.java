@@ -36,18 +36,17 @@ public class MapData {
         ArrayList<Vector2> enemyLocations = new ArrayList<Vector2>();
         switch(levelIndex) {
             case 0:
-                enemyLocations.add(new Vector2(125, 275));
+                enemyLocations.add(new Vector2(70, 250));
                 break;
             case 1:
                 enemyLocations.add(new Vector2(125, 375));
-                enemyLocations.add(new Vector2(250, 375));
                 enemyLocations.add(new Vector2(375, 375));
                 break;
             case 2:
                 enemyLocations.add(new Vector2(250,125));
                 enemyLocations.add(new Vector2(375, 125));
                 enemyLocations.add(new Vector2(62,427));
-                enemyLocations.add(new Vector2(400,390));
+                //enemyLocations.add(new Vector2(400,390));
                 break;
             case 3:
                 enemyLocations.add(new Vector2(100, 360));
@@ -63,8 +62,8 @@ public class MapData {
         Vector2 spawn = new Vector2();
         switch(levelIndex) {
             case 0:
-                spawn.x = 45;
-                spawn.y = 45;
+                spawn.x = 160;
+                spawn.y = 250;
                 break;
             case 1:
                 spawn.x = 45;

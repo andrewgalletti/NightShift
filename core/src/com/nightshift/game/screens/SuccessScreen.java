@@ -40,10 +40,10 @@ public class SuccessScreen implements Screen{
 
         batch.begin();
         font2.draw(batch, "You have escaped!", 50, Constants.VIEWPORT_HEIGHT/2 + 100);
-        font1.draw(batch, "Press any key to restart!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2 - 50);
+        font1.draw(batch, "Press Space to Restart!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2 - 50);
         batch.end();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             game.setScreen();
             dispose();
         }

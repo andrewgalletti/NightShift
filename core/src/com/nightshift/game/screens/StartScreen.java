@@ -38,10 +38,10 @@ public class StartScreen implements Screen {
 
         batch.begin();
         font2.draw(batch, "NightShift", Constants.VIEWPORT_WIDTH/2 - 50, Constants.VIEWPORT_HEIGHT/2 + 100);
-        font1.draw(batch, "Press any key to begin!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2);
+        font1.draw(batch, "Press Space to Begin!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2);
         batch.end();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             game.setScreen();
             dispose();
         }

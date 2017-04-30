@@ -3,6 +3,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.nightshift.game.data.Constants;
+import com.nightshift.game.data.ScreenData;
 import com.nightshift.game.screens.*;
 import com.nightshift.game.sprites.LifeBar;
 
@@ -11,11 +16,18 @@ import static com.badlogic.gdx.Gdx.input;
 public class NightShift extends Game {
 
 	private Screen currentScreen;
+	private ScreenData screenData;
 	public LifeBar health;
+	public FitViewport viewport;
+	public OrthographicCamera camera;
 
 	public void create() {
+		screenData = new ScreenData();
 		health = new LifeBar(this);
 		currentScreen = new StartScreen(this);
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+		viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
 	}
 
 	@Override
@@ -41,6 +53,9 @@ public class NightShift extends Game {
 		if(currentScreen instanceof GameOverScreen || currentScreen instanceof SuccessScreen) {
 			currentScreen = new GameScreen(this, 0);
 		}
+
+		viewport.update((int)screenData.previousScreenDimensions.x, (int)screenData.previousScreenDimensions.y);
+		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 	}
 
 	public void endGame() {

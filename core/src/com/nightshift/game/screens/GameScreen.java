@@ -80,7 +80,7 @@ public class GameScreen implements Screen {
 
         //fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
 
-        //fitViewport.apply();
+        //gameViewport.apply();
         //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
         //mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0)
         //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);

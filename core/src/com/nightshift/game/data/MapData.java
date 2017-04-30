@@ -49,10 +49,9 @@ public class MapData {
                 //enemyLocations.add(new Vector2(400,390));
                 break;
             case 3:
-                enemyLocations.add(new Vector2(100, 360));
-                enemyLocations.add(new Vector2(400, 125));
-                enemyLocations.add(new Vector2(200, 125));
-                enemyLocations.add(new Vector2(375, 400));
+                enemyLocations.add(new Vector2(250,125));
+                enemyLocations.add(new Vector2(375, 125));
+                enemyLocations.add(new Vector2(62,427));
                 break;
         }
         return enemyLocations;

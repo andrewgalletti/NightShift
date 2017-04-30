@@ -41,11 +41,15 @@ public class GameOverScreen implements Screen {
         font2.draw(batch, "GAME OVER", (int)(Constants.VIEWPORT_WIDTH/2.5), Constants.VIEWPORT_HEIGHT/2 + 100);
         font1.setColor(100,0,0,.85f);
         font1.draw(batch, "Press Space to Restart!", (int)(Constants.VIEWPORT_WIDTH/3.6), Constants.VIEWPORT_HEIGHT/2);
+        font1.draw(batch, "Q to Quit", (int)(Constants.VIEWPORT_WIDTH/3.6)+50, Constants.VIEWPORT_HEIGHT/2-50);
         batch.end();
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             game.setScreen();
             dispose();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            Gdx.app.exit();
         }
     }
 

@@ -42,7 +42,7 @@ public class LifeBar extends Sprite {
 
     public void takeDamage() {
         lives--;
-        takeDamage.play();
+        takeDamage.play(.5f);
         if(hearts.size() > 1)
             hearts.remove(lives);
         else

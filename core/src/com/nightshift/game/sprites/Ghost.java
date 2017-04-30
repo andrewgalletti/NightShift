@@ -24,7 +24,7 @@ public class Ghost {
     private Body body;
     private Sprite currentSprite;
     private Sprite[] animation;
-    private Sound ghostChuckle;
+    private Sound intoPursuit;
 
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
@@ -34,7 +34,7 @@ public class Ghost {
     public Ghost(Janitor hero, float xPos, float yPos, World world) {
         this.world = world;
         this.hero = hero;
-        this.ghostChuckle = Gdx.audio.newSound(Gdx.files.internal("Sounds/GhostChuckle.mp3"));
+        this.intoPursuit = Gdx.audio.newSound(Gdx.files.internal("Sounds/IntoPursuit.mp3"));
         position.x = xPos;
         position.y = yPos;
         post.x = xPos;
@@ -49,7 +49,7 @@ public class Ghost {
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
 
         if(prevOnPatrol && !onPatrol)
-            ghostChuckle.play(.3f);
+            intoPursuit.play(.4f);
     }
 
     public void moveGhost() {

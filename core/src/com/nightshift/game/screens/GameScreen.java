@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nightshift.game.sprites.Ghost;
 import com.nightshift.game.sprites.Janitor;
@@ -43,8 +44,8 @@ public class GameScreen implements Screen {
     //Used to draw Sprite objects on the screen.
     private SpriteBatch batch;
     private ArrayList<Ghost> enemies;
-    private Vector3 center;
-    private OrthographicCamera camera;
+    //private Vector3 center;
+    //private OrthographicCamera camera;
     private TiledMap map;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMapTileLayer mapTileLayer;
@@ -54,7 +55,7 @@ public class GameScreen implements Screen {
     private MapLayer wallLayer;
     //Object that stores the walls as an array of RectangleMapObject.
     private MapObjects mapObjects;
-    private Viewport gameViewport;
+    //private Viewport gameViewport;
 
     public GameScreen(NightShift game, int levelIndex) {
         this.game = game;
@@ -71,15 +72,16 @@ public class GameScreen implements Screen {
 
         //Gdx.graphics.setWindowedMode(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
         //Gdx.graphics.setWindowedMode((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+        //camera = new OrthographicCamera();
+        //camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
         //camera.setToOrtho(false, (int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
-        camera.update();
-
-        gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
+        //camera.update();
+        //game.camera.update();
+        //gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
 
         //fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
-
+        game.viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, game.camera);
+        game.viewport.apply();
         //fitViewport.apply();
         //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
         //mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0)
@@ -111,11 +113,13 @@ public class GameScreen implements Screen {
         }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
-        tiledMapRenderer.setView(camera);
+        //tiledMapRenderer.setView(camera);
+        game.camera.update();
+        tiledMapRenderer.setView(game.camera);
         tiledMapRenderer.render();
 
         batch.begin();
+        batch.setProjectionMatrix(game.camera.combined);
         game.health.draw(batch);
         hero.draw(batch);
         for(Ghost g: enemies) {
@@ -201,8 +205,17 @@ public class GameScreen implements Screen {
     @Override
     public void show() {}
     public void resize(int width, int height) {
-        gameViewport.update(width,height);
-        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        //gameViewport.update(width,height);
+        game.viewport.update(width, height);
+        game.camera.position.set(game.camera.viewportWidth/2, game.camera.viewportHeight/2, 0);
+        //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        //Vector2 size = Scaling.fit.apply(500, 500, width, height);
+        //int viewportX = (int)(width - size.x) / 2;
+        //int viewportY = (int)(height - size.y) / 2;
+        //int viewportWidth = (int)size.x;
+        //int viewportHeight = (int)size.y;
+        //Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+        //stage.setViewport(800, 480, true, viewportX, viewportY, viewportWidth, viewportHeight);
     }
     public void pause() {}
     public void resume() {}

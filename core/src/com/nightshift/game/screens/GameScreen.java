@@ -81,6 +81,9 @@ public class GameScreen implements Screen {
 
         //fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
         game.viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, game.camera);
+        game.viewport.setScreenHeight(Gdx.graphics.getHeight());
+        game.viewport.setScreenWidth(Gdx.graphics.getWidth());
+        System.out.println(game.viewport.getWorldWidth());
         game.viewport.apply();
         //fitViewport.apply();
 

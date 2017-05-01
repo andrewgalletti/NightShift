@@ -35,7 +35,7 @@ public class GameScreen implements Screen {
     //MapData returns enemy spawn locations and map file name based on a level index.
     private static MapData mapData = new MapData();
     private int levelIndex;
-
+    private FitViewport viewport;
     //Provides a reference to NightShift for access to LifeBar and to setScreen() method.
     private NightShift game;
     private Janitor hero;
@@ -79,12 +79,11 @@ public class GameScreen implements Screen {
         //game.camera.update();
         //gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
 
-        //fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
-        game.viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, game.camera);
-        game.viewport.setScreenHeight(Gdx.graphics.getHeight());
-        game.viewport.setScreenWidth(Gdx.graphics.getWidth());
-        System.out.println(game.viewport.getWorldWidth());
-        game.viewport.apply();
+//        fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
+        viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, game.camera);
+        viewport.setScreenHeight(Gdx.graphics.getHeight());
+        viewport.setScreenWidth(Gdx.graphics.getWidth());
+//        game.viewport.apply();
         //fitViewport.apply();
 
         //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
@@ -210,8 +209,8 @@ public class GameScreen implements Screen {
     public void show() {}
     public void resize(int width, int height) {
         //gameViewport.update(width,height);
-        game.viewport.update(width, height);
-        game.camera.position.set(game.camera.viewportWidth/2, game.camera.viewportHeight/2, 0);
+        viewport.update(width, height);
+        game.camera.position.set(Constants.VIEWPORT_WIDTH/2, Constants.VIEWPORT_HEIGHT/2, 0);
         //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
         //Vector2 size = Scaling.fit.apply(500, 500, width, height);
         //int viewportX = (int)(width - size.x) / 2;

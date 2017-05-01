@@ -52,6 +52,7 @@ public class NightShift extends Game {
 		}
 		if(currentScreen instanceof GameOverScreen || currentScreen instanceof SuccessScreen) {
 			currentScreen = new GameScreen(this, 0);
+			health = new LifeBar(this);
 		}
 
 		viewport.update((int)screenData.previousScreenDimensions.x, (int)screenData.previousScreenDimensions.y);

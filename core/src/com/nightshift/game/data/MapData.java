@@ -36,7 +36,7 @@ public class MapData {
         ArrayList<Vector2> enemyLocations = new ArrayList<Vector2>();
         switch(levelIndex) {
             case 0:
-                enemyLocations.add(new Vector2(70, 250));
+                enemyLocations.add(new Vector2(10, 250));
                 break;
             case 1:
                 enemyLocations.add(new Vector2(125, 375));

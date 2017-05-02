@@ -3,9 +3,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.nightshift.game.data.Constants;
 import com.nightshift.game.data.ScreenData;
 import com.nightshift.game.screens.*;
@@ -15,22 +14,27 @@ import static com.badlogic.gdx.Gdx.input;
 
 public class NightShift extends Game {
 
+	private Sound gameMusic;
+	private Sound ghostChuckle;
 	private Screen currentScreen;
-	private ScreenData screenData;
-	public LifeBar health;
 
+	public LifeBar health;
 	public OrthographicCamera camera;
 
+	private long timeOfStartSound = 0;
+	private boolean musicLooping = false;
+
 	public void create() {
-		screenData = new ScreenData();
 		health = new LifeBar(this);
 		currentScreen = new StartScreen(this);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+		startSound();
 	}
 
 	@Override
 	public void render() {
+		startMusic();
 		checkPause();
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 	}
@@ -59,6 +63,8 @@ public class NightShift extends Game {
 	public void endGame() {
 		currentScreen = new GameOverScreen(this);
 		health = new LifeBar(this);
+		gameMusic.dispose();
+		ghostChuckle.dispose();
 	}
 
 	public void success() {
@@ -75,9 +81,23 @@ public class NightShift extends Game {
 		}
 	}
 
-	public void checkPause() {
+	private void checkPause() {
 		if(input.isKeyPressed(Input.Keys.ESCAPE)) {
 			currentScreen = new PauseScreen(this);
+		}
+	}
+
+	private void startSound() {
+		gameMusic = Gdx.audio.newSound(Gdx.files.internal("Sounds/NightShift_LONG.mp3"));
+		ghostChuckle = Gdx.audio.newSound(Gdx.files.internal("Sounds/TakeDamage.mp3"));
+		ghostChuckle.play(Constants.GHOST_CHUCKLE_VOLUME);
+		timeOfStartSound = System.currentTimeMillis();
+	}
+
+	private void startMusic() {
+		if(System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY && !musicLooping) {
+			gameMusic.loop(Constants.GAME_MUSIC_VOLUME);
+			musicLooping = true;
 		}
 	}
 }

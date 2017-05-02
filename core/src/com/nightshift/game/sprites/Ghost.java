@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.nightshift.game.data.Constants;
 
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class Ghost {
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
 
         if(prevOnPatrol && !onPatrol)
-            intoPursuit.play(.4f);
+            intoPursuit.play(Constants.INTO_PURSUIT_VOLUME);
     }
 
     public void moveGhost() {

@@ -95,7 +95,7 @@ public class NightShift extends Game {
 	}
 
 	private void startMusic() {
-		if(System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY && !musicLooping) {
+		if(!musicLooping && System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY) {
 			gameMusic.loop(Constants.GAME_MUSIC_VOLUME);
 			musicLooping = true;
 		}

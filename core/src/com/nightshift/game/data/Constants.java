@@ -13,5 +13,5 @@ public class Constants {
     public static final float GHOST_CHUCKLE_VOLUME = .8f;
     public static final float GAME_MUSIC_VOLUME = .4f;
     //Sets the delay in milliseconds between ghostChuckle.play() and gameMusic.loop()
-    public static final float START_SOUND_MUSIC_DELAY = 1300;
+    public static final float START_SOUND_MUSIC_DELAY = 900;
 }

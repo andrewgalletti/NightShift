@@ -188,7 +188,7 @@ public class GameScreen implements Screen {
             Rectangle rect = r.getRectangle();
             if(Intersector.overlaps(player,rect)) {
                 mapData.previousScreenDimensions = new Vector2(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
-                if (getLevelIndex() == 3) {
+                if (getLevelIndex() == 4) {
                     game.success();
                 } else {
                     game.setScreen();

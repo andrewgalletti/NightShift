@@ -28,6 +28,8 @@ public class MapData {
             case 3:
                 fileName = "Maps/spiralmap.tmx";
                 break;
+            case 4:
+                fileName = "Maps/concentricmap.tmx";
         }
         return fileName;
     }
@@ -43,16 +45,21 @@ public class MapData {
                 enemyLocations.add(new Vector2(375, 375));
                 break;
             case 2:
-                enemyLocations.add(new Vector2(250,125));
+                enemyLocations.add(new Vector2(250, 125));
                 enemyLocations.add(new Vector2(375, 125));
-                enemyLocations.add(new Vector2(62,427));
+                enemyLocations.add(new Vector2(62, 427));
                 //enemyLocations.add(new Vector2(400,390));
                 break;
             case 3:
-                enemyLocations.add(new Vector2(250,125));
+                enemyLocations.add(new Vector2(250, 125));
                 enemyLocations.add(new Vector2(375, 125));
-                enemyLocations.add(new Vector2(62,427));
+                enemyLocations.add(new Vector2(62, 427));
                 break;
+            case 4:
+                enemyLocations.add(new Vector2(450, 450));
+                enemyLocations.add(new Vector2(50, 450));
+                enemyLocations.add(new Vector2(450, 250));
+
         }
         return enemyLocations;
     }
@@ -75,6 +82,10 @@ public class MapData {
             case 3:
                 spawn.x = 45;
                 spawn.y = 45;
+                break;
+            case 4:
+                spawn.x = 250;
+                spawn.y = 250;
                 break;
         }
 

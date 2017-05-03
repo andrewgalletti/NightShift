@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class LifeBar extends Sprite {
 
     private NightShift game;
-    private int lives = 4;
+    private int lives = 3;
     private ArrayList<Sprite> hearts;
     private Sound takeDamage;
 

@@ -15,6 +15,7 @@ import static com.badlogic.gdx.Gdx.input;
 public class NightShift extends Game {
 
 	private Sound gameMusic;
+	private Sound intoPursuit;
 	private Sound ghostChuckle;
 	private Screen currentScreen;
 
@@ -26,6 +27,7 @@ public class NightShift extends Game {
 
 	public void create() {
 		health = new LifeBar(this);
+		this.intoPursuit = Gdx.audio.newSound(Gdx.files.internal("Sounds/IntoPursuit.mp3"));
 		currentScreen = new StartScreen(this);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
@@ -52,6 +54,7 @@ public class NightShift extends Game {
 		if(currentScreen instanceof GameScreen) {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
 			currentScreen = new GameScreen(this,(index + 1) % 5);
+			intoPursuit.play(Constants.INTO_PURSUIT_VOLUME);
 		}
 		if(currentScreen instanceof GameOverScreen || currentScreen instanceof SuccessScreen) {
 			currentScreen = new GameScreen(this, 0);
@@ -67,12 +70,14 @@ public class NightShift extends Game {
 	}
 
 	public void success() {
+
 		currentScreen = new SuccessScreen(this);
 	}
 
 	public void setScreen(int level) {
 		try {
 			currentScreen = new GameScreen(this, level);
+
 			System.out.println("Changed Levels to: " + level);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {

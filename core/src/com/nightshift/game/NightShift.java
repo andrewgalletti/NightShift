@@ -63,7 +63,6 @@ public class NightShift extends Game {
 	public void endGame() {
 		currentScreen = new GameOverScreen(this);
 		health = new LifeBar(this);
-		//gameMusic.dispose();
 		ghostChuckle.dispose();
 	}
 

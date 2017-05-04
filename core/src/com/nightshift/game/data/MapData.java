@@ -41,13 +41,13 @@ public class MapData {
                 enemyLocations.add(new Vector2(10, 250));
                 break;
             case 1:
-                enemyLocations.add(new Vector2(125, 375));
-                enemyLocations.add(new Vector2(375, 375));
+                enemyLocations.add(new Vector2(375, 350));
+                enemyLocations.add(new Vector2(375, 425));
                 break;
             case 2:
                 enemyLocations.add(new Vector2(450, 450));
                 enemyLocations.add(new Vector2(50, 450));
-                enemyLocations.add(new Vector2(450, 250));
+                //enemyLocations.add(new Vector2(450, 250));
                 break;
             case 3:
                 enemyLocations.add(new Vector2(50, 250));

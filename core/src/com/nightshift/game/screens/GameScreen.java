@@ -44,8 +44,6 @@ public class GameScreen implements Screen {
     //Used to draw Sprite objects on the screen.
     private SpriteBatch batch;
     private ArrayList<Ghost> enemies;
-    //private Vector3 center;
-    //private OrthographicCamera camera;
     private TiledMap map;
     private TiledMapRenderer tiledMapRenderer;
     private TiledMapTileLayer mapTileLayer;
@@ -70,27 +68,10 @@ public class GameScreen implements Screen {
         winLayer = map.getLayers().get(2);
         mapObjects = wallLayer.getObjects();
 
-        //Gdx.graphics.setWindowedMode(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
-        //Gdx.graphics.setWindowedMode((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
-        //camera = new OrthographicCamera();
-        //camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        //camera.setToOrtho(false, (int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y);
-        //camera.update();
-        //game.camera.update();
-        //gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
-
-//        fitViewport = new FitViewport((int)mapData.previousScreenDimensions.x,(int)mapData.previousScreenDimensions.y, camera);
         viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, game.camera);
         viewport.setScreenHeight(Gdx.graphics.getHeight());
         viewport.setScreenWidth(Gdx.graphics.getWidth());
-//        game.viewport.apply();
-        //fitViewport.apply();
 
-        //center = new Vector3(mapTileLayer.getWidth() * mapTileLayer.getTileWidth() / 2,
-        //mapTileLayer.getHeight() * mapTileLayer.getTileHeight() / 2, 0)
-        //camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
-
-        //FIGURE OUT WHAT THE HELL THIS ALL DOES
 
         Vector2 spawn = mapData.janitorSpawn(levelIndex);
         this.hero = new Janitor((int)spawn.x, (int)spawn.y, this);
@@ -116,7 +97,6 @@ public class GameScreen implements Screen {
         }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //tiledMapRenderer.setView(camera);
         game.camera.update();
         tiledMapRenderer.setView(game.camera);
         tiledMapRenderer.render();

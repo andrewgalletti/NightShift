@@ -11,7 +11,7 @@ import com.nightshift.game.data.Constants;
 import java.util.Random;
 
 public class Ghost {
-    private static final float RANGE = 250;
+    private static final float RANGE = 225;
     private static final float BASE_ALPHA = .3f;
     private static final int ANIMATION_FACTOR = 6;
     private static Random random = new Random();

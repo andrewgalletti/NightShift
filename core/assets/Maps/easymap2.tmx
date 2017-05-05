@@ -28,10 +28,10 @@
  </layer>
  <objectgroup name="Walls">
   <object id="1" x="0" y="0" width="32" height="509.333"/>
-  <object id="2" x="0" y="0" width="510.667" height="32"/>
-  <object id="3" x="225.333" y="97.333" width="60" height="413.333"/>
+  <object id="2" x="0" y="0" width="510.667" height="22"/>
+  <object id="3" x="235.333" y="97.333" width="50" height="413.333"/>
   <object id="4" x="1.33333" y="480" width="508" height="30.6667"/>
-  <object id="5" x="480" y="0" width="30.6667" height="510.667"/>
+  <object id="5" x="490" y="0" width="20.6667" height="510.667"/>
  </objectgroup>
  <objectgroup name="Start/End">
   <object id="7" x="448" y="448" width="32" height="30"/>

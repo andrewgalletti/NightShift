@@ -27,10 +27,10 @@
 </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="12" x="-4" y="128" width="514" height="32"/>
+  <object id="12" x="-4" y="128" width="514" height="20"/>
   <object id="13" x="-6" y="128" width="40" height="256"/>
   <object id="14" x="-2" y="354" width="512" height="32"/>
-  <object id="15" x="482" y="128" width="30" height="256"/>
+  <object id="15" x="490" y="128" width="22" height="256"/>
   <object id="16" x="128" y="130" width="30" height="254"/>
  </objectgroup>
  <objectgroup name="Object Layer 2">

@@ -46,12 +46,12 @@ public class Janitor {
     }
 
     public void moveJanitor() {
-        if(input.isKeyPressed(Input.Keys.UP)) {
+        if(input.isKeyPressed(Input.Keys.UP) ||input.isKeyPressed(Input.Keys.W)) {
             direction = PlayerDirection.BACK;
             setVelocity();
             currentSprite = animation[2][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
-        if(input.isKeyPressed(Input.Keys.DOWN)) {
+        if(input.isKeyPressed(Input.Keys.DOWN) || input.isKeyPressed(Input.Keys.S)) {
             direction = PlayerDirection.FRONT;
             setVelocity();
             currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
@@ -156,7 +156,7 @@ public class Janitor {
     private void createPhysicsBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set((currentSprite.getX() + currentSprite.getWidth()/2) / Constants.PIXELS_TO_METERS,
+        bodyDef.position.set((currentSprite.getX() + (currentSprite.getWidth()/2)) / Constants.PIXELS_TO_METERS,
                 (currentSprite.getY() + currentSprite.getHeight()/2) / Constants.PIXELS_TO_METERS);
         this.body = this.world.createBody(bodyDef);
     }

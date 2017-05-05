@@ -180,7 +180,7 @@ public class Janitor {
     public void takeDamage(LifeBar health) {
         if(remainingInvulnerability <= 0) {
             health.takeDamage();
-            remainingInvulnerability = 3;
+            remainingInvulnerability = 1;
         }
     }
 

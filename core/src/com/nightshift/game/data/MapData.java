@@ -42,7 +42,7 @@ public class MapData {
                 break;
             case 1:
                 enemyLocations.add(new Vector2(375, 350));
-                enemyLocations.add(new Vector2(375, 425));
+                enemyLocations.add(new Vector2(125, 350));
                 break;
             case 2:
                 enemyLocations.add(new Vector2(450, 300));

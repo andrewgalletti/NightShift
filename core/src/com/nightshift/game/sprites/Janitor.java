@@ -56,12 +56,12 @@ public class Janitor {
             setVelocity();
             currentSprite = animation[0][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
-        if(input.isKeyPressed(Input.Keys.RIGHT)) {
+        if(input.isKeyPressed(Input.Keys.RIGHT) || input.isKeyPressed(Input.Keys.D)) {
             direction = PlayerDirection.RIGHT;
             setVelocity();
             currentSprite = animation[1][moveIterCounter/ANIMATION_FACTOR%animation.length];
         }
-        if(input.isKeyPressed(Input.Keys.LEFT)) {
+        if(input.isKeyPressed(Input.Keys.LEFT) || input.isKeyPressed(Input.Keys.A)) {
             direction = PlayerDirection.LEFT;
             setVelocity();
             currentSprite = animation[3][moveIterCounter/ANIMATION_FACTOR%animation.length];
@@ -180,7 +180,7 @@ public class Janitor {
     public void takeDamage(LifeBar health) {
         if(remainingInvulnerability <= 0) {
             health.takeDamage();
-            remainingInvulnerability = 1;
+            remainingInvulnerability = 3;
         }
     }
 

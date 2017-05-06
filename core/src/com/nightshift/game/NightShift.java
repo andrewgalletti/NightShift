@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.nightshift.game.data.Constants;
-import com.nightshift.game.data.ScreenData;
 import com.nightshift.game.screens.*;
 import com.nightshift.game.sprites.LifeBar;
 
@@ -47,6 +46,12 @@ public class NightShift extends Game {
 	}
 
 	public void setScreen() {
+		/**
+		 * Sets the next screen: to game screen if player just started,
+		 * to screen for the next level if the player is playing and surviving,
+		 * to game over screen if player dies,
+		 * and to success screen if player wins.
+		 */
 		if(currentScreen instanceof StartScreen) {
 			currentScreen = new GameScreen(this,0);
 			return;
@@ -64,13 +69,15 @@ public class NightShift extends Game {
 	}
 
 	public void endGame() {
+		/**
+		 * Displays game over screen and resets life.
+		 */
 		currentScreen = new GameOverScreen(this);
 		health = new LifeBar(this);
 		ghostChuckle.dispose();
 	}
 
 	public void success() {
-
 		currentScreen = new SuccessScreen(this);
 	}
 
@@ -81,7 +88,7 @@ public class NightShift extends Game {
 			System.out.println("Changed Levels to: " + level);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
-			//You aaaare the only exception.
+
 		}
 	}
 

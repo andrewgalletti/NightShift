@@ -1,12 +1,12 @@
 package com.nightshift.game.data;
 
 import com.badlogic.gdx.math.Vector2;
-import com.nightshift.game.data.Constants;
-
 import java.util.ArrayList;
 
 public class MapData {
-
+    /**
+     * Stores information about level maps, ghost spawn locations and janitor spawn locations.
+     */
     public Vector2 previousScreenDimensions;
 
     public MapData() {
@@ -14,6 +14,9 @@ public class MapData {
     }
 
     public String getFileName(int levelIndex) {
+        /**
+         * Each case is a filepath for a map stored in assets. To add levels, simply add a case here.
+         */
         String fileName = "";
         switch(levelIndex) {
             case 0:
@@ -35,6 +38,9 @@ public class MapData {
     }
 
     public ArrayList<Vector2> getEnemies(int levelIndex) {
+        /**
+         * Each case is for one level. One add method add one ghost.
+         */
         ArrayList<Vector2> enemyLocations = new ArrayList<Vector2>();
         switch(levelIndex) {
             case 0:
@@ -47,12 +53,10 @@ public class MapData {
             case 2:
                 enemyLocations.add(new Vector2(450, 300));
                 enemyLocations.add(new Vector2(50, 300));
-                //enemyLocations.add(new Vector2(450, 250));
                 break;
             case 3:
                 enemyLocations.add(new Vector2(50, 250));
                 enemyLocations.add(new Vector2(400, 400));
-                //enemyLocations.add(new Vector2(62, 427));
                 break;
             case 4:
                 enemyLocations.add(new Vector2(250, 125));
@@ -64,6 +68,9 @@ public class MapData {
     }
 
     public Vector2 janitorSpawn(int levelIndex) {
+        /**
+         * Each case is for one level.
+         */
         Vector2 spawn = new Vector2();
         switch(levelIndex) {
             case 0:

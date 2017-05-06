@@ -1,12 +1,10 @@
 package com.nightshift.game.sprites;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.nightshift.game.data.Constants;
 
 import java.util.Random;
 
@@ -25,7 +23,6 @@ public class Ghost {
     private Body body;
     private Sprite currentSprite;
     private Sprite[] animation;
-    //private Sound intoPursuit;
     private int p;
 
     private Vector2 position = new Vector2(0,0);
@@ -36,7 +33,6 @@ public class Ghost {
     public Ghost(Janitor hero, float xPos, float yPos, World world) {
         this.world = world;
         this.hero = hero;
-        //this.intoPursuit = Gdx.audio.newSound(Gdx.files.internal("Sounds/IntoPursuit.mp3"));
         position.x = xPos;
         position.y = yPos;
         post.x = xPos;
@@ -49,9 +45,6 @@ public class Ghost {
     private void playSound() {
         boolean prevOnPatrol = onPatrol;
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
-
-        //if(prevOnPatrol && !onPatrol)
-            //intoPursuit.play(Constants.INTO_PURSUIT_VOLUME);
     }
 
     public void moveGhost() {

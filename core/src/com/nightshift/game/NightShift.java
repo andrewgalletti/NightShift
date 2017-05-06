@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.nightshift.game.data.Constants;
-import com.nightshift.game.data.ScreenData;
 import com.nightshift.game.screens.*;
 import com.nightshift.game.sprites.LifeBar;
 
@@ -14,15 +13,20 @@ import static com.badlogic.gdx.Gdx.input;
 
 public class NightShift extends Game {
 
-	private Sound gameMusic;
-	private Sound ghostChuckle;
+	//Pointer used to denote the current screen to be displayed on this iteration of render().
 	private Screen currentScreen;
 
+	//Same sound as LifeBar.takeDamage played before gameMusic, as it sounded too sudden without the ghostChuckle.
+	private Sound ghostChuckle;
+	private Sound gameMusic;
+
+	//Used to store user's lives across different levels, as well as, initiate the end sequence if the user runs out of lives.
 	public LifeBar health;
+	//TODO: define camera
 	public OrthographicCamera camera;
 
 	private long timeOfStartSound = 0;
-	private boolean musicLooping = false;
+	private boolean musicCurrentlyLooping = false;
 
 	public void create() {
 		health = new LifeBar(this);
@@ -94,10 +98,11 @@ public class NightShift extends Game {
 		timeOfStartSound = System.currentTimeMillis();
 	}
 
+	//Starts looping gameMusic after ghostChuckle and appropriate delay.
 	private void startMusic() {
-		if(!musicLooping && System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY) {
+		if(!musicCurrentlyLooping && System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY) {
 			gameMusic.loop(Constants.GAME_MUSIC_VOLUME);
-			musicLooping = true;
+			musicCurrentlyLooping = true;
 		}
 	}
 }

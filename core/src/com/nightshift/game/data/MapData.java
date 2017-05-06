@@ -32,7 +32,7 @@ public class MapData {
         return fileName;
     }
 
-    public ArrayList<Vector2> getEnemies(int levelIndex) {
+    public ArrayList<Vector2> getEnemySpawnLocations(int levelIndex) {
         ArrayList<Vector2> enemyLocations = new ArrayList<Vector2>();
         switch(levelIndex) {
             case 0:

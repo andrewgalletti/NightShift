@@ -23,7 +23,7 @@ public class Janitor {
 
     private GameScreen game;
     private World world;
-    //Physical representation of the Janitor used by Box2d to out physics.
+    //Physical representation of the Janitor used by Box2d to carry out physics.
     private Body body;
     //Current sprite to be drawn in this iteration of the world step.
     private Sprite currentSprite;
@@ -89,7 +89,7 @@ public class Janitor {
         }
     }
 
-    public void updateTimers() {
+    public void updateInvulnerabilityTimer() {
         remainingInvulnerability -= Gdx.graphics.getDeltaTime();
     }
 

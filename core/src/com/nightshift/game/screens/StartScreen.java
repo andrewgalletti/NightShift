@@ -30,6 +30,8 @@ public class StartScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        //Sets background color
         Gdx.gl.glClearColor(0.1f, 0.3f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -37,10 +39,12 @@ public class StartScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
+        //Draws texts
         font2.draw(batch, "NightShift", Constants.VIEWPORT_WIDTH/2 - 50, Constants.VIEWPORT_HEIGHT/2 + 100);
         font1.draw(batch, "Press Space to Begin!", Constants.VIEWPORT_WIDTH/2 - 80, Constants.VIEWPORT_HEIGHT/2);
         batch.end();
 
+        //This is apparently an event listener.
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             game.setScreen();
             dispose();

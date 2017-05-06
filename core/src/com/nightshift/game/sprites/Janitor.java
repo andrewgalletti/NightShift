@@ -46,6 +46,9 @@ public class Janitor {
     }
 
     public void moveJanitor() {
+        /**
+         * Sets input direction, and renders character sprite according to direction.
+         */
         if(input.isKeyPressed(Input.Keys.UP) ||input.isKeyPressed(Input.Keys.W)) {
             direction = PlayerDirection.BACK;
             setVelocity();
@@ -70,6 +73,9 @@ public class Janitor {
     }
 
     private void setVelocity() {
+        /**
+         * Move character according to input direction.
+         */
         if(!game.mapCollisionWillOccur()) {
             moveIterCounter++;
             switch(direction) {
@@ -93,8 +99,11 @@ public class Janitor {
         remainingInvulnerability -= Gdx.graphics.getDeltaTime();
     }
 
-    //Converts from Box2d coordinate system to LibGdx coordinate system and stores them in the position vector.
+
     public void updateJanitorPosition() {
+        /**
+         *  Converts from Box2d coordinate system to LibGdx coordinate system and stores them in the position vector.
+         */
         position.x = Constants.PIXELS_TO_METERS * body.getPosition().x - currentSprite.getWidth()/2;
         position.y = Constants.PIXELS_TO_METERS * body.getPosition().y - currentSprite.getHeight()/2;
         updateSpritePositions();
@@ -114,8 +123,12 @@ public class Janitor {
         velocity.y = 0;
     }
 
-    //Draws the current sprite and flashes during invulnerability.
+
     public void draw(SpriteBatch batch) {
+        /**
+         * Draws the current sprite.
+         * After the character gets hit the sprite flashes, and character gets invulnerable for a few seconds.
+         */
         if(remainingInvulnerability > 0 && System.currentTimeMillis() % 400 < 150) {
             return;
         }
@@ -178,6 +191,9 @@ public class Janitor {
     }
 
     public void takeDamage(LifeBar health) {
+        /**
+         *Drops life, and get invulnerable for a few seconds.
+         */
         if(remainingInvulnerability <= 0) {
             health.takeDamage();
             remainingInvulnerability = 3;

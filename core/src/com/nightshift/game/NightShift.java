@@ -109,8 +109,10 @@ public class NightShift extends Game {
 		timeOfStartSound = System.currentTimeMillis();
 	}
 
-	//Starts looping gameMusic after intoPursuit and appropriate delay.
 	private void startMusic() {
+		/**
+		 * Plays background music with appropriate delay.
+		 */
 		if(!musicCurrentlyLooping && System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY) {
 			gameMusic.loop(Constants.GAME_MUSIC_VOLUME);
 			musicCurrentlyLooping = true;

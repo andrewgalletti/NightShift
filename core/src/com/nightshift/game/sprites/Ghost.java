@@ -43,11 +43,20 @@ public class Ghost {
     }
 
     private void playSound() {
+        /**
+         * What this function actually does is checking if hero is out of distance so that
+         * ghost should go on patrol, i.e. wander randomly, instead of chase the character.
+         */
         boolean prevOnPatrol = onPatrol;
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
     }
 
     public void moveGhost() {
+        /**
+         * Moves ghost:
+         * If character is within distance, ghost chase him.
+         * Otherwise ghost wanders randomly.
+         */
         playSound();
         if(onPatrol) {
             patrol();
@@ -162,6 +171,9 @@ public class Ghost {
     }
 
     public void updateGhostPosition() {
+        /**
+         *Updates ghost's physical position as opposed to sprite position.
+         */
         position.x = body.getPosition().x;
         position.y = body.getPosition().y;
         updateSpritePositions();

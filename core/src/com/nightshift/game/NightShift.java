@@ -16,8 +16,8 @@ public class NightShift extends Game {
 	//Pointer used to denote the current screen to be displayed on this iteration of render().
 	private Screen currentScreen;
 
-	//Same sound as LifeBar.takeDamage played before gameMusic, as it sounded too sudden without the ghostChuckle.
-	private Sound ghostChuckle;
+	//Same sound as LifeBar.takeDamage played before gameMusic, as it sounded too sudden without the intoPursuit.
+	private Sound intoPursuit;
 	private Sound gameMusic;
 
 	//Used to store user's lives across different levels, as well as, initiate the end sequence if the user runs out of lives.
@@ -30,6 +30,7 @@ public class NightShift extends Game {
 
 	public void create() {
 		health = new LifeBar(this);
+		this.intoPursuit = Gdx.audio.newSound(Gdx.files.internal("Sounds/IntoPursuit.mp3"));
 		currentScreen = new StartScreen(this);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
@@ -49,13 +50,20 @@ public class NightShift extends Game {
 	}
 
 	public void setScreen() {
+		/**
+		 * Sets the next screen: to game screen if player just started,
+		 * to screen for the next level if the player is playing and surviving,
+		 * to game over screen if player dies,
+		 * and to success screen if player wins.
+		 */
 		if(currentScreen instanceof StartScreen) {
 			currentScreen = new GameScreen(this,0);
 			return;
 		}
 		if(currentScreen instanceof GameScreen) {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
-			currentScreen = new GameScreen(this,(index + 1) % 4);
+			currentScreen = new GameScreen(this,(index + 1) % 5);
+			intoPursuit.play(Constants.INTO_PURSUIT_VOLUME);
 		}
 		if(currentScreen instanceof GameOverScreen || currentScreen instanceof SuccessScreen) {
 			currentScreen = new GameScreen(this, 0);
@@ -65,10 +73,12 @@ public class NightShift extends Game {
 	}
 
 	public void endGame() {
+		/**
+		 * Displays game over screen and resets life.
+		 */
 		currentScreen = new GameOverScreen(this);
 		health = new LifeBar(this);
-		gameMusic.dispose();
-		ghostChuckle.dispose();
+		intoPursuit.dispose();
 	}
 
 	public void success() {
@@ -78,10 +88,11 @@ public class NightShift extends Game {
 	public void setScreen(int level) {
 		try {
 			currentScreen = new GameScreen(this, level);
+
 			System.out.println("Changed Levels to: " + level);
 		}
 		catch(ArrayIndexOutOfBoundsException e) {
-			//You aaaare the only exception.
+
 		}
 	}
 
@@ -93,12 +104,12 @@ public class NightShift extends Game {
 
 	private void startSound() {
 		gameMusic = Gdx.audio.newSound(Gdx.files.internal("Sounds/NightShift_LONG.mp3"));
-		ghostChuckle = Gdx.audio.newSound(Gdx.files.internal("Sounds/TakeDamage.mp3"));
-		ghostChuckle.play(Constants.GHOST_CHUCKLE_VOLUME);
+		intoPursuit = Gdx.audio.newSound(Gdx.files.internal("Sounds/TakeDamage.mp3"));
+		intoPursuit.play(Constants.GHOST_CHUCKLE_VOLUME);
 		timeOfStartSound = System.currentTimeMillis();
 	}
 
-	//Starts looping gameMusic after ghostChuckle and appropriate delay.
+	//Starts looping gameMusic after intoPursuit and appropriate delay.
 	private void startMusic() {
 		if(!musicCurrentlyLooping && System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY) {
 			gameMusic.loop(Constants.GAME_MUSIC_VOLUME);

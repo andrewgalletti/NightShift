@@ -13,11 +13,14 @@ import java.util.ArrayList;
 public class LifeBar extends Sprite {
 
     private NightShift game;
-    private int lives = 4;
+    private int lives = 3;
     private ArrayList<Sprite> hearts;
     private Sound takeDamage;
 
     public LifeBar(NightShift game) {
+        /**
+         * Draws hearts on upper-right corner of game screen, where one heart corresponds to one life.
+         */
         this.game = game;
         takeDamage = Gdx.audio.newSound(Gdx.files.internal("Sounds/TakeDamage.mp3"));
 
@@ -41,6 +44,10 @@ public class LifeBar extends Sprite {
     }
 
     public void takeDamage() {
+        /**
+         * Called when hero loses life.
+         * Hero dies when life goes below 1.
+         */
         lives--;
         takeDamage.play(Constants.TAKE_DAMAGE_VOLUME);
         if(hearts.size() > 1)

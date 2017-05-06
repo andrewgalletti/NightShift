@@ -20,19 +20,18 @@ import com.nightshift.game.sprites.Janitor;
 import com.nightshift.game.NightShift;
 import com.nightshift.game.data.Constants;
 import com.nightshift.game.data.MapData;
-
-
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
-    // MapData returns enemy spawn locations and map file name based on a level index.
+    //MapData returns enemy spawn locations and map file name based on a level index.
     private static MapData mapData = new MapData();
     private int levelIndex;
 
     //Used to draw Sprite objects on the screen.
     private SpriteBatch batch;
     private ArrayList<Ghost> enemies;
+
     private Janitor hero;
 
     //TODO: define the viewport
@@ -120,6 +119,10 @@ public class GameScreen implements Screen {
     }
 
     private void spawnEnemies() {
+        /**
+         * Spawn an array of ghost according to there positions on different maps.
+         * Information about maps is passed in from the MapData class.
+         */
         enemies = new ArrayList<Ghost>();
         for(Vector2 pos: mapData.getEnemySpawnLocations(levelIndex)) {
             enemies.add(new Ghost(hero, pos.x, pos.y, world));
@@ -129,6 +132,9 @@ public class GameScreen implements Screen {
     //Determines, based on the player's current direction, whether or not a collision will occur with map walls and
     //restricts movement accordingly.
     public boolean mapCollisionWillOccur() {
+        /**
+         * Makes a rectangle around janitor and uses intersector to check janitor's collision with walls.
+         */
         int threshold = 10;
         Rectangle player = new Rectangle(0,0,0,0);
 
@@ -156,7 +162,11 @@ public class GameScreen implements Screen {
         return false;
     }
 
-    private void checkGhostCollisions() {
+    public void checkGhostCollisions() {
+        /**
+         * Checks ghost's collision with janitor.
+         * If a collision occurs, janitor loses life.
+         */
         Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
         for(Ghost g: enemies) {
             Rectangle ghost = new Rectangle(g.getX(),g.getY(),g.getWidth(),g.getHeight());
@@ -168,11 +178,17 @@ public class GameScreen implements Screen {
     }
 
     private void checkWin() {
+        /**
+         * Uses intersector to check janitor's collision with destination.
+         * If janitor reaches the destination in last level, he wins. Game will display a success screen.
+         * Otherwise he will go to the next screen, decided by the setScreen() method.
+         */
         Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
         for(RectangleMapObject r: winLayer.getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = r.getRectangle();
             if(Intersector.overlaps(player,rect)) {
-                if (getLevelIndex() == 3) {
+                mapData.previousScreenDimensions = new Vector2(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
+                if (getLevelIndex() == 4) {
                     game.success();
                 } else {
                     game.setScreen();
@@ -192,6 +208,9 @@ public class GameScreen implements Screen {
     @Override
     public void show() {}
     public void resize(int width, int height) {
+        /***
+         * Updates viewport and reset camera to center of viewport.
+         */
         viewport.update(width, height);
         game.camera.position.set(Constants.VIEWPORT_WIDTH/2, Constants.VIEWPORT_HEIGHT/2, 0);
     }

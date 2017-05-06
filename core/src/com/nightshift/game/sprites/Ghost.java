@@ -1,17 +1,15 @@
 package com.nightshift.game.sprites;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.nightshift.game.data.Constants;
 
 import java.util.Random;
 
 public class Ghost {
-    private static final float RANGE = 250;
+    private static final float RANGE = 225;
     private static final float BASE_ALPHA = .3f;
     private static final int ANIMATION_FACTOR = 6;
     private static Random random = new Random();
@@ -25,7 +23,7 @@ public class Ghost {
     private Body body;
     private Sprite currentSprite;
     private Sprite[] animation;
-    private Sound intoPursuit;
+    private int p;
 
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
@@ -35,7 +33,6 @@ public class Ghost {
     public Ghost(Janitor hero, float xPos, float yPos, World world) {
         this.world = world;
         this.hero = hero;
-        this.intoPursuit = Gdx.audio.newSound(Gdx.files.internal("Sounds/IntoPursuit.mp3"));
         position.x = xPos;
         position.y = yPos;
         post.x = xPos;
@@ -48,22 +45,21 @@ public class Ghost {
     private void playSound() {
         boolean prevOnPatrol = onPatrol;
         onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
-
-        if(prevOnPatrol && !onPatrol)
-            intoPursuit.play(Constants.INTO_PURSUIT_VOLUME);
     }
 
     public void moveGhost() {
         playSound();
         if(onPatrol) {
             patrol();
+            p = 0;
         }
         else {
             chase();
+            p = 6;
         }
         applyAlpha();
         moveIterCounter++;
-        currentSprite = animation[moveIterCounter/ANIMATION_FACTOR%animation.length];
+        currentSprite = animation[(moveIterCounter/ANIMATION_FACTOR%6)+p];
 
         if(velocity.x != 0 && velocity.y != 0)
             scaleVelocity();
@@ -137,13 +133,26 @@ public class Ghost {
         Texture t2 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost3.png"));
         Texture t3 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost4.png"));
 
-        animation = new Sprite[6];
+        Texture m0 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost1.png"));
+        Texture m1 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost2.png"));
+        Texture m2 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost3.png"));
+        Texture m3 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost4.png"));
+
+        animation = new Sprite[12];
         animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());
         animation[1] = new Sprite(t1,t1.getWidth(),t1.getHeight());
         animation[2] = new Sprite(t2,t2.getWidth(),t2.getHeight());
         animation[3] = new Sprite(t3,t3.getWidth(),t3.getHeight());
         animation[4] = new Sprite(t2,t2.getWidth(),t2.getHeight());
         animation[5] = new Sprite(t1,t1.getWidth(),t1.getHeight());
+
+        animation[6] = new Sprite(m0,m0.getWidth(),m0.getHeight());
+        animation[7] = new Sprite(m1,m1.getWidth(),m1.getHeight());
+        animation[8] = new Sprite(m2,m2.getWidth(),m2.getHeight());
+        animation[9] = new Sprite(m3,m3.getWidth(),m3.getHeight());
+        animation[10] = new Sprite(m2,m2.getWidth(),m2.getHeight());
+        animation[11] = new Sprite(m1,m1.getWidth(),m1.getHeight());
+
 
         for(Sprite s: animation) {
             s.setAlpha(BASE_ALPHA);

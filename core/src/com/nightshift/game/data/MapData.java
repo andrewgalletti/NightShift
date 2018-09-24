@@ -33,6 +33,13 @@ public class MapData {
                 break;
             case 4:
                 fileName = "Maps/spiralmap2.tmx";
+                break;
+            case 5:
+                fileName = "Maps/learningmap.tmx";
+                break;
+            case 6:
+                fileName = "Maps/test.tmx";
+                break;
         }
         return fileName;
     }
@@ -62,7 +69,20 @@ public class MapData {
                 enemyLocations.add(new Vector2(250, 125));
                 enemyLocations.add(new Vector2(375, 125));
                 enemyLocations.add(new Vector2(150, 427));
-
+                break;
+            case 5:
+                enemyLocations.add(new Vector2(250,45));
+                enemyLocations.add(new Vector2(45,350));
+                enemyLocations.add(new Vector2(350,200));
+                break;
+            case 6:
+                enemyLocations.add(new Vector2(400,45));
+                enemyLocations.add(new Vector2(200,45));
+                enemyLocations.add(new Vector2(400,100));
+                enemyLocations.add(new Vector2(200,100));
+                enemyLocations.add(new Vector2(300,300));
+                enemyLocations.add(new Vector2(100,400));
+                break;
         }
         return enemyLocations;
     }
@@ -93,8 +113,44 @@ public class MapData {
                 spawn.x = 45;
                 spawn.y = 45;
                 break;
+            case 5:
+                spawn.x = 45;
+                spawn.y = 45;
+                break;
+            case 6:
+                spawn.x = 50;
+                spawn.y = 50;
+                break;
         }
 
         return spawn;
+    }
+
+    public String spriteSize(int levelIndex){
+        /**
+         * Determines sprite size of janitor and ghosts for each map index.
+         * returns smallModifier if small sprite size is needed,
+         * returns largeModifier if large sprite is needed.
+         */
+        String smallModifier = " Small";
+        String largeModifier = "";
+        switch(levelIndex){
+            case 0:
+                return largeModifier;
+            case 1:
+                return largeModifier;
+            case 2:
+                return largeModifier;
+            case 3:
+                return largeModifier;
+            case 4:
+                return largeModifier;
+            case 5:
+                return largeModifier;
+            case 6:
+                return smallModifier;
+
+        }
+        return largeModifier;
     }
 }

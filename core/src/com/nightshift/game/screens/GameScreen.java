@@ -67,9 +67,10 @@ public class GameScreen implements Screen {
         viewport.setScreenWidth(Gdx.graphics.getWidth());
 
         Vector2 spawn = mapData.janitorSpawn(levelIndex);
-        this.hero = new Janitor((int)spawn.x, (int)spawn.y, this);
+        String sizeModifier = mapData.spriteSize(levelIndex);
+        this.hero = new Janitor((int)spawn.x, (int)spawn.y, this, sizeModifier);
         this.batch = new SpriteBatch();
-        spawnEnemies();
+        spawnEnemies(sizeModifier);
     }
 
     @Override
@@ -118,14 +119,14 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void spawnEnemies() {
+    private void spawnEnemies(String sizeModifier) {
         /**
          * Spawn an array of ghost according to there positions on different maps.
          * Information about maps is passed in from the MapData class.
          */
         enemies = new ArrayList<Ghost>();
         for(Vector2 pos: mapData.getEnemySpawnLocations(levelIndex)) {
-            enemies.add(new Ghost(hero, pos.x, pos.y, world));
+            enemies.add(new Ghost(hero, pos.x, pos.y, world, sizeModifier));
         }
     }
 
@@ -188,7 +189,7 @@ public class GameScreen implements Screen {
             Rectangle rect = r.getRectangle();
             if(Intersector.overlaps(player,rect)) {
                 mapData.previousScreenDimensions = new Vector2(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
-                if (getLevelIndex() == 4) {
+                if (getLevelIndex() == Constants.END_LEVEL_INDEX) {
                     game.success();
                 } else {
                     game.setScreen();

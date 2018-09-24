@@ -30,14 +30,14 @@ public class Ghost {
     private Vector2 acceleration = new Vector2(0,0);
     private Vector2 post = new Vector2(0,0);
 
-    public Ghost(Janitor hero, float xPos, float yPos, World world) {
+    public Ghost(Janitor hero, float xPos, float yPos, World world, String sizeModifier) {
         this.world = world;
         this.hero = hero;
         position.x = xPos;
         position.y = yPos;
         post.x = xPos;
         post.y = yPos;
-        initSpriteArray();
+        initSpriteArray(sizeModifier);
         currentSprite = animation[0];
         createPhysicsBody();
     }
@@ -136,16 +136,16 @@ public class Ghost {
         }
     }
 
-    private void initSpriteArray() {
-        Texture t0 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost.png"));
-        Texture t1 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost2.png"));
-        Texture t2 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost3.png"));
-        Texture t3 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost4.png"));
+    private void initSpriteArray(String sizeModifier) {
+        Texture t0 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost" + sizeModifier + ".png"));
+        Texture t1 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost2" + sizeModifier + ".png"));
+        Texture t2 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost3" + sizeModifier + ".png"));
+        Texture t3 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost4" + sizeModifier + ".png"));
 
-        Texture m0 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost1.png"));
-        Texture m1 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost2.png"));
-        Texture m2 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost3.png"));
-        Texture m3 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost4.png"));
+        Texture m0 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost1" + sizeModifier + ".png"));
+        Texture m1 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost2" + sizeModifier + ".png"));
+        Texture m2 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost3" + sizeModifier + ".png"));
+        Texture m3 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost4" + sizeModifier + ".png"));
 
         animation = new Sprite[12];
         animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());

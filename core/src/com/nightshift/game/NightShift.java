@@ -62,7 +62,7 @@ public class NightShift extends Game {
 		}
 		if(currentScreen instanceof GameScreen) {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
-			currentScreen = new GameScreen(this,(index + 1) % 5);
+			currentScreen = new GameScreen(this,(index + 1) % Constants.MAX_NUM_LEVELS);
 			intoPursuit.play(Constants.INTO_PURSUIT_VOLUME);
 		}
 		if(currentScreen instanceof GameOverScreen || currentScreen instanceof SuccessScreen) {

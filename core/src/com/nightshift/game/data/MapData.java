@@ -118,39 +118,35 @@ public class MapData {
                 spawn.y = 45;
                 break;
             case 6:
-                spawn.x = 50;
-                spawn.y = 50;
+                spawn.x = 100;
+                spawn.y = 100;
                 break;
         }
 
         return spawn;
     }
 
-    public String spriteSize(int levelIndex){
+    public float spriteSize(int levelIndex){
         /**
-         * Determines sprite size of janitor and ghosts for each map index.
-         * returns smallModifier if small sprite size is needed,
-         * returns largeModifier if large sprite is needed.
+         * Determines sprite scale factor for janitor and ghost sprites.
          */
-        String smallModifier = " Small";
-        String largeModifier = "";
+
         switch(levelIndex){
             case 0:
-                return largeModifier;
+                return 1;
             case 1:
-                return largeModifier;
+                return 1;
             case 2:
-                return largeModifier;
+                return 1;
             case 3:
-                return largeModifier;
+                return 1;
             case 4:
-                return largeModifier;
+                return 1;
             case 5:
-                return largeModifier;
+                return 1;
             case 6:
-                return smallModifier;
-
+                return 0.5f;
         }
-        return largeModifier;
+        return 1;
     }
 }

@@ -22,6 +22,7 @@ public class Ghost {
     private Janitor hero;
     private Body body;
     private Sprite currentSprite;
+    private float spriteScaleFactor;
     private Sprite[] animation;
     private int p;
 
@@ -30,14 +31,15 @@ public class Ghost {
     private Vector2 acceleration = new Vector2(0,0);
     private Vector2 post = new Vector2(0,0);
 
-    public Ghost(Janitor hero, float xPos, float yPos, World world, String sizeModifier) {
+    public Ghost(Janitor hero, float xPos, float yPos, World world, float spriteScaleFactor) {
         this.world = world;
         this.hero = hero;
+        this.spriteScaleFactor = spriteScaleFactor;
         position.x = xPos;
         position.y = yPos;
         post.x = xPos;
         post.y = yPos;
-        initSpriteArray(sizeModifier);
+        initSpriteArray();
         currentSprite = animation[0];
         createPhysicsBody();
     }
@@ -136,16 +138,16 @@ public class Ghost {
         }
     }
 
-    private void initSpriteArray(String sizeModifier) {
-        Texture t0 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost" + sizeModifier + ".png"));
-        Texture t1 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost2" + sizeModifier + ".png"));
-        Texture t2 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost3" + sizeModifier + ".png"));
-        Texture t3 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost4" + sizeModifier + ".png"));
+    private void initSpriteArray() {
+        Texture t0 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost.png"));
+        Texture t1 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost2.png"));
+        Texture t2 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost3.png"));
+        Texture t3 = new Texture(Gdx.files.internal("Sprites/Ghost/Ghost4.png"));
 
-        Texture m0 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost1" + sizeModifier + ".png"));
-        Texture m1 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost2" + sizeModifier + ".png"));
-        Texture m2 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost3" + sizeModifier + ".png"));
-        Texture m3 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost4" + sizeModifier + ".png"));
+        Texture m0 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost1.png"));
+        Texture m1 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost2.png"));
+        Texture m2 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost3.png"));
+        Texture m3 = new Texture(Gdx.files.internal("Sprites/Ghost/Mad Ghost4.png"));
 
         animation = new Sprite[12];
         animation[0] = new Sprite(t0,t0.getWidth(),t0.getHeight());
@@ -166,7 +168,7 @@ public class Ghost {
         for(Sprite s: animation) {
             s.setAlpha(BASE_ALPHA);
         }
-
+        setSpriteScale(spriteScaleFactor);
         updateSpritePositions();
     }
 
@@ -234,6 +236,12 @@ public class Ghost {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(currentSprite.getX(), currentSprite.getY());
         this.body = this.world.createBody(bodyDef);
+    }
+
+    private void setSpriteScale(float scaleFactor){
+        for(int i = 0; i < 12; i++){
+            animation[i].setScale(scaleFactor);
+        }
     }
 
     private void applyAlpha() {

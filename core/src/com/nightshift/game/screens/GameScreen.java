@@ -3,6 +3,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -24,9 +25,14 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
+    //debugging boolean! set to false unless doing hitbox debugging
+    private static boolean showHitbox = true;
+
     //MapData returns enemy spawn locations and map file name based on a level index.
     private static MapData mapData = new MapData();
     private int levelIndex;
+
+    private ShapeRenderer shapeRenderer;
 
     //Used to draw Sprite objects on the screen.
     private SpriteBatch batch;
@@ -58,6 +64,7 @@ public class GameScreen implements Screen {
 
         map = new TmxMapLoader().load(mapData.getFileName(levelIndex));
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+        shapeRenderer = new ShapeRenderer();
         wallLayer = map.getLayers().get(1);
         winLayer = map.getLayers().get(2);
         mapObjects = wallLayer.getObjects();
@@ -67,10 +74,10 @@ public class GameScreen implements Screen {
         viewport.setScreenWidth(Gdx.graphics.getWidth());
 
         Vector2 spawn = mapData.janitorSpawn(levelIndex);
-        String sizeModifier = mapData.spriteSize(levelIndex);
-        this.hero = new Janitor((int)spawn.x, (int)spawn.y, this, sizeModifier);
+        float spriteScaleFactor = mapData.spriteSize(levelIndex);
+        this.hero = new Janitor((int)spawn.x, (int)spawn.y, this, spriteScaleFactor);
         this.batch = new SpriteBatch();
-        spawnEnemies(sizeModifier);
+        spawnEnemies(spriteScaleFactor);
     }
 
     @Override
@@ -102,6 +109,15 @@ public class GameScreen implements Screen {
         tiledMapRenderer.setView(game.camera);
         tiledMapRenderer.render();
 
+
+        if(showHitbox) {
+            shapeRenderer.setProjectionMatrix(game.camera.combined);
+            Rectangle player = hero.getHitbox();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+            shapeRenderer.end();
+        }
+
         //Scales and then draws all Sprites onto the screen.
         batch.begin();
         batch.setProjectionMatrix(game.camera.combined);
@@ -119,14 +135,14 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void spawnEnemies(String sizeModifier) {
+    private void spawnEnemies(float spriteScaleFactor) {
         /**
          * Spawn an array of ghost according to there positions on different maps.
          * Information about maps is passed in from the MapData class.
          */
         enemies = new ArrayList<Ghost>();
         for(Vector2 pos: mapData.getEnemySpawnLocations(levelIndex)) {
-            enemies.add(new Ghost(hero, pos.x, pos.y, world, sizeModifier));
+            enemies.add(new Ghost(hero, pos.x, pos.y, world, spriteScaleFactor));
         }
     }
 
@@ -136,23 +152,10 @@ public class GameScreen implements Screen {
         /**
          * Makes a rectangle around janitor and uses intersector to check janitor's collision with walls.
          */
-        int threshold = 10;
-        Rectangle player = new Rectangle(0,0,0,0);
 
-        switch(hero.getDirection()) {
-            case BACK:
-                player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y + threshold);
-                break;
-            case LEFT:
-                player = new Rectangle(hero.getX() - threshold + 6,hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
-                break;
-            case FRONT:
-                player = new Rectangle(hero.getX(),hero.getY() - threshold + 6,hero.getDimensions().x,hero.getDimensions().y);
-                break;
-            case RIGHT:
-                player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x + threshold,hero.getDimensions().y);
-                break;
-        }
+        Rectangle player = hero.getHitbox();
+
+
 
         for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = r.getRectangle();

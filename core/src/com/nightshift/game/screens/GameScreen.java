@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class GameScreen implements Screen {
 
     //debugging boolean! set to false unless doing hitbox debugging
-    private static boolean showHitbox = true;
+    private static boolean showHitbox = false;
 
     //MapData returns enemy spawn locations and map file name based on a level index.
     private static MapData mapData = new MapData();

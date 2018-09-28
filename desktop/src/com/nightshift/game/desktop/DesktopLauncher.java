@@ -9,14 +9,10 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
 		config.title = "Night Shift";
 		//The dimensions of the map. When we change map size, change these
-		config.width = 1000;
-		//config.width = screenSize.width;
-		config.height = 1000;
-		//config.height = screenSize.height;
-
+		config.width = screenSize.width;
+		config.height = screenSize.height;
 		new LwjglApplication(new NightShift(), config);
 	}
 }

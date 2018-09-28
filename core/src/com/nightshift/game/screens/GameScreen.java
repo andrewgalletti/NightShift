@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.nightshift.game.sprites.Ghost;
 import com.nightshift.game.sprites.Janitor;
 import com.nightshift.game.NightShift;
@@ -41,7 +42,7 @@ public class GameScreen implements Screen {
     private Janitor hero;
 
     //TODO: define the viewport
-    private FitViewport viewport;
+    private ScalingViewport viewport;
     private TiledMap map;
     private TiledMapRenderer tiledMapRenderer;
     //Map layer that contains the end location stored as a RectangleMapObject.
@@ -69,9 +70,9 @@ public class GameScreen implements Screen {
         winLayer = map.getLayers().get(2);
         mapObjects = wallLayer.getObjects();
 
-        viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, game.camera);
-        viewport.setScreenHeight(Gdx.graphics.getHeight());
-        viewport.setScreenWidth(Gdx.graphics.getWidth());
+        viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,game.camera);
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),false);
+        System.out.println(viewport.getScreenWidth());
 
         Vector2 spawn = mapData.janitorSpawn(levelIndex);
         float spriteScaleFactor = mapData.spriteSize(levelIndex);
@@ -105,6 +106,7 @@ public class GameScreen implements Screen {
 
         //Prepares the screen and camera to display all Sprites in their correct positions for this iteration of render.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),false);
         game.camera.update();
         tiledMapRenderer.setView(game.camera);
         tiledMapRenderer.render();
@@ -215,7 +217,7 @@ public class GameScreen implements Screen {
         /***
          * Updates viewport and reset camera to center of viewport.
          */
-        viewport.update(width, height);
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),false);
         game.camera.position.set(Constants.VIEWPORT_WIDTH/2, Constants.VIEWPORT_HEIGHT/2, 0);
     }
     public void pause() {}

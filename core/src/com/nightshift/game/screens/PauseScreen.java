@@ -60,6 +60,12 @@ public class PauseScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.NUM_7)) {
             game.setScreen(6);
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_8)) {
+            game.setScreen(7);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_9)) {
+            game.setScreen(8);
+        }
     }
 
     @Override

@@ -40,6 +40,12 @@ public class MapData {
             case 6:
                 fileName = "Maps/test.tmx";
                 break;
+            case 7:
+                fileName = "Maps/mechanicmap.tmx";
+                break;
+            case 8:
+                fileName = "Maps/mazemap.tmx";
+                break;
         }
         return fileName;
     }
@@ -83,6 +89,14 @@ public class MapData {
                 enemyLocations.add(new Vector2(300,300));
                 enemyLocations.add(new Vector2(100,400));
                 break;
+            case 7:
+                enemyLocations.add(new Vector2(280,150));
+                break;
+            case 8:
+                enemyLocations.add(new Vector2(45,300));
+                enemyLocations.add(new Vector2(300,300));
+                enemyLocations.add(new Vector2(300,45));
+                break;
         }
         return enemyLocations;
     }
@@ -121,6 +135,14 @@ public class MapData {
                 spawn.x = 100;
                 spawn.y = 100;
                 break;
+            case 7:
+                spawn.x = 45;
+                spawn.y = 150;
+                break;
+            case 8:
+                spawn.x = 55;
+                spawn.y = 55;
+                break;
         }
 
         return spawn;
@@ -145,6 +167,10 @@ public class MapData {
             case 5:
                 return 1;
             case 6:
+                return 0.5f;
+            case 7:
+                return 1;
+            case 8:
                 return 0.5f;
         }
         return 1;

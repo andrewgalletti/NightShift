@@ -50,7 +50,7 @@ public class Ghost {
          * ghost should go on patrol, i.e. wander randomly, instead of chase the character.
          */
         boolean prevOnPatrol = onPatrol;
-        onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE;
+        onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE*spriteScaleFactor;
     }
 
     public void moveGhost() {
@@ -253,7 +253,7 @@ public class Ghost {
         else {
             for(Sprite s: animation) {
                 float d = (float)(Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)));
-                float alpha = (1 - BASE_ALPHA) * (RANGE - d) / RANGE + BASE_ALPHA;
+                float alpha = (1 - BASE_ALPHA) * (RANGE*spriteScaleFactor - d) / RANGE*spriteScaleFactor + BASE_ALPHA;
                 s.setAlpha(alpha);
             }
         }

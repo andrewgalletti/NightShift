@@ -39,8 +39,8 @@ public class Janitor {
         this.game = game;
         this.spriteScaleFactor = spriteScaleFactor;
         world = game.getWorld();
-        position.x = xPos;
-        position.y = yPos;
+        position.x = xPos * (1/spriteScaleFactor);
+        position.y = yPos * (1/spriteScaleFactor);
         initSpriteArray();
         dimensions.x = currentSprite.getWidth()*spriteScaleFactor;
         dimensions.y = currentSprite.getHeight()*spriteScaleFactor;

@@ -3,7 +3,7 @@ package com.nightshift.game.data;
 public class Constants {
 
     //sets the total amount of levels in game
-    public static final int MAX_NUM_LEVELS = 9;
+    public static final int MAX_NUM_LEVELS = 10;
     public static final int END_LEVEL_INDEX = MAX_NUM_LEVELS - 1;
 
     //Used to convert from Box2d units to relative coordinate system.

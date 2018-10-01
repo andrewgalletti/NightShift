@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -49,6 +50,10 @@ public class GameScreen implements Screen {
     private MapLayer winLayer;
     //Map layer that contains the walls in MapObjects.
     private MapLayer wallLayer;
+    //Map layer that contains the ghost spawn points
+    private MapLayer ghostLayer;
+    //Map layer that contains spawn point for the janitor.
+    private MapLayer heroLayer;
     //Object that stores the walls as an array of RectangleMapObject.
     private MapObjects mapObjects;
 
@@ -66,17 +71,19 @@ public class GameScreen implements Screen {
         map = new TmxMapLoader().load(mapData.getFileName(levelIndex));
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
         shapeRenderer = new ShapeRenderer();
-        wallLayer = map.getLayers().get(1);
-        winLayer = map.getLayers().get(2);
+        wallLayer = map.getLayers().get("Walls");
+        winLayer = map.getLayers().get("Start/End");
+        ghostLayer = map.getLayers().get("Ghosts");
+        heroLayer = map.getLayers().get("Hero");
         mapObjects = wallLayer.getObjects();
 
         viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,game.camera);
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),false);
         System.out.println(viewport.getScreenWidth());
 
-        Vector2 spawn = mapData.janitorSpawn(levelIndex);
+        //Vector2 spawn = mapData.janitorSpawn(levelIndex);
         float spriteScaleFactor = mapData.spriteSize(levelIndex);
-        this.hero = new Janitor((int)spawn.x, (int)spawn.y, this, spriteScaleFactor);
+        spawnJanitor(spriteScaleFactor);
         this.batch = new SpriteBatch();
         spawnEnemies(spriteScaleFactor);
     }
@@ -143,9 +150,28 @@ public class GameScreen implements Screen {
          * Information about maps is passed in from the MapData class.
          */
         enemies = new ArrayList<Ghost>();
-        for(Vector2 pos: mapData.getEnemySpawnLocations(levelIndex)) {
-            enemies.add(new Ghost(hero, pos.x, pos.y, world, spriteScaleFactor));
+        for(int i = 0; i < ghostLayer.getObjects().getCount(); i++) {
+            if(ghostLayer.getObjects().get(i) instanceof RectangleMapObject){
+                Rectangle r = ((RectangleMapObject) ghostLayer.getObjects().get(i)).getRectangle();
+                enemies.add(new Ghost(hero, r.getX(),r.getY(),world,spriteScaleFactor));
+
+            }
         }
+
+        /*
+        for(Vector2 pos: mapData.getEnemySpawnLocations(levelIndex)){
+            enemies.add(new Ghost(hero,pos.x,pos.y,world,spriteScaleFactor));
+        }
+         */
+    }
+
+    private void spawnJanitor(float spriteScaleFactor){
+        MapObject obj = heroLayer.getObjects().get(0);
+        if(obj instanceof RectangleMapObject) {
+            Rectangle spawnPoint = ((RectangleMapObject) obj).getRectangle();
+            this.hero = new Janitor(spawnPoint.getX(), spawnPoint.getY(), this, spriteScaleFactor);
+        }
+
     }
 
     //Determines, based on the player's current direction, whether or not a collision will occur with map walls and

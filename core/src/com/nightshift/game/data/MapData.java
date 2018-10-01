@@ -44,7 +44,10 @@ public class MapData {
                 fileName = "Maps/mechanicmap.tmx";
                 break;
             case 8:
-                fileName = "Maps/mazemap.tmx";
+                fileName = "Maps/bigmappy.tmx";
+                break;
+            case 9:
+                fileName = "Maps/anothermap.tmx";
                 break;
         }
         return fileName;
@@ -91,11 +94,19 @@ public class MapData {
                 break;
             case 7:
                 enemyLocations.add(new Vector2(280,150));
+                enemyLocations.add(new Vector2(300,150));
+                enemyLocations.add(new Vector2(280,170));
                 break;
             case 8:
                 enemyLocations.add(new Vector2(45,300));
                 enemyLocations.add(new Vector2(300,300));
                 enemyLocations.add(new Vector2(300,45));
+                break;
+            case 9:
+                enemyLocations.add(new Vector2(70,70));
+                enemyLocations.add(new Vector2(200,300));
+                enemyLocations.add(new Vector2(300,60));
+                enemyLocations.add(new Vector2(350,50));
                 break;
         }
         return enemyLocations;
@@ -143,6 +154,10 @@ public class MapData {
                 spawn.x = 55;
                 spawn.y = 55;
                 break;
+            case 9:
+                spawn.x = 60;
+                spawn.y = 300;
+                break;
         }
 
         return spawn;
@@ -172,6 +187,8 @@ public class MapData {
                 return 1;
             case 8:
                 return 0.5f;
+            case 9:
+                return 1;
         }
         return 1;
     }

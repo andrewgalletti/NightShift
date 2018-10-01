@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="42">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="49">
  <tileset firstgid="1" source="oltile.tsx"/>
  <tileset firstgid="29" source="oltile2.tsx"/>
  <layer id="5" name="Tile Layer 1" width="32" height="32">
@@ -55,6 +55,31 @@
  </objectgroup>
  <objectgroup id="7" name="Start/End">
   <object id="32" x="385.855" y="384.848" width="14.1044" height="15.1118"/>
+ </objectgroup>
+ <objectgroup id="10" name="Ghosts">
+  <object id="42" x="361.291" y="466.234">
+   <point/>
+  </object>
+  <object id="43" x="442.201" y="465.433">
+   <point/>
+  </object>
+  <object id="44" x="56.8774" y="67.2915">
+   <point/>
+  </object>
+  <object id="45" x="218.697" y="416.567">
+   <point/>
+  </object>
+  <object id="46" x="346.872" y="226.708">
+   <point/>
+  </object>
+  <object id="47" x="309.221" y="316.43">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="11" name="Hero">
+  <object id="48" x="60.0817" y="455.019">
+   <point/>
+  </object>
  </objectgroup>
  <layer id="8" name="Tile Layer 2" width="32" height="32">
   <data encoding="csv">

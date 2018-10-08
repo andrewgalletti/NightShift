@@ -33,10 +33,7 @@
   <object id="10" x="415" y="318" width="33" height="35"/>
  </objectgroup>
  <objectgroup id="9" name="Ghosts">
-  <object id="17" x="253" y="339">
-   <point/>
-  </object>
-  <object id="18" x="318" y="381">
+  <object id="17" x="259" y="344">
    <point/>
   </object>
  </objectgroup>

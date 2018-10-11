@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.PropertiesUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.nightshift.game.sprites.Ghost;
@@ -54,6 +55,10 @@ public class GameScreen implements Screen {
     private MapLayer ghostLayer;
     //Map layer that contains spawn point for the janitor.
     private MapLayer heroLayer;
+
+    //Map Layer that skips to level 5 or 10
+    private MapLayer skipLayer;
+
     //Object that stores the walls as an array of RectangleMapObject.
     private MapObjects mapObjects;
 
@@ -75,7 +80,11 @@ public class GameScreen implements Screen {
         winLayer = map.getLayers().get("Start/End");
         ghostLayer = map.getLayers().get("Ghosts");
         heroLayer = map.getLayers().get("Hero");
+
+        skipLayer = map.getLayers().get("SkipTo");
+
         mapObjects = wallLayer.getObjects();
+
 
         viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,game.camera);
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),false);
@@ -152,8 +161,17 @@ public class GameScreen implements Screen {
         enemies = new ArrayList<Ghost>();
         for(int i = 0; i < ghostLayer.getObjects().getCount(); i++) {
             if(ghostLayer.getObjects().get(i) instanceof RectangleMapObject){
-                Rectangle r = ((RectangleMapObject) ghostLayer.getObjects().get(i)).getRectangle();
-                enemies.add(new Ghost(hero, r.getX(),r.getY(),world,spriteScaleFactor));
+                RectangleMapObject ghost = (RectangleMapObject) ghostLayer.getObjects().get(i);
+                Rectangle r = ghost.getRectangle();
+                float ghostScaleFactor = 1f;
+                if(ghost.getProperties().get("scalefactor") != null){
+                    ghostScaleFactor = ghost.getProperties().get("scalefactor",float.class);
+                }
+                float ghostSpeed = 60;
+                if(ghost.getProperties().get("speed") != null){
+                    ghostSpeed = ghost.getProperties().get("speed",float.class);
+                }
+                enemies.add(new Ghost(hero, r.getX(),r.getY(),world,ghostScaleFactor, ghostSpeed));
 
             }
         }
@@ -224,6 +242,16 @@ public class GameScreen implements Screen {
                     game.success();
                 } else {
                     game.setScreen();
+                }
+            }
+        }
+        if(skipLayer != null) {
+            for (RectangleMapObject r : skipLayer.getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = r.getRectangle();
+                if (Intersector.overlaps(player, rect)) {
+                    mapData.previousScreenDimensions = new Vector2(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
+                    game.setScreen(r.getProperties().get("levelindex",int.class));
+
                 }
             }
         }

@@ -20,147 +20,58 @@ public class MapData {
         String fileName = "";
         switch(levelIndex) {
             case 0:
-                fileName = "Maps/startmap2.tmx";
+                fileName = "Maps/menu.tmx";
                 break;
             case 1:
-                fileName = "Maps/easymap2.tmx";
+                fileName = "Maps/supereasymap.tmx";
                 break;
             case 2:
-                fileName = "Maps/concentricmap2.tmx";
+                fileName = "Maps/firstmapnoghost.tmx";
                 break;
             case 3:
-                fileName = "Maps/zigmap2.tmx";
+                fileName = "Maps/noghostmaze.tmx";
                 break;
             case 4:
-                fileName = "Maps/spiralmap2.tmx";
+                fileName = "Maps/firstghostrun.tmx";
                 break;
             case 5:
-                fileName = "Maps/learningmap.tmx";
-                break;
-            case 6:
-                fileName = "Maps/test.tmx";
-                break;
-            case 7:
                 fileName = "Maps/mechanicmap.tmx";
                 break;
+            case 6:
+                fileName = "Maps/openbeginner.tmx";
+                break;
+            case 7:
+                fileName = "Maps/ghostrooms.tmx";
+                break;
             case 8:
-                fileName = "Maps/bigmappy.tmx";
+                fileName = "Maps/easymap2.tmx";
                 break;
             case 9:
+                fileName = "Maps/concentricmap2.tmx";
+                break;
+            case 10:
+                fileName = "Maps/spiralmap2.tmx";
+                break;
+            case 11:
+                fileName = "Maps/learningmap.tmx";
+                break;
+            case 12:
+                fileName = "Maps/zigmap2.tmx";
+                break;
+            case 13:
                 fileName = "Maps/anothermap.tmx";
+                break;
+            case 14:
+                fileName = "Maps/test.tmx";
+                break;
+            case 15:
+                fileName = "Maps/bigmappy.tmx";
+                break;
+            case 16:
+                fileName = "Maps/mazemap.tmx";
                 break;
         }
         return fileName;
-    }
-
-    public ArrayList<Vector2> getEnemySpawnLocations(int levelIndex) {
-        /**
-         * Each case is for one level. One add method add one ghost.
-         */
-        ArrayList<Vector2> enemyLocations = new ArrayList<Vector2>();
-        switch(levelIndex) {
-            case 0:
-                enemyLocations.add(new Vector2(10, 250));
-                break;
-            case 1:
-                enemyLocations.add(new Vector2(375, 350));
-                enemyLocations.add(new Vector2(125, 350));
-                break;
-            case 2:
-                enemyLocations.add(new Vector2(450, 300));
-                enemyLocations.add(new Vector2(50, 300));
-                break;
-            case 3:
-                enemyLocations.add(new Vector2(50, 250));
-                enemyLocations.add(new Vector2(400, 400));
-                break;
-            case 4:
-                enemyLocations.add(new Vector2(250, 125));
-                enemyLocations.add(new Vector2(375, 125));
-                enemyLocations.add(new Vector2(150, 427));
-                break;
-            case 5:
-                enemyLocations.add(new Vector2(250,45));
-                enemyLocations.add(new Vector2(45,350));
-                enemyLocations.add(new Vector2(350,200));
-                break;
-            case 6:
-                enemyLocations.add(new Vector2(400,45));
-                enemyLocations.add(new Vector2(200,45));
-                enemyLocations.add(new Vector2(400,100));
-                enemyLocations.add(new Vector2(200,100));
-                enemyLocations.add(new Vector2(300,300));
-                enemyLocations.add(new Vector2(100,400));
-                break;
-            case 7:
-                enemyLocations.add(new Vector2(280,150));
-                enemyLocations.add(new Vector2(300,150));
-                enemyLocations.add(new Vector2(280,170));
-                break;
-            case 8:
-                enemyLocations.add(new Vector2(45,300));
-                enemyLocations.add(new Vector2(300,300));
-                enemyLocations.add(new Vector2(300,45));
-                break;
-            case 9:
-                enemyLocations.add(new Vector2(70,70));
-                enemyLocations.add(new Vector2(200,300));
-                enemyLocations.add(new Vector2(300,60));
-                enemyLocations.add(new Vector2(350,50));
-                break;
-        }
-        return enemyLocations;
-    }
-
-    public Vector2 janitorSpawn(int levelIndex) {
-        /**
-         * Each case is for one level.
-         */
-        Vector2 spawn = new Vector2();
-        switch(levelIndex) {
-            case 0:
-                spawn.x = 160;
-                spawn.y = 250;
-                break;
-            case 1:
-                spawn.x = 45;
-                spawn.y = 45;
-                break;
-            case 2:
-                spawn.x = 250;
-                spawn.y = 100;
-                break;
-            case 3:
-                spawn.x = 45;
-                spawn.y = 45;
-                break;
-            case 4:
-                spawn.x = 45;
-                spawn.y = 45;
-                break;
-            case 5:
-                spawn.x = 45;
-                spawn.y = 45;
-                break;
-            case 6:
-                spawn.x = 100;
-                spawn.y = 100;
-                break;
-            case 7:
-                spawn.x = 45;
-                spawn.y = 150;
-                break;
-            case 8:
-                spawn.x = 55;
-                spawn.y = 55;
-                break;
-            case 9:
-                spawn.x = 60;
-                spawn.y = 300;
-                break;
-        }
-
-        return spawn;
     }
 
     public float spriteSize(int levelIndex){
@@ -169,26 +80,12 @@ public class MapData {
          */
 
         switch(levelIndex){
-            case 0:
-                return 1;
-            case 1:
-                return 1;
-            case 2:
-                return 1;
-            case 3:
-                return 1;
-            case 4:
-                return 1;
-            case 5:
-                return 1;
-            case 6:
+            case 13:
                 return 0.5f;
-            case 7:
-                return 1;
-            case 8:
+            case 14:
                 return 0.5f;
-            case 9:
-                return 1;
+            case 15:
+                return 0.5f;
         }
         return 1;
     }

@@ -3,13 +3,13 @@ package com.nightshift.game.data;
 public class Constants {
 
     //sets the total amount of levels in game
-    public static final int MAX_NUM_LEVELS = 10;
+    public static final int MAX_NUM_LEVELS = 17;
     public static final int END_LEVEL_INDEX = MAX_NUM_LEVELS - 1;
 
     //Used to convert from Box2d units to relative coordinate system.
     public static final float PIXELS_TO_METERS = 100f;
-    public static final int VIEWPORT_HEIGHT = 500;
-    public static final int VIEWPORT_WIDTH = 500;
+    public static final int VIEWPORT_HEIGHT = 512;
+    public static final int VIEWPORT_WIDTH = 512;
 
     //Sound Volumes expressed as percentages of original volume.
     public static final float INTO_PURSUIT_VOLUME = .3f;

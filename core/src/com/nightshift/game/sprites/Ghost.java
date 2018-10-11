@@ -31,7 +31,8 @@ public class Ghost {
     private Vector2 acceleration = new Vector2(0,0);
     private Vector2 post = new Vector2(0,0);
 
-    public Ghost(Janitor hero, float xPos, float yPos, World world, float spriteScaleFactor) {
+    public Ghost(Janitor hero, float xPos, float yPos, World world, float spriteScaleFactor, float speed) {
+        this.speed = speed;
         this.world = world;
         this.hero = hero;
         this.spriteScaleFactor = spriteScaleFactor;

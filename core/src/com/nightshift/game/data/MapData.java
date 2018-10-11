@@ -80,11 +80,11 @@ public class MapData {
          */
 
         switch(levelIndex){
-            case 13:
-                return 0.5f;
             case 14:
                 return 0.5f;
             case 15:
+                return 0.5f;
+            case 16:
                 return 0.5f;
         }
         return 1;

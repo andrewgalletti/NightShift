@@ -24,7 +24,7 @@ public class Ghost {
     private Sprite currentSprite;
     private float spriteScaleFactor;
     private Sprite[] animation;
-    private int p;
+    private int angryAnimationIndexOffset;
 
     private Vector2 position = new Vector2(0,0);
     private Vector2 velocity = new Vector2(0,0);
@@ -64,15 +64,15 @@ public class Ghost {
         playSound();
         if(onPatrol) {
             patrol();
-            p = 0;
+            angryAnimationIndexOffset = 0;
         }
         else {
             chase();
-            p = 6;
+            angryAnimationIndexOffset = 6;
         }
         applyAlpha();
         moveIterCounter++;
-        currentSprite = animation[(moveIterCounter/ANIMATION_FACTOR%6)+p];
+        currentSprite = animation[(moveIterCounter/ANIMATION_FACTOR%6)+ angryAnimationIndexOffset];
 
         if(velocity.x != 0 && velocity.y != 0)
             scaleVelocity();

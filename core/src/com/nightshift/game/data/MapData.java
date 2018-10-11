@@ -17,58 +17,58 @@ public class MapData {
         /**
          * Each case is a filepath for a map stored in assets. To add levels, simply add a case here.
          */
-        String fileName = "";
+        String fileName = "Maps/Official Maps/";
         switch(levelIndex) {
             case 0:
-                fileName = "Maps/menu.tmx";
+                fileName += "menu.tmx";
                 break;
             case 1:
-                fileName = "Maps/supereasymap.tmx";
+                fileName += "supereasymap.tmx";
                 break;
             case 2:
-                fileName = "Maps/firstmapnoghost.tmx";
+                fileName += "firstmapnoghost.tmx";
                 break;
             case 3:
-                fileName = "Maps/noghostmaze.tmx";
+                fileName += "noghostmaze.tmx";
                 break;
             case 4:
-                fileName = "Maps/firstghostrun.tmx";
+                fileName += "firstghostrun.tmx";
                 break;
             case 5:
-                fileName = "Maps/mechanicmap.tmx";
+                fileName += "mechanicmap.tmx";
                 break;
             case 6:
-                fileName = "Maps/openbeginner.tmx";
+                fileName += "openbeginner.tmx";
                 break;
             case 7:
-                fileName = "Maps/ghostrooms.tmx";
+                fileName += "ghostrooms.tmx";
                 break;
             case 8:
-                fileName = "Maps/easymap2.tmx";
+                fileName += "easymap2.tmx";
                 break;
             case 9:
-                fileName = "Maps/concentricmap2.tmx";
+                fileName += "concentricmap2.tmx";
                 break;
             case 10:
-                fileName = "Maps/spiralmap2.tmx";
+                fileName += "spiralmap2.tmx";
                 break;
             case 11:
-                fileName = "Maps/learningmap.tmx";
+                fileName += "learningmap.tmx";
                 break;
             case 12:
-                fileName = "Maps/zigmap2.tmx";
+                fileName += "zigmap2.tmx";
                 break;
             case 13:
-                fileName = "Maps/anothermap.tmx";
+                fileName += "anothermap.tmx";
                 break;
             case 14:
-                fileName = "Maps/test.tmx";
+                fileName += "test.tmx";
                 break;
             case 15:
-                fileName = "Maps/bigmappy.tmx";
+                fileName += "bigmappy.tmx";
                 break;
             case 16:
-                fileName = "Maps/mazemap.tmx";
+                fileName += "mazemap.tmx";
                 break;
         }
         return fileName;

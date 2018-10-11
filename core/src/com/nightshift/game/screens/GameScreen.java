@@ -94,7 +94,7 @@ public class GameScreen implements Screen {
         float spriteScaleFactor = mapData.spriteSize(levelIndex);
         spawnJanitor(spriteScaleFactor);
         this.batch = new SpriteBatch();
-        spawnEnemies(spriteScaleFactor);
+        spawnEnemies();
     }
 
     @Override
@@ -153,7 +153,7 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void spawnEnemies(float spriteScaleFactor) {
+    private void spawnEnemies() {
         /**
          * Spawn an array of ghost according to there positions on different maps.
          * Information about maps is passed in from the MapData class.

@@ -37,7 +37,7 @@
    <properties>
     <property name="scalefactor" type="float" value="0.5"/>
     <property name="speed" type="float" value="80"/>
-    <property name="visibleRadius" type="float" value="50"/>
+    <property name="visibleRadius" type="float" value="175"/>
     <property name="wanderRadius" type="float" value="100"/>
    </properties>
    <point/>
@@ -64,7 +64,7 @@
    <properties>
     <property name="scalefactor" type="float" value="0.5"/>
     <property name="speed" type="float" value="80"/>
-    <property name="visibleRadius" type="float" value="50"/>
+    <property name="visibleRadius" type="float" value="175"/>
     <property name="wanderRadius" type="float" value="100"/>
    </properties>
    <point/>

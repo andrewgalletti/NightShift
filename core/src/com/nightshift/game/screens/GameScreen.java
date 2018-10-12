@@ -87,7 +87,6 @@ public class GameScreen implements Screen {
 
         viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,game.camera);
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),false);
-        System.out.println(viewport.getScreenWidth());
 
         //Vector2 spawn = mapData.janitorSpawn(levelIndex);
         float spriteScaleFactor = mapData.spriteSize(levelIndex);
@@ -218,7 +217,7 @@ public class GameScreen implements Screen {
         for(Ghost g: enemies) {
             Rectangle ghost = new Rectangle(g.getX(),g.getY(),g.getWidth(),g.getHeight());
             if(Intersector.overlaps(player,ghost)) {
-                hero.takeDamage(game.health);
+                //hero.takeDamage(game.health);
                 return;
             }
         }

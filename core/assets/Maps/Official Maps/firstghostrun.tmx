@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="11">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextobjectid="11">
  <tileset firstgid="1" source="oltile.tsx"/>
- <layer id="1" name="Tile Layer 1" width="16" height="16">
+ <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -21,17 +21,23 @@
 0,0,0,0,0,0,0,0,0,0,0,0,17,17,17,17
 </data>
  </layer>
- <objectgroup id="3" name="Ghosts">
+ <objectgroup name="Ghosts">
   <object id="1" x="49" y="244">
+   <properties>
+    <property name="scalefactor" type="float" value="5"/>
+    <property name="speed" type="float" value="10"/>
+    <property name="visibleRadius" type="float" value="500"/>
+    <property name="wanderRadius" type="float" value="500"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="4" name="Hero">
+ <objectgroup name="Hero" visible="0">
   <object id="2" x="207" y="240">
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="5" name="Walls">
+ <objectgroup name="Walls">
   <object id="4" x="0" y="350" width="382" height="158"/>
   <object id="5" x="0" y="105" width="32" height="403"/>
   <object id="6" x="-7" y="92" width="549" height="66"/>
@@ -39,10 +45,10 @@
   <object id="8" x="348" y="481" width="169" height="32"/>
   <object id="10" x="342" y="351" width="40" height="161"/>
  </objectgroup>
- <objectgroup id="6" name="Start/End">
+ <objectgroup name="Start/End">
   <object id="3" x="417" y="416" width="31" height="33"/>
  </objectgroup>
- <layer id="2" name="Tile Layer 2" width="16" height="16">
+ <layer name="Tile Layer 2" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -9,12 +9,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import java.util.Random;
 
 public class Ghost {
-    private static final float RANGE = 225;
     private static final float BASE_ALPHA = .3f;
     private static final int ANIMATION_FACTOR = 6;
     private static Random random = new Random();
 
-    private float speed = random.nextFloat() * 20 + 50;
     private int moveIterCounter = 0;
     private boolean onPatrol = true;
 
@@ -22,7 +20,7 @@ public class Ghost {
     private Janitor hero;
     private Body body;
     private Sprite currentSprite;
-    private float spriteScaleFactor;
+    private float spriteScaleFactor, speed, visionRadius, wanderRadius;
     private Sprite[] animation;
     private int angryAnimationIndexOffset;
 
@@ -30,29 +28,25 @@ public class Ghost {
     private Vector2 velocity = new Vector2(0,0);
     //Acceleration manipulation used to give ghost movement curvature.
     private Vector2 acceleration = new Vector2(0,0);
+    //Spawn point and center of wandering area
     private Vector2 post = new Vector2(0,0);
 
-    public Ghost(Janitor hero, float xPos, float yPos, World world, float spriteScaleFactor, float speed) {
-        this.speed = speed;
-        this.world = world;
+    public Ghost(Janitor hero, float xPos, float yPos, World world, float spriteScaleFactor, float speed, float visionRadius, float wanderRadius) {
+        //Sets references
         this.hero = hero;
-        this.spriteScaleFactor = spriteScaleFactor;
+        this.world = world;
         position.x = xPos;
         position.y = yPos;
         post.x = xPos;
         post.y = yPos;
+        this.spriteScaleFactor = spriteScaleFactor;
+        this.speed = speed;
+        this.visionRadius = visionRadius;
+        this.wanderRadius = wanderRadius;
+        //Prepare Sprite animation
         initSpriteArray();
         currentSprite = animation[0];
         createPhysicsBody();
-    }
-
-    private void playSound() {
-        /**
-         * What this function actually does is checking if hero is out of distance so that
-         * ghost should go on patrol, i.e. wander randomly, instead of chase the character.
-         */
-        boolean prevOnPatrol = onPatrol;
-        onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > RANGE*spriteScaleFactor;
     }
 
     public void moveGhost() {
@@ -61,7 +55,7 @@ public class Ghost {
          * If character is within distance, ghost chase him.
          * Otherwise ghost wanders randomly.
          */
-        playSound();
+        onPatrol = Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)) > visionRadius;
         if(onPatrol) {
             patrol();
             angryAnimationIndexOffset = 0;
@@ -86,7 +80,7 @@ public class Ghost {
 
     private void patrol() {
         //If outside range of "post" forgoes acceleration manipulation and b-lines it back within range.
-        if(Math.sqrt(Math.pow(position.x-post.x,2)+Math.pow(position.y-post.y,2)) > 150) {
+        if(Math.sqrt(Math.pow(position.x-post.x,2)+Math.pow(position.y-post.y,2)) > wanderRadius) {
             velocity.x += 50*(post.x - position.x);
             velocity.y += 50*(post.y - position.y);
         }
@@ -255,7 +249,7 @@ public class Ghost {
         else {
             for(Sprite s: animation) {
                 float d = (float)(Math.sqrt(Math.pow(position.x-hero.getX(),2)+Math.pow(position.y-hero.getY(),2)));
-                float alpha = (1 - BASE_ALPHA) * (RANGE*spriteScaleFactor - d) / RANGE*spriteScaleFactor + BASE_ALPHA;
+                float alpha = (1 - BASE_ALPHA) * (visionRadius - d) / visionRadius + BASE_ALPHA;
                 s.setAlpha(alpha);
             }
         }

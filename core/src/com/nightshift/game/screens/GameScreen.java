@@ -16,7 +16,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.PropertiesUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.nightshift.game.sprites.Ghost;
@@ -164,23 +163,24 @@ public class GameScreen implements Screen {
                 RectangleMapObject ghost = (RectangleMapObject) ghostLayer.getObjects().get(i);
                 Rectangle r = ghost.getRectangle();
                 float ghostScaleFactor = 1f;
-                if(ghost.getProperties().get("scalefactor") != null){
-                    ghostScaleFactor = ghost.getProperties().get("scalefactor",float.class);
-                }
                 float ghostSpeed = 60;
-                if(ghost.getProperties().get("speed") != null){
+                float visibleRadius = 225;
+                float wanderRadius = 150;
+                try {
+                    ghostScaleFactor = ghost.getProperties().get("scalefactor",float.class);
+                } catch (NullPointerException e) {}
+                try {
                     ghostSpeed = ghost.getProperties().get("speed",float.class);
-                }
-                enemies.add(new Ghost(hero, r.getX(),r.getY(),world,ghostScaleFactor, ghostSpeed));
-
+                } catch (NullPointerException e) {}
+                try {
+                    visibleRadius = ghost.getProperties().get("visibleRadius",float.class);
+                } catch (NullPointerException e) {}
+                try {
+                    wanderRadius = ghost.getProperties().get("wanderRadius",float.class);
+                } catch (NullPointerException e) {}
+                enemies.add(new Ghost(hero, r.getX(), r.getY(), world, ghostScaleFactor, ghostSpeed, visibleRadius, wanderRadius));
             }
         }
-
-        /*
-        for(Vector2 pos: mapData.getEnemySpawnLocations(levelIndex)){
-            enemies.add(new Ghost(hero,pos.x,pos.y,world,spriteScaleFactor));
-        }
-         */
     }
 
     private void spawnJanitor(float spriteScaleFactor){
@@ -189,7 +189,6 @@ public class GameScreen implements Screen {
             Rectangle spawnPoint = ((RectangleMapObject) obj).getRectangle();
             this.hero = new Janitor(spawnPoint.getX(), spawnPoint.getY(), this, spriteScaleFactor);
         }
-
     }
 
     //Determines, based on the player's current direction, whether or not a collision will occur with map walls and
@@ -200,8 +199,6 @@ public class GameScreen implements Screen {
          */
 
         Rectangle player = hero.getHitbox();
-
-
 
         for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = r.getRectangle();

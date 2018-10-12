@@ -3,6 +3,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -238,6 +239,16 @@ public class Ghost {
         for(int i = 0; i < 12; i++){
             animation[i].setScale(scaleFactor);
         }
+    }
+
+    public Rectangle getHitbox(){
+
+        float width = currentSprite.getWidth()*spriteScaleFactor;
+        float height = currentSprite.getHeight()*spriteScaleFactor;
+        float x = getX() + (currentSprite.getWidth()/2) - (width/2);
+        float y = getY() + (currentSprite.getHeight()/2) - (height/2);
+
+        return new Rectangle( x, y, width, height);
     }
 
     private void applyAlpha() {

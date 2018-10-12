@@ -42,8 +42,8 @@ public class Janitor {
         position.x = xPos * (1/spriteScaleFactor);
         position.y = yPos * (1/spriteScaleFactor);
         initSpriteArray();
-        dimensions.x = currentSprite.getWidth()*spriteScaleFactor;
-        dimensions.y = currentSprite.getHeight()*spriteScaleFactor;
+        dimensions.x = currentSprite.getWidth();//*spriteScaleFactor;
+        dimensions.y = currentSprite.getHeight();//*spriteScaleFactor;
         createPhysicsBody();
     }
 
@@ -114,8 +114,8 @@ public class Janitor {
     private void updateSpritePositions() {
         for (Sprite[] directionalSpriteSet: animation) {
             for(Sprite s: directionalSpriteSet) {
-                float x = position.x - (1-spriteScaleFactor)*currentSprite.getWidth()/2;
-                float y = position.y - (1-spriteScaleFactor)*currentSprite.getWidth()/2;
+                float x = position.x;// - (1-spriteScaleFactor)*currentSprite.getWidth()/2;
+                float y = position.y;// - (1-spriteScaleFactor)*currentSprite.getWidth()/2;
                 s.setX(x);
                 s.setY(y);
             }
@@ -198,16 +198,16 @@ public class Janitor {
         return dimensions;
     }
 
-    public Rectangle getHitbox(){
+    public Rectangle getWallHitbox(){
         /**
          * Used for wall collision.
          */
 
-        float threshold = 10*spriteScaleFactor;
-        float x = getX() + (1-spriteScaleFactor)*threshold;
-        float y = getY() + (1-spriteScaleFactor)*threshold*2;
+        float threshold = 5*spriteScaleFactor;
         float width = getDimensions().x*spriteScaleFactor;
         float height = getDimensions().y*spriteScaleFactor;
+        float x = getX() + (getDimensions().x/2) - (width/2);
+        float y = getY() + (getDimensions().y/2) - (height/2);
         switch(getDirection()) {
             case BACK:
                 y += threshold;
@@ -224,6 +224,22 @@ public class Janitor {
         }
         return new Rectangle( x, y, width, height);
     }
+
+    public Rectangle getGhostHitbox(){
+        /**
+         * Used for ghost collision.
+         */
+
+        float width = getDimensions().x*spriteScaleFactor;
+        float height = getDimensions().y*spriteScaleFactor;
+        float x = getX() + (getDimensions().x/2) - (width/2);
+        float y = getY() + (getDimensions().y/2) - (height/2);
+
+
+        return new Rectangle( x, y, width, height);
+    }
+
+
 
     public float getX() {
         return position.x;

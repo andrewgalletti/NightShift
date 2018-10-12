@@ -128,9 +128,17 @@ public class GameScreen implements Screen {
 
         if(showHitbox) {
             shapeRenderer.setProjectionMatrix(game.camera.combined);
-            Rectangle player = hero.getHitbox();
+            Rectangle wallHitbox = hero.getWallHitbox();
+            Rectangle damageHitbox = hero.getGhostHitbox();
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+            shapeRenderer.setColor(0,1,0,1);
+            shapeRenderer.rect(wallHitbox.getX(), wallHitbox.getY(), wallHitbox.getWidth(), wallHitbox.getHeight());
+            shapeRenderer.setColor(1,0,0,1);
+            shapeRenderer.rect(damageHitbox.getX(), damageHitbox.getY(), damageHitbox.getWidth(), damageHitbox.getHeight());
+            for(Ghost g : enemies){
+                Rectangle ghostBox = g.getHitbox();
+                shapeRenderer.rect(ghostBox.getX(),ghostBox.getY(),ghostBox.getWidth(),ghostBox.getHeight());
+            }
             shapeRenderer.end();
         }
 
@@ -178,6 +186,7 @@ public class GameScreen implements Screen {
                     wanderRadius = ghost.getProperties().get("wanderRadius",float.class);
                 } catch (NullPointerException e) {}
                 enemies.add(new Ghost(hero, r.getX(), r.getY(), world, ghostScaleFactor, ghostSpeed, visibleRadius, wanderRadius));
+
             }
         }
     }
@@ -197,7 +206,7 @@ public class GameScreen implements Screen {
          * Makes a rectangle around janitor and uses intersector to check janitor's collision with walls.
          */
 
-        Rectangle player = hero.getHitbox();
+        Rectangle player = hero.getWallHitbox();
 
         for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = r.getRectangle();
@@ -213,11 +222,11 @@ public class GameScreen implements Screen {
          * Checks ghost's collision with janitor.
          * If a collision occurs, janitor loses life.
          */
-        Rectangle player = new Rectangle(hero.getX(),hero.getY(),hero.getDimensions().x,hero.getDimensions().y);
+        Rectangle player = hero.getGhostHitbox();
         for(Ghost g: enemies) {
-            Rectangle ghost = new Rectangle(g.getX(),g.getY(),g.getWidth(),g.getHeight());
+            Rectangle ghost = g.getHitbox();
             if(Intersector.overlaps(player,ghost)) {
-                //hero.takeDamage(game.health);
+                hero.takeDamage(game.health);
                 return;
             }
         }

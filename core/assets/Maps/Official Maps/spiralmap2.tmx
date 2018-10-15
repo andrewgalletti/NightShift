@@ -28,14 +28,14 @@
  </layer>
  <objectgroup id="2" name="Walls">
   <object id="1" x="0" y="0" width="30" height="510"/>
-  <object id="2" x="0" y="482" width="512" height="28"/>
-  <object id="3" x="490" y="0" width="18" height="512"/>
-  <object id="4" x="136" y="128" width="24" height="372"/>
-  <object id="6" x="0" y="0" width="514" height="20"/>
-  <object id="7" x="134" y="128" width="250" height="20"/>
-  <object id="8" x="360" y="130" width="24" height="246"/>
-  <object id="9" x="264" y="258" width="24" height="116"/>
-  <object id="10" x="256" y="354" width="126" height="20"/>
+  <object id="2" x="0" y="480" width="512" height="30"/>
+  <object id="3" x="480" y="0" width="55" height="512"/>
+  <object id="4" x="128" y="128" width="32" height="372"/>
+  <object id="6" x="0" y="0" width="514" height="32"/>
+  <object id="7" x="134" y="128" width="250" height="31"/>
+  <object id="8" x="351" y="130" width="33" height="246"/>
+  <object id="9" x="255" y="258" width="33" height="116"/>
+  <object id="10" x="256" y="354" width="127" height="28"/>
  </objectgroup>
  <objectgroup id="6" name="Hero">
   <object id="17" x="78" y="435">

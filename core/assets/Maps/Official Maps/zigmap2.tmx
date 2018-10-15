@@ -25,16 +25,16 @@
  </layer>
  <objectgroup id="2" name="Walls">
   <object id="3" x="0" y="2" width="512" height="26"/>
-  <object id="5" x="136" y="224" width="376" height="22"/>
+  <object id="5" x="128" y="224" width="384" height="31"/>
   <object id="6" x="-2" y="2" width="516" height="24"/>
-  <object id="8" x="-2" y="-2" width="30" height="510"/>
-  <object id="9" x="0" y="482" width="464" height="26"/>
+  <object id="8" x="-2" y="-2" width="34" height="510"/>
+  <object id="9" x="0" y="482" width="508" height="40"/>
   <object id="12" x="0" y="480" width="512" height="36"/>
-  <object id="13" x="488" y="0" width="24" height="520"/>
-  <object id="14" x="0" y="352" width="382" height="22"/>
-  <object id="15" x="2" y="96" width="382" height="20"/>
+  <object id="13" x="479" y="0" width="33" height="520"/>
+  <object id="14" x="0" y="352" width="382" height="31"/>
+  <object id="15" x="2" y="96" width="382" height="31"/>
   <object id="16" x="312" y="14"/>
-  <object id="17" x="-4" y="2" width="516" height="18"/>
+  <object id="17" x="-4" y="2" width="516" height="30"/>
  </objectgroup>
  <objectgroup id="3" name="Start/End">
   <object id="2" x="32" y="32" width="30" height="28"/>

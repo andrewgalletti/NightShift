@@ -26,7 +26,7 @@ public class MapData {
                 fileName += "supereasymap.tmx";
                 break;
             case 2:
-                fileName += "firstmapnoghost.tmx";
+                fileName += "SquareMaze.tmx";
                 break;
             case 3:
                 fileName += "noghostmaze.tmx";
@@ -80,6 +80,8 @@ public class MapData {
          */
 
         switch(levelIndex){
+            case 2:
+                return 0.5f;
             case 14:
                 return 0.5f;
             case 15:

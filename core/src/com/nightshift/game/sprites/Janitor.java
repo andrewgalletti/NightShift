@@ -203,7 +203,7 @@ public class Janitor {
          * Used for wall collision.
          */
 
-        float threshold = 5*spriteScaleFactor;
+        float threshold = 2.5f*spriteScaleFactor;
         float width = getDimensions().x*spriteScaleFactor;
         float height = getDimensions().y*spriteScaleFactor;
         float x = getX() + (getDimensions().x/2) - (width/2);

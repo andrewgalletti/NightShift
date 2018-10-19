@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextobjectid="13">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="13">
  <tileset firstgid="1" source="oltile.tsx"/>
- <layer name="Tile Layer 1" width="16" height="16">
+ <layer id="1" name="Tile Layer 1" width="16" height="16">
   <data encoding="csv">
 17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,
 17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,
@@ -21,42 +21,24 @@
 17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17
 </data>
  </layer>
- <objectgroup name="Walls">
+ <objectgroup id="2" name="Walls">
   <object id="1" x="-18" y="-10" width="537" height="42"/>
   <object id="2" x="480" y="-12" width="43" height="529"/>
   <object id="3" x="-24" y="480" width="546" height="36"/>
   <object id="4" x="-15" y="-18" width="45" height="544"/>
  </objectgroup>
- <objectgroup name="Hero" visible="0">
+ <objectgroup id="3" name="Hero">
   <object id="6" x="241" y="467">
    <point/>
   </object>
  </objectgroup>
- <objectgroup name="Ghosts">
-  <object id="7" x="435" y="315">
+ <objectgroup id="4" name="Ghosts">
+  <object id="7" x="433" y="329">
    <properties>
     <property name="scalefactor" type="float" value="0.5"/>
     <property name="speed" type="float" value="80"/>
     <property name="visibleRadius" type="float" value="175"/>
     <property name="wanderRadius" type="float" value="100"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="8" x="335" y="209">
-   <properties>
-    <property name="scalefactor" type="float" value="2"/>
-    <property name="speed" type="float" value="30"/>
-    <property name="visibleRadius" type="float" value="400"/>
-    <property name="wanderRadius" type="float" value="200"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="9" x="181" y="210">
-   <properties>
-    <property name="scalefactor" type="float" value="2"/>
-    <property name="speed" type="float" value="30"/>
-    <property name="visibleRadius" type="float" value="400"/>
-    <property name="wanderRadius" type="float" value="200"/>
    </properties>
    <point/>
   </object>
@@ -88,10 +70,10 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup name="Start/End">
+ <objectgroup id="5" name="Start/End">
   <object id="5" x="223" y="27" width="33" height="37"/>
  </objectgroup>
- <layer name="Tile Layer 2" width="16" height="16">
+ <layer id="6" name="Tile Layer 2" width="16" height="16">
   <data encoding="csv">
 11,27,27,27,27,27,27,27,27,27,27,27,27,27,27,12,
 28,0,0,0,0,0,0,22,0,0,0,0,0,0,0,28,

@@ -72,18 +72,33 @@
  </objectgroup>
  <objectgroup id="5" name="Ghosts">
   <object id="32" x="380.117" y="309.618">
+   <properties>
+    <property name="scalefactor" type="float" value="0.5"/>
+   </properties>
    <point/>
   </object>
   <object id="33" x="75.5928" y="193.071">
+   <properties>
+    <property name="scalefactor" type="float" value="0.5"/>
+   </properties>
    <point/>
   </object>
   <object id="35" x="339.395" y="32.0184">
+   <properties>
+    <property name="scalefactor" type="float" value="0.5"/>
+   </properties>
    <point/>
   </object>
   <object id="36" x="167.777" y="342.597">
+   <properties>
+    <property name="scalefactor" type="float" value="0.5"/>
+   </properties>
    <point/>
   </object>
-  <object id="39" x="383.698" y="410.943">
+  <object id="39" x="382.109" y="413.327">
+   <properties>
+    <property name="scalefactor" type="float" value="0.5"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>

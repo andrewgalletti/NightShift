@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="35">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="36">
  <tileset firstgid="1" source="oltile2.tsx"/>
  <layer id="1" name="Tile Layer 1" width="32" height="32">
   <data encoding="csv">
@@ -56,7 +56,7 @@
   <object id="20" x="144.179" y="96.4442" width="79.8831" height="93.5217"/>
  </objectgroup>
  <objectgroup id="5" name="Ghosts">
-  <object id="27" x="98.3926" y="264.004">
+  <object id="27" x="449.393" y="84.004">
    <properties>
     <property name="scalefactor" type="float" value="0.5"/>
    </properties>
@@ -78,6 +78,9 @@
    <properties>
     <property name="scalefactor" type="float" value="0.5"/>
    </properties>
+   <point/>
+  </object>
+  <object id="35" x="65" y="75">
    <point/>
   </object>
  </objectgroup>

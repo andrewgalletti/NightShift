@@ -126,21 +126,7 @@ public class GameScreen implements Screen {
         tiledMapRenderer.render();
 
 
-        if(showHitbox) {
-            shapeRenderer.setProjectionMatrix(game.camera.combined);
-            Rectangle wallHitbox = hero.getWallHitbox();
-            Rectangle damageHitbox = hero.getGhostHitbox();
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(0,1,0,1);
-            shapeRenderer.rect(wallHitbox.getX(), wallHitbox.getY(), wallHitbox.getWidth(), wallHitbox.getHeight());
-            shapeRenderer.setColor(1,0,0,1);
-            shapeRenderer.rect(damageHitbox.getX(), damageHitbox.getY(), damageHitbox.getWidth(), damageHitbox.getHeight());
-            for(Ghost g : enemies){
-                Rectangle ghostBox = g.getHitbox();
-                shapeRenderer.rect(ghostBox.getX(),ghostBox.getY(),ghostBox.getWidth(),ghostBox.getHeight());
-            }
-            shapeRenderer.end();
-        }
+
 
         //Scales and then draws all Sprites onto the screen.
         batch.begin();
@@ -156,6 +142,22 @@ public class GameScreen implements Screen {
         hero.resetVelocity();
         for(Ghost g: enemies) {
             g.resetVelocity();
+        }
+
+        if(showHitbox) {
+            shapeRenderer.setProjectionMatrix(game.camera.combined);
+            Rectangle wallHitbox = hero.getWallHitbox();
+            Rectangle damageHitbox = hero.getGhostHitbox();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(0,1,0,1);
+            shapeRenderer.rect(wallHitbox.getX(), wallHitbox.getY(), wallHitbox.getWidth(), wallHitbox.getHeight());
+            shapeRenderer.setColor(1,0,0,1);
+            shapeRenderer.rect(damageHitbox.getX(), damageHitbox.getY(), damageHitbox.getWidth(), damageHitbox.getHeight());
+            for(Ghost g : enemies){
+                Rectangle ghostBox = g.getHitbox();
+                shapeRenderer.rect(ghostBox.getX(),ghostBox.getY(),ghostBox.getWidth(),ghostBox.getHeight());
+            }
+            shapeRenderer.end();
         }
     }
 
@@ -206,11 +208,12 @@ public class GameScreen implements Screen {
          * Makes a rectangle around janitor and uses intersector to check janitor's collision with walls.
          */
 
-        Rectangle player = hero.getWallHitbox();
+        Rectangle playerUnforgiving = hero.getWallHitbox();
+        Rectangle playerForgiving = hero.getGhostHitbox();
 
         for(RectangleMapObject r: mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle rect = r.getRectangle();
-            if(Intersector.overlaps(player,rect))
+            if(!Intersector.overlaps(playerForgiving,rect) && Intersector.overlaps(playerUnforgiving,rect))
                 return true;
         }
 

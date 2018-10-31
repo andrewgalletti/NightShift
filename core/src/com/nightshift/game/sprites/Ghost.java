@@ -243,8 +243,8 @@ public class Ghost {
 
     public Rectangle getHitbox(){
 
-        float width = currentSprite.getWidth()*spriteScaleFactor;
-        float height = currentSprite.getHeight()*spriteScaleFactor;
+        float width = currentSprite.getWidth()*.7f*spriteScaleFactor;
+        float height = currentSprite.getHeight()*.7f*spriteScaleFactor;
         float x = getX() + (currentSprite.getWidth()/2) - (width/2);
         float y = getY() + (currentSprite.getHeight()/2) - (height/2);
 

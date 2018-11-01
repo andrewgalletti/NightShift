@@ -32,7 +32,7 @@ public class MapData {
                 fileName += "mechanicmap.tmx";
                 break;
             case 4:
-                fileName += "mechanicmap.tmx";
+                fileName += "morethanoneghost.tmx";
                 break;
             case 5:
                 fileName += "easymap2.tmx";
@@ -47,7 +47,7 @@ public class MapData {
                 fileName += "ghostrooms.tmx";
                 break;
             case 9:
-                fileName += "ghostrooms.tmx";
+                fileName += "blocklevel.tmx";
                 break;
             case 10:
                 fileName += "spiralmap2.tmx";
@@ -62,7 +62,7 @@ public class MapData {
                 fileName += "openbeginner.tmx";
                 break;
             case 14:
-                fileName += "openbeginner.tmx";
+                fileName += "butterfly.tmx";
                 break;
             case 15:
                 fileName += "openbeginner.tmx";

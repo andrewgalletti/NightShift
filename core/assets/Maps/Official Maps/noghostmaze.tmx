@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="18">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="22">
  <tileset firstgid="1" source="oltile.tsx"/>
  <layer id="1" name="Tile Layer 1" width="16" height="16">
   <data encoding="csv">
@@ -21,7 +21,20 @@
 17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17
 </data>
  </layer>
- <objectgroup id="2" name="Ghosts"/>
+ <objectgroup id="2" name="Ghosts">
+  <object id="18" x="71" y="132">
+   <point/>
+  </object>
+  <object id="19" x="454" y="336">
+   <point/>
+  </object>
+  <object id="20" x="331" y="457">
+   <point/>
+  </object>
+  <object id="21" x="60" y="462">
+   <point/>
+  </object>
+ </objectgroup>
  <objectgroup id="3" name="Hero">
   <object id="15" x="417" y="83">
    <point/>

@@ -204,8 +204,8 @@ public class Janitor {
          */
 
         float threshold = 5f*spriteScaleFactor;
-        float width = getDimensions().x*spriteScaleFactor;
-        float height = getDimensions().y*spriteScaleFactor;
+        float width = getDimensions().x*0.8f*spriteScaleFactor;
+        float height = getDimensions().y*0.8f*spriteScaleFactor;
         float x = getX() + (getDimensions().x/2) - (width/2);
         float y = getY() + (getDimensions().y/2) - (height/2);
         switch(getDirection()) {
@@ -230,8 +230,8 @@ public class Janitor {
          * Used for ghost collision.
          */
 
-        float width = getDimensions().x*spriteScaleFactor;
-        float height = getDimensions().y*spriteScaleFactor;
+        float width = getDimensions().x*0.8f*spriteScaleFactor;
+        float height = getDimensions().y*0.8f*spriteScaleFactor;
         float x = getX() + (getDimensions().x/2) - (width/2);
         float y = getY() + (getDimensions().y/2) - (height/2);
 

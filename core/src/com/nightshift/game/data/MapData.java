@@ -35,40 +35,55 @@ public class MapData {
                 fileName += "mechanicmap.tmx";
                 break;
             case 5:
-                fileName += "openbeginner.tmx";
-                break;
-            case 6:
-                fileName += "openbeginner.tmx";
-                break;
-            case 7:
-                fileName += "ghostrooms.tmx";
-                break;
-            case 8:
                 fileName += "easymap2.tmx";
                 break;
+            case 6:
+                fileName += "learningmap.tmx";
+                break;
+            case 7:
+                fileName += "anothermap.tmx";
+                break;
+            case 8:
+                fileName += "ghostrooms.tmx";
+                break;
             case 9:
-                fileName += "concentricmap2.tmx";
+                fileName += "ghostrooms.tmx";
                 break;
             case 10:
                 fileName += "spiralmap2.tmx";
                 break;
             case 11:
-                fileName += "learningmap.tmx";
+                fileName += "spiralmap2.tmx";
                 break;
             case 12:
-                fileName += "zigmap2.tmx";
+                fileName += "noghostmaze.tmx";
                 break;
             case 13:
-                fileName += "anothermap.tmx";
+                fileName += "openbeginner.tmx";
                 break;
             case 14:
-                fileName += "test.tmx";
+                fileName += "openbeginner.tmx";
                 break;
             case 15:
-                fileName += "bigmappy.tmx";
+                fileName += "openbeginner.tmx";
                 break;
             case 16:
+                fileName += "openbeginner.tmx";
+                break;
+            case 17:
+                fileName += "bigmappy.tmx";
+                break;
+            case 18:
+                fileName += "test.tmx";
+                break;
+            case 19:
                 fileName += "mazemap.tmx";
+                break;
+            case 20:
+                fileName += "wallOfGhosts.tmx";
+                break;
+            case 21:
+                fileName += "TheEnd.tmx";
                 break;
         }
         return fileName;
@@ -78,14 +93,8 @@ public class MapData {
         /**
          * Determines sprite scale factor for janitor and ghost sprites.
          */
-
-        switch(levelIndex){
-            case 14:
-                return 0.5f;
-            case 15:
-                return 0.5f;
-            case 16:
-                return 0.5f;
+        if(levelIndex >= 17){
+            return 0.5f;
         }
         return 1;
     }

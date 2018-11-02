@@ -93,7 +93,7 @@ public class MapData {
         /**
          * Determines sprite scale factor for janitor and ghost sprites.
          */
-        if(levelIndex >= 17){
+        if(levelIndex >= 14){
             return 0.5f;
         }
         return 1;

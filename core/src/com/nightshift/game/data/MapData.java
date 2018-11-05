@@ -53,7 +53,7 @@ public class MapData {
                 fileName += "spiralmap2.tmx";
                 break;
             case 11:
-                fileName += "spiralmap2.tmx";
+                fileName += "differentsizeghosts.tmx";
                 break;
             case 12:
                 fileName += "noghostmaze.tmx";
@@ -65,7 +65,7 @@ public class MapData {
                 fileName += "butterfly.tmx";
                 break;
             case 15:
-                fileName += "openbeginner.tmx";
+                fileName += "zipzap.tmx";
                 break;
             case 16:
                 fileName += "openbeginner.tmx";
@@ -93,7 +93,7 @@ public class MapData {
         /**
          * Determines sprite scale factor for janitor and ghost sprites.
          */
-        if(levelIndex >= 17){
+        if(levelIndex >= 14){
             return 0.5f;
         }
         return 1;

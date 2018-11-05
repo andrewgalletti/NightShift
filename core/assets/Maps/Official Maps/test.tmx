@@ -44,21 +44,17 @@
   <object id="27" x="480.556" y="-54.4026" width="41.3057" height="588.354"/>
   <object id="28" x="-33.246" y="-16.1193" width="571.227" height="46.3429"/>
   <object id="29" x="-13.0969" y="-10.0746" width="44.328" height="551.078"/>
-  <object id="33" x="321.378" y="320.371" width="29.2162" height="109.813"/>
-  <object id="34" x="321.378" y="320.371" width="110.82" height="32.2386"/>
+  <object id="34" x="321.378" y="320.371" width="110.82" height="30.2474"/>
   <object id="36" x="240.782" y="240.782" width="31.2311" height="189.402"/>
-  <object id="37" x="240.782" y="240.782" width="192.424" height="31.2311"/>
-  <object id="38" x="161.193" y="162.2" width="272.013" height="28.2087"/>
-  <object id="39" x="161.193" y="162.2" width="30.2237" height="269.998"/>
-  <object id="40" x="80.5964" y="81.6039" width="33.246" height="352.609"/>
-  <object id="41" x="80.5964" y="81.6039" width="348.579" height="30.2237"/>
-  <object id="54" x="80" y="78" width="398" height="30"/>
+  <object id="37" x="240.782" y="240.782" width="238.222" height="29.2399"/>
+  <object id="38" x="161.193" y="162.2" width="269.026" height="28.2087"/>
+  <object id="40" x="80.5964" y="81.6039" width="29.7421" height="349.105"/>
+  <object id="41" x="80.5964" y="81.6039" width="399.385" height="30.2237"/>
   <object id="55" x="163" y="164" width="27" height="314"/>
-  <object id="56" x="243" y="242" width="236" height="29"/>
-  <object id="57" x="326" y="325" width="23" height="151"/>
+  <object id="57" x="322.018" y="322.013" width="28.9737" height="161.952"/>
  </objectgroup>
  <objectgroup id="7" name="Start/End">
-  <object id="32" x="385.855" y="384.848" width="14.1044" height="15.1118"/>
+  <object id="32" x="384.847" y="384.176" width="14.1044" height="15.1118"/>
  </objectgroup>
  <objectgroup id="11" name="Hero">
   <object id="48" x="62.0817" y="77.019">

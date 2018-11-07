@@ -1,8 +1,5 @@
 package com.nightshift.game;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.nightshift.game.data.Constants;
@@ -22,6 +19,7 @@ public class NightShift extends Game {
 
 	//Used to store user's lives across different levels, as well as, initiate the end sequence if the user runs out of lives.
 	public LifeBar health;
+	public Preferences prefs;
 	//TODO: define camera
 	public OrthographicCamera camera;
 
@@ -30,6 +28,7 @@ public class NightShift extends Game {
 
 	public void create() {
 		health = new LifeBar(this);
+		prefs = Gdx.app.getPreferences("My Preferences");
 		this.intoPursuit = Gdx.audio.newSound(Gdx.files.internal("Sounds/IntoPursuit.mp3"));
 		currentScreen = new StartScreen(this);
 		camera = new OrthographicCamera();
@@ -62,6 +61,7 @@ public class NightShift extends Game {
 		}
 		if(currentScreen instanceof GameScreen) {
 			int index = ((GameScreen) currentScreen).getLevelIndex();
+			storeMaxLevel(index);
 			currentScreen = new GameScreen(this,(index + 1) % Constants.MAX_NUM_LEVELS);
 			intoPursuit.play(Constants.INTO_PURSUIT_VOLUME);
 		}
@@ -116,6 +116,13 @@ public class NightShift extends Game {
 		if(!musicCurrentlyLooping && System.currentTimeMillis() - timeOfStartSound >= Constants.START_SOUND_MUSIC_DELAY) {
 			gameMusic.loop(Constants.GAME_MUSIC_VOLUME);
 			musicCurrentlyLooping = true;
+		}
+	}
+
+	private void storeMaxLevel(int i) {
+		if(prefs.getInteger("maxInteger") < i) {
+			prefs.putInteger("maxLevel", i);
+			prefs.flush();
 		}
 	}
 }

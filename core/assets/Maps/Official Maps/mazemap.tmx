@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="76">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="81">
  <tileset firstgid="1" source="oltile2.tsx"/>
  <tileset firstgid="30" source="rugs2.tsx"/>
  <layer id="1" name="Tile Layer 1" width="32" height="32">
@@ -135,6 +135,21 @@
   <object id="39" x="382.109" y="413.327">
    <properties>
     <property name="scalefactor" type="float" value="0.5"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="76" x="49" y="58">
+   <point/>
+  </object>
+  <object id="78" x="258" y="502">
+   <properties>
+    <property name="scalefactor" type="float" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="80" x="469" y="45">
+   <properties>
+    <property name="scalefactor" type="float" value="3"/>
    </properties>
    <point/>
   </object>

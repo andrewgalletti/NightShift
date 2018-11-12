@@ -67,11 +67,11 @@ public class StartScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
 
-        int multiplier = 4;
+        int multiplier = 40;
         for (final Image img: listOfImages) {
             img.setSize(img.getWidth() / 3.5f, img.getHeight() / 1.7f);
-            img.setPosition(Constants.VIEWPORT_WIDTH/1.9f - (img.getWidth() / 2), (Constants.VIEWPORT_HEIGHT / 6f)  * multiplier - (img.getHeight() / 2)); //(port.getWorldWidth() / 2) - (img.getWidth() / 2), (port.getWorldHeight() / 6) * multiplier - (img.getHeight() / 2)
-            multiplier--;
+            img.setPosition(Constants.VIEWPORT_WIDTH/2 - (img.getWidth() / 2), (Constants.VIEWPORT_HEIGHT / 2) - (img.getHeight() / 2) + multiplier + 40); //(port.getWorldWidth() / 2) - (img.getWidth() / 2), (port.getWorldHeight() / 6) * multiplier - (img.getHeight() / 2)
+            multiplier-= multiplier*2;
 
             stage.addActor(img);
 
@@ -99,7 +99,7 @@ public class StartScreen implements Screen {
     public void render(float delta) {
 
         //Sets background color
-        Gdx.gl.glClearColor(0.3f, 0.6f, 0.5f, 1);
+        Gdx.gl.glClearColor((101f/255f), (108f/255f), (115f/255f), 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();

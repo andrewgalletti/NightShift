@@ -2,6 +2,8 @@ package com.nightshift.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
@@ -39,6 +41,8 @@ public class GameScreen implements Screen {
     //Used to draw Sprite objects on the screen.
     private SpriteBatch batch;
     private ArrayList<Ghost> enemies;
+    private BitmapFont font = new BitmapFont(Gdx.files.internal("font/white64.fnt"));
+    Texture pause = new Texture(Gdx.files.internal("ButtonImg/PauseButton.png"));
 
     private Janitor hero;
 
@@ -99,65 +103,82 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         //Applies velocity to all Sprites to queue a positional change to be carried out during world.step().
         //Also updates invulnerability timer before world.step() to ensure that user is able to take damage if applicable.
-        hero.moveJanitor();
-        hero.updateInvulnerabilityTimer();
-        for(Ghost g: enemies) {
-            g.moveGhost();
-        }
 
-        //Applies positional change based on velocity applied over a very small time interval (1/60th of a second). Checks
-        //if user has reached the end of the map and for contact with enemies directly after the world.step().
-        world.step(1f / 60f, 6, 2);
-        checkWin();
-        checkGhostCollisions();
-
-        //Updates every Sprite's position to match the Body's position, as world.step() operates on Body's position
-        //as part of the Box2D physics engine.
-        hero.updateJanitorPosition();
-        for(Ghost g: enemies) {
-            g.updateGhostPosition();
-        }
-
-        //Prepares the screen and camera to display all Sprites in their correct positions for this iteration of render.
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),false);
-        game.camera.update();
-        tiledMapRenderer.setView(game.camera);
-        tiledMapRenderer.render();
-
-
-
-
-        //Scales and then draws all Sprites onto the screen.
-        batch.begin();
-        batch.setProjectionMatrix(game.camera.combined);
-        game.health.draw(batch);
-        hero.draw(batch);
-        for(Ghost g: enemies) {
-            g.draw(batch);
-        }
-        batch.end();
-
-        //Resets velocity for all Sprites to zero.
-        hero.resetVelocity();
-        for(Ghost g: enemies) {
-            g.resetVelocity();
-        }
-
-        if(showHitbox) {
-            shapeRenderer.setProjectionMatrix(game.camera.combined);
-            Rectangle wallHitbox = hero.getWallHitbox();
-            Rectangle damageHitbox = hero.getGhostHitbox();
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(0,1,0,1);
-            shapeRenderer.rect(wallHitbox.getX(), wallHitbox.getY(), wallHitbox.getWidth(), wallHitbox.getHeight());
-            shapeRenderer.setColor(1,0,0,1);
-            shapeRenderer.rect(damageHitbox.getX(), damageHitbox.getY(), damageHitbox.getWidth(), damageHitbox.getHeight());
-            for(Ghost g : enemies){
-                Rectangle ghostBox = g.getHitbox();
-                shapeRenderer.rect(ghostBox.getX(),ghostBox.getY(),ghostBox.getWidth(),ghostBox.getHeight());
+        if(!game.isPaused) {
+            hero.moveJanitor();
+            hero.updateInvulnerabilityTimer();
+            for (Ghost g : enemies) {
+                g.moveGhost();
             }
-            shapeRenderer.end();
+
+            //Applies positional change based on velocity applied over a very small time interval (1/60th of a second). Checks
+            //if user has reached the end of the map and for contact with enemies directly after the world.step().
+            world.step(1f / 60f, 6, 2);
+            checkWin();
+            checkGhostCollisions();
+
+            //Updates every Sprite's position to match the Body's position, as world.step() operates on Body's position
+            //as part of the Box2D physics engine.
+            hero.updateJanitorPosition();
+            for (Ghost g : enemies) {
+                g.updateGhostPosition();
+            }
+
+            //Prepares the screen and camera to display all Sprites in their correct positions for this iteration of render.
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+            game.camera.update();
+            tiledMapRenderer.setView(game.camera);
+            tiledMapRenderer.render();
+
+
+            //Scales and then draws all Sprites onto the screen.
+            batch.begin();
+            batch.setProjectionMatrix(game.camera.combined);
+            game.health.draw(batch);
+            hero.draw(batch);
+            for (Ghost g : enemies) {
+                g.draw(batch);
+            }
+            batch.end();
+
+            //Resets velocity for all Sprites to zero.
+            hero.resetVelocity();
+            for (Ghost g : enemies) {
+                g.resetVelocity();
+            }
+
+            if (showHitbox) {
+                shapeRenderer.setProjectionMatrix(game.camera.combined);
+                Rectangle wallHitbox = hero.getWallHitbox();
+                Rectangle damageHitbox = hero.getGhostHitbox();
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                shapeRenderer.setColor(0, 1, 0, 1);
+                shapeRenderer.rect(wallHitbox.getX(), wallHitbox.getY(), wallHitbox.getWidth(), wallHitbox.getHeight());
+                shapeRenderer.setColor(1, 0, 0, 1);
+                shapeRenderer.rect(damageHitbox.getX(), damageHitbox.getY(), damageHitbox.getWidth(), damageHitbox.getHeight());
+                for (Ghost g : enemies) {
+                    Rectangle ghostBox = g.getHitbox();
+                    shapeRenderer.rect(ghostBox.getX(), ghostBox.getY(), ghostBox.getWidth(), ghostBox.getHeight());
+                }
+                shapeRenderer.end();
+            }
+        }
+        else{
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+            game.camera.update();
+            tiledMapRenderer.setView(game.camera);
+            tiledMapRenderer.render();
+            batch.begin();
+            batch.setProjectionMatrix(game.camera.combined);
+            game.health.draw(batch);
+            hero.draw(batch);
+            for (Ghost g : enemies) {
+                g.draw(batch);
+            }
+            batch.draw(pause, Constants.VIEWPORT_WIDTH/2 - pause.getWidth()/2, Constants.VIEWPORT_HEIGHT/2 - pause.getHeight()/2);
+            batch.end();
         }
     }
 

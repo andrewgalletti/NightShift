@@ -20,6 +20,7 @@ public class NightShift extends Game {
 	//Used to store user's lives across different levels, as well as, initiate the end sequence if the user runs out of lives.
 	public LifeBar health;
 	public Preferences prefs;
+	public boolean isPaused = false;
 	//TODO: define camera
 	public OrthographicCamera camera;
 
@@ -97,8 +98,9 @@ public class NightShift extends Game {
 	}
 
 	private void checkPause() {
-		if(input.isKeyPressed(Input.Keys.ESCAPE)) {
-			currentScreen = new PauseScreen(this);
+		if(input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			isPaused = !isPaused;
+			//currentScreen = new PauseScreen(this);
 		}
 	}
 

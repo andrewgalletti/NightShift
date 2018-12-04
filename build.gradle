@@ -3,15 +3,18 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://dl.bintray.com/hendraanggrian/packr"}
         jcenter()
     }
     dependencies {
+        classpath "com.hendraanggrian.packr:packr-gradle-plugin:0.5"
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: 'com.hendraanggrian.packr'
 
     version = '1.0'
     ext {
@@ -31,6 +34,8 @@ allprojects {
     }
 }
 
+
+
 project(":desktop") {
     apply plugin: "java"
 
@@ -41,6 +46,36 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
     }
+
+    packr {
+        executable 'NightShift'
+        classpath '/Users/khinthirikyaw/Documents/FInalProject/NightShift/desktop/build/libs/desktop-1.0.jar'
+        mainClass 'com.nightshift.game.desktop.DesktopLauncher'
+        outputDir new File('/Users/khinthirikyaw/Documents/FInalProject/OutputFromPlugin')
+        vmArgs 'Xmx1G'
+        minimizeJre 'hard'
+        verbose true
+        openOnDone true
+
+        macOS {
+            it.name 'NightShiftMac.app'
+            it.jdk '/Users/khinthirikyaw/Downloads/jre.zip'
+            it.vmArgs '-Xmx512M'
+        }
+
+        windows64 {
+            it.name 'NightShiftWindow.app'
+            it.jdk '/Users/khinthirikyaw/Downloads/jre-windows.zip'
+            it.vmArgs '-Xmx512M'
+        }
+    }
+
+    tasks.all {
+        if(group == 'packr') {
+            dependsOn ':desktop:dist'
+        }
+    }
+
 }
 
 project(":core") {
